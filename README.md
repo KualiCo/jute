@@ -16,7 +16,7 @@ Summary
 System
 -------
 * Provide an immutable and strongly typed object containing essential information about the JVM we are running on
-* For example to get the home directory for the user the JVM is running as:
+* For example to get the home directory of the user the JVM is running as:
 ```
 VirtualSystem vs = VirtualSystem.build();
 User user = vs.getUser();
