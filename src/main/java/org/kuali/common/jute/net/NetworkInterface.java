@@ -12,6 +12,7 @@ import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 import java.io.IOException;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
@@ -47,7 +48,9 @@ public final class NetworkInterface {
     public static NetworkInterface copyOf(java.net.NetworkInterface mutable) throws IOException {
         Builder builder = builder();
         if (mutable.getParent() != null) {
-            builder.withParent(Optional.of(copyOf(mutable.getParent())));
+            java.net.NetworkInterface mParent = mutable.getParent();
+            NetworkInterface parent = copyOf(mParent);
+            builder.withParent(parent);
         }
         builder.withName(mutable.getName());
         builder.withAddresses(InetAddress.copyOf(list(mutable.getInetAddresses())));
@@ -124,9 +127,14 @@ public final class NetworkInterface {
             return this;
         }
 
+        @JsonSetter
         public Builder withParent(Optional<NetworkInterface> parent) {
             this.parent = parent;
             return this;
+        }
+
+        public Builder withParent(NetworkInterface parent) {
+            return withParent(Optional.of(parent));
         }
 
         public Builder withHardwareAddress(Optional<String> hardwareAddress) {
