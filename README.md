@@ -3,7 +3,7 @@ Jute: Java essentials
 
 [![Build Status](https://travis-ci.org/KualiCo/jute.svg?branch=master)](https://travis-ci.org/KualiCo/jute)
 
-* [Jute](http://en.wikipedia.org/wiki/Jute) - a fiber used to make high strength rope 
+* [Jute](http://en.wikipedia.org/wiki/Jute) - a durable fiber that is spun together with other ingredients to form high strength rope
 
 
 Summary
