@@ -58,5 +58,5 @@ JsonService json = injector.createInstance(JsonService.class);
 
 String plaintext = "foobar";
 String encrypted = enc.encrypt(plaintext);
-String converted = json.writeString(encrypted);
+String asJson = json.writeString(encrypted);
 ```
