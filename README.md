@@ -37,17 +37,22 @@ File home = VirtualSystem.build().getUser().getHome();
 ```
 int pid = VirtualRuntime.build().getUptime().getElapsed();
 ```
-* `Environment` - abstraction for searching the current environment for string values (typically used to override a default value)
-* `Encryptor` - password based encryption using AES 128 that is fully compatible with OpenSSL
+* `Environment` - abstraction for locating string values (typically used to override a default value)
+* `Encryptor` - password based encryption using AES 128, fully compatible with OpenSSL
 * `JsonService` - easily read/write data structures as JSON via Jackson
-* `Precondition` - argument checking with a meaningful error message that includes the argument name
+* `Precondition` - argument checking with a meaningful error message that include the argument name
 
 Dependency Injection
 -------
 * Guice Modules capable of wiring everything together via dependency injection are included
 * For example, if you need to encrypt a string and send it over the wire as JSON
 ```
-Injector injector = Guice.createInjector(new SystemModule(), new EnvModule(), new OpenSSLModule(), new JacksonModule());
+List<AbstractModule> modules = Lists.newArrayList();
+modules.add(new SystemModule());
+modules.add(new EnvModule());
+modules.add(new OpenSSLModule());
+modules.add(new JacksonModule());
+Injector injector = Guice.createInjector(modules);
 Encryptor enc = injector.createInstance(Encryptor.class);
 JsonService json = injector.createInstance(JsonService.class);
 
