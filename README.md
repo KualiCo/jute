@@ -35,7 +35,7 @@ File home = VirtualSystem.build().getUser().getHome();
  * garbage collection events
 * For example to find how long the JVM has been running:
 ```
-int uptime = VirtualRuntime.build().getUptime().getElapsed();
+long uptime = VirtualRuntime.build().getUptime().getElapsed();
 ```
 * `Environment` - abstraction for locating string values (typically used to override a default value)
 * `Encryptor` - password based encryption using AES 128, fully compatible with OpenSSL
