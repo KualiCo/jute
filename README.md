@@ -3,13 +3,13 @@ Jute: Java essentials
 
 [![Build Status](https://travis-ci.org/KualiCo/jute.svg?branch=master)](https://travis-ci.org/KualiCo/jute)
 
-* [Jute](http://en.wikipedia.org/wiki/Jute) - a fiber used in the making of strong, coarse, threads
+* [Jute](http://en.wikipedia.org/wiki/Jute) - a tough fiber used in the making of high tensile strength rope 
 
 
 Summary
 -------
 
-* Small library providing a few essential features on top of those provided natively by the JDK
+* Small library providing a few building blocks features on top of those provided natively by the JDK
 * Heavily influenced by the [Guava](https://github.com/google/guava) team's approach to interacting with the Java language 
 * Especially with regards to:
  * [using and avoiding null](https://code.google.com/p/guava-libraries/wiki/UsingAndAvoidingNullExplained)
