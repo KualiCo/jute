@@ -44,7 +44,7 @@ int pid = VirtualRuntime.build().getUptime().getElapsed();
 
 Dependency Injection
 -------
-* The project contains Guice Modules capable of wiring everything together using dependency injection
+* Guice Modules capable of wiring everything together via dependency injection are included
 * For example, if you need to encrypt a string and send it over the wire as JSON
 ```
 Injector injector = Guice.createInjector(new SystemModule(), new EnvModule(), new OpenSSLModule(), new JacksonModule());
