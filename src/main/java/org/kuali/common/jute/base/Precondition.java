@@ -149,7 +149,7 @@ public class Precondition {
      *             If argName is blank
      */
     public static String checkNotBlank(String arg, String argName) {
-        // checkArgument(isNotBlank(argName), NOT_BLANK_MSG, ARG_NAME);
+        checkArgument(isNotBlank(argName), NOT_BLANK_MSG, ARG_NAME);
         checkArgument(isNotBlank(arg), NOT_BLANK_MSG, argName);
         return arg;
     }
