@@ -15,7 +15,7 @@ Summary
 
 Highlights
 -------
-* `VirtualSystem` - immutable, strongly typed, object containing system level information about the JVM including:
+* `VirtualSystem` - immutable, strongly typed, object containing system level information
  * system properties and environment variables
  * encoding/character set
  * user
@@ -26,7 +26,7 @@ Highlights
 ```
 File home = VirtualSystem.build().getUser().getHome();
 ```
-* `VirtualRuntime` - immutable, strongly typed, object containing runtime information about the JVM including:
+* `VirtualRuntime` - immutable, strongly typed, object containing runtime information
  * uptime
  * memory usage
  * process id
