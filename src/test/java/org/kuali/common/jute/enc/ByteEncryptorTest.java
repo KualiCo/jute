@@ -42,6 +42,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kuali.common.jute.base.BaseUnitTest;
 import org.kuali.common.jute.enc.cipher.CipherMode;
@@ -52,6 +53,7 @@ import com.google.common.io.ByteSource;
 public class ByteEncryptorTest extends BaseUnitTest {
 
     @Test
+    @Ignore
     public void test() throws Exception {
         // 1
         int saltBytes = 8;
