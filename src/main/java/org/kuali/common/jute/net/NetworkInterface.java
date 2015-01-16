@@ -3,7 +3,6 @@ package org.kuali.common.jute.net;
 import static com.google.common.base.Optional.absent;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.io.BaseEncoding.base16;
-import static java.lang.String.format;
 import static java.util.Collections.list;
 import static org.kuali.common.jute.base.Optionals.fromNegativeToAbsent;
 import static org.kuali.common.jute.base.Precondition.checkMin;
@@ -48,14 +47,11 @@ public final class NetworkInterface {
 
     public static NetworkInterface copyOf(java.net.NetworkInterface mutable) throws IOException {
         Builder builder = builder();
-        if (mutable.getParent() != null) {
-            java.net.NetworkInterface mParent = mutable.getParent();
-            String name = mutable.getDisplayName();
-            String p = mParent.getDisplayName();
-            System.out.println(format("name=%s, parent=%s", name, p));
-            NetworkInterface parent = copyOf(mParent);
-            builder.withParent(parent);
-        }
+        // TODO This causes an infinite loop on Travis CI.
+        // Javadoc states it returns null if this interface has no parent, but on Travis it returns itself, leading to stackoverflow
+        // if (mutable.getParent() != null) {
+        // builder.withParent(copyOf(mutable.getParent()));
+        // }
         builder.withName(mutable.getName());
         builder.withAddresses(InetAddress.copyOf(list(mutable.getInetAddresses())));
         builder.withDisplayName(mutable.getDisplayName());
