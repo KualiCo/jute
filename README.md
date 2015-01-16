@@ -22,7 +22,7 @@ Highlights
  * timezone
  * locale
  * java version
-* For example to find the home directory for the user the JVM is running as:
+* For example, to find the home directory for the user the JVM is running as:
 ```
 File home = VirtualSystem.build().getUser().getHome();
 ```
@@ -33,7 +33,7 @@ File home = VirtualSystem.build().getUser().getHome();
  * system load
  * class loading statistics
  * garbage collection events
-* For example to find how long the JVM has been running:
+* For example, to find how long the JVM has been running:
 ```
 long uptime = VirtualRuntime.build().getUptime().getElapsed();
 ```
