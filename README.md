@@ -9,7 +9,7 @@ Jute: Java essentials
 Summary
 -------
 
-* Small library providing a few key application building blocks on top of those provided natively by the JDK
+* Small library providing a few key application building blocks
 * Heavily influenced by the [Guava](https://github.com/google/guava) team's approach to interacting with the Java language 
 * Especially with regards to:
  * [using and avoiding null](https://code.google.com/p/guava-libraries/wiki/UsingAndAvoidingNullExplained)
