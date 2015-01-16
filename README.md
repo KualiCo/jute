@@ -16,22 +16,22 @@ Summary
 Highlights
 -------
 * `VirtualSystem` - immutable, strongly typed, object containing system level information about the JVM including:
-** timezone
-** encoding/character set
-** locale
-** system properties and environment variables
-** user
-** jvm specification
+ * timezone
+ * encoding/character set
+ * locale
+ * system properties and environment variables
+ * user
+ * jvm specification
 ```
 File home = VirtualSystem.build().getUser().getHome();
 ```
 * `VirtualRuntime` - immutable, strongly typed, object containing runtime information about the JVM including:
-** process id
-** uptime
-** memory usage
-** system load
-** class loading statistics
-** garbage collection events
+ * process id
+ * uptime
+ * memory usage
+ * system load
+ * class loading statistics
+ * garbage collection events
 ```
 int pid = VirtualRuntime.build().getPid();
 ```
