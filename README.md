@@ -16,12 +16,12 @@ Summary
 Highlights
 -------
 * `VirtualSystem` - immutable, strongly typed, object containing system level information about the JVM including:
- * timezone
- * encoding/character set
- * locale
  * system properties and environment variables
+ * encoding/character set
  * user
- * jvm specification
+ * timezone
+ * locale
+ * java version
 * For example to find the home directory for the user the JVM is running as:
 ```
 File home = VirtualSystem.build().getUser().getHome();
