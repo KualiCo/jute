@@ -40,7 +40,7 @@ long uptime = VirtualRuntime.build().getUptime().getElapsed();
 * `Environment` - abstraction for locating string values (typically used to override a default value)
 * `Encryptor` - password based encryption using AES 128, fully compatible with OpenSSL
 * `JsonService` - easily read/write data structures as JSON via Jackson
-* `Precondition` - argument checking with a meaningful error message that includes the argument name
+* `Precondition` - argument checking with meaningful error messages
 
 Dependency Injection
 -------
