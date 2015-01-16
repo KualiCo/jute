@@ -1,4 +1,4 @@
-Jute: Core Libraries for Java
+Jute: Java essentials
 -------
 
 * [Jute](http://en.wikipedia.org/wiki/Jute) - a fiber used in the making of strong, coarse, threads
