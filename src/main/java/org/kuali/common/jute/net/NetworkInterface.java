@@ -3,6 +3,7 @@ package org.kuali.common.jute.net;
 import static com.google.common.base.Optional.absent;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.io.BaseEncoding.base16;
+import static java.lang.String.format;
 import static java.util.Collections.list;
 import static org.kuali.common.jute.base.Optionals.fromNegativeToAbsent;
 import static org.kuali.common.jute.base.Precondition.checkMin;
@@ -49,6 +50,9 @@ public final class NetworkInterface {
         Builder builder = builder();
         if (mutable.getParent() != null) {
             java.net.NetworkInterface mParent = mutable.getParent();
+            String name = mutable.getDisplayName();
+            String p = mParent.getDisplayName();
+            System.out.println(format("name=%s, parent=%s", name, p));
             NetworkInterface parent = copyOf(mParent);
             builder.withParent(parent);
         }
