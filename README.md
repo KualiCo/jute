@@ -1,4 +1,4 @@
-Jute: Kuali Core Libraries for Java
+Jute: Core Libraries for Java
 =====================================
 
 * Jute - a fiber used in the making of strong, coarse, threads
@@ -13,15 +13,30 @@ Summary
  * [immutable collections](https://code.google.com/p/guava-libraries/wiki/ImmutableCollectionsExplained)
  * [functional idioms](https://code.google.com/p/guava-libraries/wiki/FunctionalExplained)
 
-System
+Highlights
 -------
-* Provide an immutable and strongly typed object containing essential information about the JVM we are running on
-* For example to get the home directory of the user the JVM is running as:
+* `VirtualSystem` - immutable, strongly typed, object containing system level information about the JVM including:
+** timezone
+** encoding/character set
+** locale
+** system properties and environment variables
+** user
+** jvm specification
 ```
-VirtualSystem vs = VirtualSystem.build();
-User user = vs.getUser();
-File home = user.getHome();
+File home = VirtualSystem.build().getUser().getHome();
 ```
-
-
-
+* `VirtualRuntime` - immutable, strongly typed, object containing runtime information about the JVM including:
+** process id
+** uptime
+** memory usage
+** system load
+** class loading statistics
+** garbage collection events
+```
+int pid = VirtualRuntime.build().getPid();
+```
+* `Environment` - abstraction for searching the current environment for string values (typically used to override a default value)
+* `Encryptor` - password based encryption using AES 128 that is fully compatible with OpenSSL
+* `JsonService` - easily read/write data structures as JSON via Jackson
+* `Precondition` - argument checking with a meaningful error message that includes the argument name
+ 
