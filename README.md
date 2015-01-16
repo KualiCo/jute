@@ -45,7 +45,7 @@ long uptime = VirtualRuntime.build().getUptime().getElapsed();
 Dependency Injection
 -------
 * Guice Modules capable of wiring everything together via dependency injection are included
-* For example, if you need to encrypt a string and send it over the wire as JSON
+* For example, if you need to encrypt a string and convert it to JSON
 ```
 List<AbstractModule> modules = Lists.newArrayList();
 modules.add(new SystemModule());
