@@ -79,7 +79,7 @@
       <version>${slf4j.version}</version>
       <scope>test</scope>
     </dependency>
-    <!-- normal dependencies -->
+    <!-- compile dependencies -->
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
