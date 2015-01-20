@@ -67,9 +67,10 @@ public final class Reflection {
                     fields.add(field);
                 }
             }
+            fields = ImmutableSet.copyOf(fields);
             CACHE.put(type, fields);
         }
-        return ImmutableSet.copyOf(fields);
+        return fields;
     }
 
     /**

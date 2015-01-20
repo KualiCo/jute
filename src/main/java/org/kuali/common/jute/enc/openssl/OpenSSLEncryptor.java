@@ -98,9 +98,9 @@ public final class OpenSSLEncryptor implements Encryptor {
         return context;
     }
 
-    private static ByteSource buildSalt(OpenSSLSaltContext input) {
-        byte[] bytes = new byte[input.getBytes()];
-        Random random = (input.isSecure()) ? new SecureRandom() : new Random();
+    private static ByteSource buildSalt(OpenSSLSaltContext context) {
+        byte[] bytes = new byte[context.getBytes()];
+        Random random = (context.isSecure()) ? new SecureRandom() : new Random();
         random.nextBytes(bytes);
         return wrap(bytes);
     }
