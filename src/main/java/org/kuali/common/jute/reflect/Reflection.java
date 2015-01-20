@@ -31,7 +31,7 @@ public final class Reflection {
     private Reflection() {
     }
 
-    private static final Map<Class<?>, Set<Field>> CACHE = newConcurrentMap();
+    private static final Map<Class<?>, ImmutableSet<Field>> CACHE = newConcurrentMap();
 
     public static <T> T checkNoNulls(T instance) {
         return checkNoNulls(instance, getFields(instance.getClass()));
@@ -55,19 +55,17 @@ public final class Reflection {
      * NOTE: field.getName() is not necessarily unique for the elements in the set
      * </p>
      */
-    private static Set<Field> getFields(Class<?> type) {
-        Set<Field> fields = CACHE.get(type);
+    private static ImmutableSet<Field> getFields(Class<?> type) {
+        ImmutableSet<Field> fields = CACHE.get(type);
         if (fields == null) {
-            fields = newHashSet();
+            Set<Field> mutable = newHashSet();
             for (Class<?> c = type; c != null; c = c.getSuperclass()) {
                 for (Field field : type.getDeclaredFields()) {
-                    if (!field.isAccessible()) {
-                        field.setAccessible(true);
-                    }
-                    fields.add(field);
+                    field.setAccessible(true);
+                    mutable.add(field);
                 }
             }
-            fields = ImmutableSet.copyOf(fields);
+            fields = ImmutableSet.copyOf(mutable);
             CACHE.put(type, fields);
         }
         return fields;
