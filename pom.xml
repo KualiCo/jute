@@ -49,6 +49,8 @@
   <properties>
     <kuali.release.arguments>-DskipTests</kuali.release.arguments>
     <kuali.release.goals>deploy</kuali.release.goals>
+    <project.augment.phase>none</project.augment.phase>
+    <project.metainf.phase>none</project.metainf.phase>
 
     <junit.version>4.11</junit.version>
     <slf4j.version>1.7.10</slf4j.version>
