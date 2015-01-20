@@ -11,32 +11,24 @@ public final class TypeLiterals {
     private TypeLiterals() {
     }
 
-    public static StringToStringFunctionList stringToStringFunctionList() {
-        return new StringToStringFunctionList();
+    public static TypeLiteral<List<Function<String, String>>> stringToStringFunctionList() {
+        return new TypeLiteral<List<Function<String, String>>>() {
+        };
     }
 
-    public static OptionalInteger optionalInteger() {
-        return new OptionalInteger();
+    public static TypeLiteral<Optional<Integer>> optionalInteger() {
+        return new TypeLiteral<Optional<Integer>>() {
+        };
     }
 
-    public static OptionalDouble optionalDouble() {
-        return new OptionalDouble();
+    public static TypeLiteral<Optional<Double>> optionalDouble() {
+        return new TypeLiteral<Optional<Double>>() {
+        };
     }
 
-    public static OptionalString optionalString() {
-        return new OptionalString();
-    }
-
-    private static final class StringToStringFunctionList extends TypeLiteral<List<Function<String, String>>> {
-    }
-
-    private static final class OptionalInteger extends TypeLiteral<Optional<Integer>> {
-    }
-
-    private static final class OptionalString extends TypeLiteral<Optional<String>> {
-    }
-
-    private static final class OptionalDouble extends TypeLiteral<Optional<Double>> {
+    public static TypeLiteral<Optional<String>> optionalString() {
+        return new TypeLiteral<Optional<String>>() {
+        };
     }
 
 }

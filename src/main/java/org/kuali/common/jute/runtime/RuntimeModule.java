@@ -81,11 +81,9 @@ public class RuntimeModule extends AbstractModule {
         }
     }
 
-    private static GarbageCollectionEventList garbageCollectionEventList() {
-        return new GarbageCollectionEventList();
-    }
-
-    private static class GarbageCollectionEventList extends TypeLiteral<List<GarbageCollectionEvent>> {
+    private static TypeLiteral<List<GarbageCollectionEvent>> garbageCollectionEventList() {
+        return new TypeLiteral<List<GarbageCollectionEvent>>() {
+        };
     }
 
 }
