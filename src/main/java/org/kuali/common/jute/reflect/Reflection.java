@@ -34,11 +34,7 @@ public final class Reflection {
     private static final Map<Class<?>, ImmutableSet<Field>> CACHE = newConcurrentMap();
 
     public static <T> T checkNoNulls(T instance) {
-        return checkNoNulls(instance, getFields(instance.getClass()));
-    }
-
-    private static <T> T checkNoNulls(T instance, Set<Field> fields) {
-        for (Field field : fields) {
+        for (Field field : getFields(instance.getClass())) {
             if (getValue(field, instance) == null) {
                 throw nullPointerException("%s.%s cannot be null", instance.getClass().getSimpleName(), field.getName());
             }
