@@ -27,7 +27,8 @@ public enum ProcessIdProvider implements Provider<Optional<Integer>> {
             if (trimmed == null) {
                 return absent();
             } else {
-                return Optional.of(parseInt(trimmed));
+                int pid = parseInt(trimmed);
+                return Optional.of(pid);
             }
         } catch (Throwable e) {
             // If anything goes wrong at any point, just return absent()
