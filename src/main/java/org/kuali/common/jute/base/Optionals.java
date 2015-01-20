@@ -15,17 +15,6 @@ public final class Optionals {
 
     private static final long NEGATIVE_ONE = -1;
 
-    /**
-     * If {@code optional.isPresent()}, return {@code optional.get()}, otherwise return provided.
-     */
-    public static <T> T ifPresent(Optional<T> optional, T provided) {
-        if (optional.isPresent()) {
-            return optional.get();
-        } else {
-            return provided;
-        }
-    }
-
     public static Optional<Integer> optionalInteger(String text) {
         Optional<String> optional = fromTrimToNull(text);
         if (optional.isPresent()) {
