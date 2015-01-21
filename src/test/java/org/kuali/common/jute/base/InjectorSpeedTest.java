@@ -17,6 +17,8 @@ package org.kuali.common.jute.base;
 
 import static com.google.common.base.Stopwatch.createStarted;
 import static com.google.inject.Guice.createInjector;
+import static java.lang.String.format;
+import static org.kuali.common.jute.base.Formats.getTime;
 
 import org.junit.Test;
 import org.kuali.common.jute.env.EnvModule;
@@ -32,7 +34,7 @@ public class InjectorSpeedTest extends BaseUnitTest {
     @Test
     public void test() {
         Stopwatch sw = createStarted();
-        int count = 500;
+        int count = 4;
         for (int i = 0; i < count; i++) {
             Injector injector = createInjector(new SystemModule(), new EnvModule(), new JacksonModule());
             injector.getInstance(JsonService.class);
@@ -41,8 +43,8 @@ public class InjectorSpeedTest extends BaseUnitTest {
         JsonService json = injector.getInstance(JsonService.class);
         TimedInterval timing = TimedInterval.build(sw);
         show(json, timing);
-        double millisPerInjector = (timing.getElapsed() * 1D) / (count + 1);
-        System.out.println(millisPerInjector);
+        long millisPerInjector = timing.getElapsed() / (count + 1);
+        System.out.println(format("took %s to create %s injectors, %s millis per injector", getTime(sw), (count + 1), millisPerInjector));
     }
 
 }
