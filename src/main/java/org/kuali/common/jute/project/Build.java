@@ -10,6 +10,9 @@ import org.kuali.common.jute.system.Java;
 import org.kuali.common.jute.system.OperatingSystem;
 import org.kuali.common.jute.system.User;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(builder = Build.Builder.class)
 public final class Build {
 
     private final String username;
