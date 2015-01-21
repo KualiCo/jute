@@ -44,7 +44,7 @@ public class InjectorSpeedTest extends BaseUnitTest {
         TimedInterval timing = TimedInterval.build(sw);
         show(json, timing);
         long millisPerInjector = timing.getElapsed() / (count + 1);
-        System.out.println(format("took %s to create %s injectors, %s millis per injector", getTime(sw), (count + 1), millisPerInjector));
+        System.out.println(format("it took %s to create %s injectors, %s millis per injector", getTime(sw), (count + 1), millisPerInjector));
     }
 
 }
