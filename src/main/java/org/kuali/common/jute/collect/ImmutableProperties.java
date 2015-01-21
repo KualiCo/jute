@@ -85,8 +85,8 @@ public final class ImmutableProperties extends Properties {
     public static ImmutableProperties copyOf(Map<String, String> map) {
         checkNotNull(map, "map");
         Properties properties = new Properties();
-        for (String key : map.keySet()) {
-            properties.setProperty(key, map.get(key));
+        for (Map.Entry<String, String> pair : map.entrySet()) {
+            properties.setProperty(pair.getKey(), pair.getValue());
         }
         return copyOf(properties);
     }
