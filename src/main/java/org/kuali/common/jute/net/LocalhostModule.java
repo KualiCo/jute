@@ -13,8 +13,7 @@ public class LocalhostModule extends AbstractModule {
     }
 
     public static TypeLiteral<List<NetworkInterface>> networkInterfaceList() {
-        return new TypeLiteral<List<NetworkInterface>>() {
-        };
+        return new TypeLiteral<List<NetworkInterface>>() {};
     }
 
 }
