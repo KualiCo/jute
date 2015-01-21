@@ -8,7 +8,7 @@ public class KualiJuteModule extends AbstractModule {
 
     @Override
     public void configure() {
-        bind(ProjectIdentifier.class).annotatedWith(KualiJute.class).toInstance(KUALI_JUTE_PROJECT_ID);
+        bind(ProjectIdentifier.class).annotatedWith(KualiJuteProjectId.class).toInstance(KUALI_JUTE_PROJECT_ID);
     }
 
 }
