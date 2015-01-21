@@ -12,8 +12,8 @@ import org.kuali.common.jute.system.User;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-@JsonDeserialize(builder = Build.Builder.class)
-public final class Build {
+@JsonDeserialize(builder = BuildEvent.Builder.class)
+public final class BuildEvent {
 
     private final String username;
     private final long timestamp;
@@ -21,7 +21,7 @@ public final class Build {
     private final OperatingSystem os;
     private final InetAddress host;
 
-    private Build(Builder builder) {
+    private BuildEvent(Builder builder) {
         this.username = builder.username;
         this.timestamp = builder.timestamp;
         this.java = builder.java;
@@ -29,7 +29,7 @@ public final class Build {
         this.host = builder.host;
     }
 
-    public static Build build() throws IOException {
+    public static BuildEvent build() throws IOException {
         Builder builder = builder();
         builder.withJava(Java.build());
         builder.withOs(OperatingSystem.build());
@@ -43,7 +43,7 @@ public final class Build {
         return new Builder();
     }
 
-    public static class Builder implements org.apache.commons.lang3.builder.Builder<Build> {
+    public static class Builder implements org.apache.commons.lang3.builder.Builder<BuildEvent> {
 
         private String username;
         private long timestamp;
@@ -77,8 +77,8 @@ public final class Build {
         }
 
         @Override
-        public Build build() {
-            return checkNoNulls(new Build(this));
+        public BuildEvent build() {
+            return checkNoNulls(new BuildEvent(this));
         }
     }
 
