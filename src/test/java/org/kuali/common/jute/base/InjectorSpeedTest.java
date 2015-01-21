@@ -34,7 +34,7 @@ public class InjectorSpeedTest extends BaseUnitTest {
     @Test
     public void test() {
         Stopwatch sw = createStarted();
-        int count = 4;
+        int count = 0;
         for (int i = 0; i < count; i++) {
             Injector injector = createInjector(new SystemModule(), new EnvModule(), new JacksonModule());
             injector.getInstance(JsonService.class);
