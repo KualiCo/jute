@@ -3,6 +3,9 @@ package org.kuali.common.jute.project;
 import static java.lang.System.currentTimeMillis;
 import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 
+import java.io.IOException;
+
+import org.kuali.common.jute.net.InetAddress;
 import org.kuali.common.jute.system.Java;
 import org.kuali.common.jute.system.OperatingSystem;
 import org.kuali.common.jute.system.User;
@@ -13,20 +16,23 @@ public final class Build {
     private final long timestamp;
     private final Java java;
     private final OperatingSystem os;
+    private final InetAddress host;
 
     private Build(Builder builder) {
         this.username = builder.username;
         this.timestamp = builder.timestamp;
         this.java = builder.java;
         this.os = builder.os;
+        this.host = builder.host;
     }
 
-    public static Build build() {
+    public static Build build() throws IOException {
         Builder builder = builder();
         builder.withJava(Java.build());
         builder.withOs(OperatingSystem.build());
         builder.withTimestamp(currentTimeMillis());
         builder.withUsername(User.build().getName());
+        builder.withHost(InetAddress.buildLocalHost());
         return builder.build();
     }
 
@@ -40,6 +46,12 @@ public final class Build {
         private long timestamp;
         private Java java;
         private OperatingSystem os;
+        private InetAddress host;
+
+        public Builder withHost(InetAddress host) {
+            this.host = host;
+            return this;
+        }
 
         public Builder withUsername(String username) {
             this.username = username;
@@ -81,6 +93,10 @@ public final class Build {
 
     public OperatingSystem getOs() {
         return os;
+    }
+
+    public InetAddress getHost() {
+        return host;
     }
 
 }
