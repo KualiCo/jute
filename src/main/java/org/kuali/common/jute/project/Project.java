@@ -10,6 +10,7 @@ import java.util.Properties;
 
 import org.kuali.common.jute.collect.ImmutableProperties;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
@@ -29,6 +30,7 @@ public final class Project {
     private final Optional<String> inceptionYear;
     private final ImmutableList<Dependency> dependencies;
     private final ImmutableList<License> licenses;
+    @JsonIgnore
     private final ImmutableProperties properties;
 
     private Project(Builder builder) {
