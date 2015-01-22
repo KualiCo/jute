@@ -22,7 +22,7 @@ public class MetadataModule extends AbstractModule {
         bind(InetAddress.class).annotatedWith(BuildHost.class).toProvider(BuildHostProvider.INSTANCE);
         bind(BuildEvent.class).toProvider(BuildEvent.Builder.class);
         bind(ProjectMetadata.class).toProvider(ProjectMetadata.Builder.class);
-        bind(Runnable.class).to(MetadataRunnable.class);
+        bind(Runnable.class).toProvider(MetadataRunnable.Builder.class);
     }
 
     private enum BuildHostProvider implements Provider<InetAddress> {
