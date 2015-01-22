@@ -14,7 +14,7 @@ import org.kuali.common.jute.project.annotation.BuildTimestamp;
 
 import com.google.inject.AbstractModule;
 
-public class MetadataModule extends AbstractModule {
+public class CreateMetadataModule extends AbstractModule {
 
     @Override
     protected void configure() {
@@ -22,7 +22,7 @@ public class MetadataModule extends AbstractModule {
         bind(InetAddress.class).annotatedWith(BuildHost.class).toProvider(BuildHostProvider.INSTANCE);
         bind(BuildEvent.class).toProvider(BuildEvent.Builder.class);
         bind(ProjectMetadata.class).toProvider(ProjectMetadata.Builder.class);
-        bind(Runnable.class).toProvider(MetadataRunnable.Builder.class);
+        bind(Runnable.class).toProvider(CreateMetadataRunnable.Builder.class);
     }
 
     private enum BuildHostProvider implements Provider<InetAddress> {

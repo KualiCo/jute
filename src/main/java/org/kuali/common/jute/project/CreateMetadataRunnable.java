@@ -14,8 +14,8 @@ import org.kuali.common.jute.json.JsonService;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.Joiner;
 
-@JsonDeserialize(builder = MetadataRunnable.Builder.class)
-public final class MetadataRunnable implements Runnable {
+@JsonDeserialize(builder = CreateMetadataRunnable.Builder.class)
+public final class CreateMetadataRunnable implements Runnable {
 
     private static final char FS = File.separatorChar;
 
@@ -40,7 +40,7 @@ public final class MetadataRunnable implements Runnable {
         }
     }
 
-    private MetadataRunnable(Builder builder) {
+    private CreateMetadataRunnable(Builder builder) {
         this.metadata = builder.metadata;
         this.json = builder.json;
         this.dirs = builder.dirs;
@@ -50,7 +50,7 @@ public final class MetadataRunnable implements Runnable {
         return new Builder();
     }
 
-    public static class Builder implements org.apache.commons.lang3.builder.Builder<MetadataRunnable>, Provider<MetadataRunnable> {
+    public static class Builder implements org.apache.commons.lang3.builder.Builder<CreateMetadataRunnable>, Provider<CreateMetadataRunnable> {
 
         private DirectoryContext dirs;
         private ProjectMetadata metadata;
@@ -75,13 +75,13 @@ public final class MetadataRunnable implements Runnable {
         }
 
         @Override
-        public MetadataRunnable get() {
+        public CreateMetadataRunnable get() {
             return build();
         }
 
         @Override
-        public MetadataRunnable build() {
-            return checkNoNulls(new MetadataRunnable(this));
+        public CreateMetadataRunnable build() {
+            return checkNoNulls(new CreateMetadataRunnable(this));
         }
     }
 
