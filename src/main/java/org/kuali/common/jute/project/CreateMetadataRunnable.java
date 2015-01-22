@@ -12,8 +12,6 @@ import javax.inject.Provider;
 import org.kuali.common.jute.json.JsonService;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
 
 @JsonDeserialize(builder = CreateMetadataRunnable.Builder.class)
 public final class CreateMetadataRunnable implements Runnable {
@@ -32,19 +30,6 @@ public final class CreateMetadataRunnable implements Runnable {
             json.write(file, metadata);
         } catch (IOException e) {
             throw illegalState(e);
-        }
-    }
-
-    private enum MetadataPathFunction implements Function<Project, String> {
-        INSTANCE;
-
-        @Override
-        public String apply(Project input) {
-            ProjectCoordinates gav = input.getCoordinates();
-            String groupId = gav.getGroupId().replace('.', '/');
-            String artifactId = gav.getArtifactId();
-            String filename = "metadata.json";
-            return Joiner.on('/').join("META-INF", groupId, artifactId, filename);
         }
     }
 
