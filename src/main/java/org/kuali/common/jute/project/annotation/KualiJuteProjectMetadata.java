@@ -1,4 +1,4 @@
-package org.kuali.common.jute.project;
+package org.kuali.common.jute.project.annotation;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
@@ -13,5 +13,5 @@ import com.google.inject.BindingAnnotation;
 @BindingAnnotation
 @Target({ FIELD, PARAMETER, METHOD })
 @Retention(RUNTIME)
-public @interface KualiJuteProjectId {
+public @interface KualiJuteProjectMetadata {
 }
