@@ -15,7 +15,7 @@ import com.google.common.base.Splitter;
 
 public class LogFormatter extends Formatter {
 
-    private static final String FORMAT = "yyyy-MM-dd hh:mm:ss.SSS";
+    private static final String FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
     private static final String LS = LINE_SEPARATOR.value();
     private static final Optional<Integer> PID = ProcessIdProvider.INSTANCE.get();
     private static final Splitter SPLITTER = Splitter.on('.').omitEmptyStrings().trimResults();
