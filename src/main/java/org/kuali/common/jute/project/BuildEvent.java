@@ -9,11 +9,15 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 import org.kuali.common.jute.net.InetAddress;
+import org.kuali.common.jute.project.annotation.BuildHost;
+import org.kuali.common.jute.project.annotation.BuildTimestamp;
+import org.kuali.common.jute.system.Java;
 import org.kuali.common.jute.system.OperatingSystem;
 import org.kuali.common.jute.system.RuntimeEnvironment;
 import org.kuali.common.jute.system.User;
 import org.kuali.common.jute.system.VirtualMachine;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @JsonDeserialize(builder = BuildEvent.Builder.class)
@@ -37,7 +41,7 @@ public final class BuildEvent {
 
     public static BuildEvent build() throws IOException {
         Builder builder = builder();
-        builder.withVirtualMachine(VirtualMachine.build());
+        builder.withVm(VirtualMachine.build());
         builder.withOs(OperatingSystem.build());
         builder.withTimestamp(currentTimeMillis());
         builder.withUser(User.build().getName());
@@ -52,46 +56,56 @@ public final class BuildEvent {
 
     public static class Builder implements org.apache.commons.lang3.builder.Builder<BuildEvent>, Provider<BuildEvent> {
 
-        private String user;
         private long timestamp;
+        private InetAddress host;
+        private String user;
         private VirtualMachine vm;
         private OperatingSystem os;
-        private InetAddress host;
         private RuntimeEnvironment runtime;
 
         @Inject
-        public Builder withRuntime(RuntimeEnvironment runtime) {
-            this.runtime = runtime;
+        public Builder withJava(Java java) {
+            withRuntime(java.getRuntime());
+            withVm(java.getVm());
             return this;
         }
 
         @Inject
-        public Builder withHost(InetAddress host) {
+        public Builder withHost(@BuildHost InetAddress host) {
             this.host = host;
             return this;
         }
 
         @Inject
-        public Builder withUser(String user) {
-            this.user = user;
-            return this;
-        }
-
-        @Inject
-        public Builder withTimestamp(long timestamp) {
+        public Builder withTimestamp(@BuildTimestamp long timestamp) {
             this.timestamp = timestamp;
-            return this;
-        }
-
-        @Inject
-        public Builder withVirtualMachine(VirtualMachine vm) {
-            this.vm = vm;
             return this;
         }
 
         @Inject
         public Builder withOs(OperatingSystem os) {
             this.os = os;
+            return this;
+        }
+
+        @Inject
+        public Builder withUser(User user) {
+            return withUser(user.getName());
+        }
+
+        @JsonSetter
+        public Builder withUser(String user) {
+            this.user = user;
+            return this;
+        }
+
+        public Builder withRuntime(RuntimeEnvironment runtime) {
+            this.runtime = runtime;
+            return this;
+        }
+
+        public Builder withVm(VirtualMachine vm) {
+            this.vm = vm;
             return this;
         }
 

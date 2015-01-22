@@ -78,7 +78,6 @@ public final class Java {
         private List<File> classPaths;
         private List<File> libraryPaths;
         private List<File> extensionDirs;
-
         private RuntimeEnvironment runtime;
         private VirtualMachine vm;
 
