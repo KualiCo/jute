@@ -15,26 +15,29 @@
  */
 package org.kuali.common.jute.logging;
 
-import static org.slf4j.LoggerFactory.getLogger;
+import static java.util.logging.Level.ALL;
+import static java.util.logging.Logger.getLogger;
 
-import org.slf4j.Logger;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
 
 public class Loggers {
 
-    /**
-     * <p>
-     * Convenience method for obtaining a logger
-     * </p>
-     *
-     * <pre>
-     * private static final Logger logger = Loggers.newLogger();
-     * </pre>
-     */
-    public static Logger newLogger() {
-        Throwable throwable = new Throwable();
-        StackTraceElement[] elements = throwable.getStackTrace();
-        StackTraceElement directCaller = elements[1];
-        return getLogger(directCaller.getClassName());
+    private static final Handler HANDLER = getHandler();
+
+    public static <T> Logger newLogger(T instance) {
+        Logger logger = getLogger(instance.getClass().getName());
+        logger.setUseParentHandlers(false);
+        logger.addHandler(HANDLER);
+        return logger;
+    }
+
+    private static Handler getHandler() {
+        Handler handler = new ConsoleHandler();
+        handler.setLevel(ALL);
+        handler.setFormatter(new LogFormatter());
+        return handler;
     }
 
 }

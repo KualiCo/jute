@@ -3,17 +3,18 @@ package org.kuali.common.jute.base;
 import static java.lang.String.format;
 import static org.kuali.common.jute.base.Formats.getTime;
 import static org.kuali.common.jute.base.Precondition.checkEquals;
-import static org.slf4j.LoggerFactory.getLogger;
+import static org.kuali.common.jute.logging.Loggers.newLogger;
+
+import java.util.logging.Logger;
 
 import org.kuali.common.jute.json.JsonService;
-import org.slf4j.Logger;
 
 import com.google.common.base.Splitter;
 import com.google.common.base.Stopwatch;
 
 public abstract class BaseUnitTest {
 
-    protected final Logger logger = getLogger(this.getClass());
+    protected final Logger logger = newLogger(this);
 
     /**
      * Convert the object reference to json.
