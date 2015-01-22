@@ -7,6 +7,7 @@ import static com.google.common.base.Predicates.containsPattern;
 import static com.google.common.base.Predicates.not;
 import static com.google.common.base.Predicates.or;
 import static org.apache.commons.lang3.StringUtils.trimToNull;
+import static org.kuali.common.jute.env.Environments.ABSENT;
 import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 
 import javax.inject.Provider;
@@ -64,7 +65,7 @@ public final class PredicateProvider implements Provider<Predicate<String>> {
 
         @Override
         public boolean apply(String input) {
-            return (input == null) || input.equals("ABSENT");
+            return (input == null) || input.equals(ABSENT);
         }
     }
 
