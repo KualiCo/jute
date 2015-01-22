@@ -17,9 +17,8 @@ import com.google.common.collect.ImmutableList;
 @JsonDeserialize(builder = Project.Builder.class)
 public final class Project {
 
-    private final String groupId;
-    private final String artifactId;
-    private final String version;
+    private final Optional<ProjectCoordinates> parent;
+    private final ProjectCoordinates coordinates;
     private final String packaging;
     private final String encoding;
     private final Optional<Scm> scm;
@@ -32,9 +31,8 @@ public final class Project {
     private final ImmutableProperties properties;
 
     private Project(Builder builder) {
-        this.groupId = builder.groupId;
-        this.artifactId = builder.artifactId;
-        this.version = builder.version;
+        this.parent = builder.parent;
+        this.coordinates = builder.coordinates;
         this.name = builder.name;
         this.description = builder.description;
         this.url = builder.url;
@@ -53,9 +51,8 @@ public final class Project {
 
     public static class Builder implements org.apache.commons.lang3.builder.Builder<Project> {
 
-        private String groupId;
-        private String artifactId;
-        private String version;
+        private Optional<ProjectCoordinates> parent = absent();
+        private ProjectCoordinates coordinates;
         private String encoding;
         private String packaging = "jar";
         private Optional<Scm> scm = absent();
@@ -72,18 +69,13 @@ public final class Project {
             return this;
         }
 
-        public Builder withGroupId(String groupId) {
-            this.groupId = groupId;
+        public Builder withCoordinates(ProjectCoordinates coordinates) {
+            this.coordinates = coordinates;
             return this;
         }
 
-        public Builder withArtifactId(String artifactId) {
-            this.artifactId = artifactId;
-            return this;
-        }
-
-        public Builder withVersion(String version) {
-            this.version = version;
+        public Builder withParent(Optional<ProjectCoordinates> parent) {
+            this.parent = parent;
             return this;
         }
 
@@ -138,24 +130,9 @@ public final class Project {
         }
 
         private static Project validate(Project instance) {
-            checkNotBlank(instance.groupId, "groupId");
-            checkNotBlank(instance.artifactId, "artifactId");
-            checkNotBlank(instance.version, "version");
             checkNotBlank(instance.packaging, "packaging");
             return instance;
         }
-    }
-
-    public String getGroupId() {
-        return groupId;
-    }
-
-    public String getArtifactId() {
-        return artifactId;
-    }
-
-    public String getVersion() {
-        return version;
     }
 
     public Optional<String> getName() {
@@ -196,6 +173,14 @@ public final class Project {
 
     public String getEncoding() {
         return encoding;
+    }
+
+    public Optional<ProjectCoordinates> getParent() {
+        return parent;
+    }
+
+    public ProjectCoordinates getCoordinates() {
+        return coordinates;
     }
 
 }

@@ -11,11 +11,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public final class ProjectMetadata {
 
     private final Project project;
-    private final BuildEvent event;
+    private final BuildEvent build;
 
     private ProjectMetadata(Builder builder) {
         this.project = builder.project;
-        this.event = builder.event;
+        this.build = builder.build;
     }
 
     public static Builder builder() {
@@ -25,7 +25,7 @@ public final class ProjectMetadata {
     public static class Builder implements org.apache.commons.lang3.builder.Builder<ProjectMetadata>, Provider<ProjectMetadata> {
 
         private Project project;
-        private BuildEvent event;
+        private BuildEvent build;
 
         @Inject
         public Builder withProject(Project project) {
@@ -34,8 +34,8 @@ public final class ProjectMetadata {
         }
 
         @Inject
-        public Builder withEvent(BuildEvent event) {
-            this.event = event;
+        public Builder withBuild(BuildEvent build) {
+            this.build = build;
             return this;
         }
 
@@ -54,8 +54,8 @@ public final class ProjectMetadata {
         return project;
     }
 
-    public BuildEvent getEvent() {
-        return event;
+    public BuildEvent getBuild() {
+        return build;
     }
 
 }

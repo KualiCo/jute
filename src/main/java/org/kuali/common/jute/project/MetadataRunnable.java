@@ -27,8 +27,9 @@ public final class MetadataRunnable implements Runnable {
     public void run() {
         Project project = metadata.getProject();
         File output = dirs.getMain().getOutput();
-        String groupId = project.getGroupId().replace('.', FS);
-        String artifactId = project.getArtifactId();
+        ProjectCoordinates gav = project.getCoordinates();
+        String groupId = gav.getGroupId().replace('.', FS);
+        String artifactId = gav.getArtifactId();
         String filename = "metadata.json";
         String path = Joiner.on(FS).join("META-INF", groupId, artifactId, filename);
         File file = new File(output, path);
