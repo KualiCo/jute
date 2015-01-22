@@ -12,12 +12,11 @@ import javax.inject.Provider;
 import org.kuali.common.jute.json.JsonService;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 
 @JsonDeserialize(builder = CreateMetadataRunnable.Builder.class)
 public final class CreateMetadataRunnable implements Runnable {
-
-    private static final char FS = File.separatorChar;
 
     private final ProjectMetadata metadata;
     private final DirectoryContext dirs;
@@ -27,16 +26,25 @@ public final class CreateMetadataRunnable implements Runnable {
     public void run() {
         Project project = metadata.getProject();
         File output = dirs.getMain().getOutput();
-        ProjectCoordinates gav = project.getCoordinates();
-        String groupId = gav.getGroupId().replace('.', FS);
-        String artifactId = gav.getArtifactId();
-        String filename = "metadata.json";
-        String path = Joiner.on(FS).join("META-INF", groupId, artifactId, filename);
+        String path = MetadataPathFunction.INSTANCE.apply(project);
         File file = new File(output, path);
         try {
             json.write(file, metadata);
         } catch (IOException e) {
             throw illegalState(e);
+        }
+    }
+
+    private enum MetadataPathFunction implements Function<Project, String> {
+        INSTANCE;
+
+        @Override
+        public String apply(Project input) {
+            ProjectCoordinates gav = input.getCoordinates();
+            String groupId = gav.getGroupId().replace('.', '/');
+            String artifactId = gav.getArtifactId();
+            String filename = "metadata.json";
+            return Joiner.on('/').join("META-INF", groupId, artifactId, filename);
         }
     }
 
