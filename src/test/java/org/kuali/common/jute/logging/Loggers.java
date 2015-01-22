@@ -26,8 +26,23 @@ public class Loggers {
 
     private static final Handler HANDLER = getHandler();
 
+    public static Logger newLogger() {
+        Throwable throwable = new Throwable();
+        StackTraceElement[] elements = throwable.getStackTrace();
+        StackTraceElement directCaller = elements[1];
+        return getLogger(directCaller.getClassName());
+    }
+
     public static <T> Logger newLogger(T instance) {
-        Logger logger = getLogger(instance.getClass().getName());
+        return newLogger(instance.getClass());
+    }
+
+    public static <T> Logger newLogger(Class<T> type) {
+        return newLogger(type.getName());
+    }
+
+    public static Logger newLogger(String name) {
+        Logger logger = getLogger(name);
         logger.setUseParentHandlers(false);
         logger.addHandler(HANDLER);
         return logger;

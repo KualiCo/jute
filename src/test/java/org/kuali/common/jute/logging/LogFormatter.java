@@ -13,6 +13,21 @@ import org.kuali.common.jute.runtime.ProcessIdProvider;
 import com.google.common.base.Optional;
 import com.google.common.base.Splitter;
 
+/**
+ * Produce a richly formatted log message from a LogRecord.
+ *
+ * The log message format is:<br>
+ * 1 - timestamp<br>
+ * 2 - level (INFO,WARN,DEBUG,ERROR)<br>
+ * 3 - pid<br>
+ * 4 - thread name<br>
+ * 5 - class with method name<br>
+ * 6 - log message<br>
+ *
+ * <pre>
+ * 2015-01-21 20:26:57.159  INFO 47461 [main] o.k.c.j.b.BuilderTest.info : iterations -> 5,000,000
+ * </pre>
+ */
 public class LogFormatter extends Formatter {
 
     private static final String FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
