@@ -26,7 +26,7 @@ public class RuntimeModule extends AbstractModule {
         bind(new TypeLiteral<Optional<Integer>>() {}).annotatedWith(ProcessId.class).toProvider(ProcessIdProvider.INSTANCE).asEagerSingleton();
         bind(ClassLoading.class).toProvider(ClassLoadingProvider.INSTANCE);
         bind(Threads.class).toProvider(ThreadsProvider.INSTANCE);
-        bind(garbageCollectionEventList()).annotatedWith(GarbageCollectionEvents.class).toProvider(GarbageCollectionEventsProvider.INSTANCE);
+        bind(new TypeLiteral<List<GarbageCollectionEvent>>() {}).annotatedWith(GarbageCollectionEvents.class).toProvider(GarbageCollectionEventsProvider.INSTANCE);
         bind(new TypeLiteral<Optional<Double>>() {}).annotatedWith(SystemLoadAverage.class).toProvider(SystemLoadAverageProvider.INSTANCE);
         bind(VirtualRuntime.class).toProvider(VirtualRuntime.Builder.class);
     }
@@ -77,10 +77,6 @@ public class RuntimeModule extends AbstractModule {
         public Threads get() {
             return Threads.build();
         }
-    }
-
-    private static TypeLiteral<List<GarbageCollectionEvent>> garbageCollectionEventList() {
-        return new TypeLiteral<List<GarbageCollectionEvent>>() {};
     }
 
 }
