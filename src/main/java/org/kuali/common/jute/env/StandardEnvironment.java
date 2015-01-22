@@ -64,8 +64,9 @@ public final class StandardEnvironment implements Environment {
         Optional<String> value = getProperty(key);
         if (value.isPresent()) {
             return value.get();
+        } else {
+            return defaultValue;
         }
-        return defaultValue;
     }
 
     @Override

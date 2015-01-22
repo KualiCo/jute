@@ -2,8 +2,6 @@ package org.kuali.common.jute.runtime;
 
 import static java.lang.management.ManagementFactory.getOperatingSystemMXBean;
 import static org.kuali.common.jute.base.Optionals.fromNegativeToAbsent;
-import static org.kuali.common.jute.inject.TypeLiterals.optionalDouble;
-import static org.kuali.common.jute.inject.TypeLiterals.optionalInteger;
 
 import java.util.List;
 
@@ -25,11 +23,11 @@ public class RuntimeModule extends AbstractModule {
         bindConstant().annotatedWith(Processors.class).to(Runtime.getRuntime().availableProcessors());
         bind(Memory.class).toProvider(MemoryProvider.INSTANCE);
         bind(Uptime.class).toProvider(UptimeProvider.INSTANCE);
-        bind(optionalInteger()).annotatedWith(ProcessId.class).toProvider(ProcessIdProvider.INSTANCE).asEagerSingleton();
+        bind(new TypeLiteral<Optional<Integer>>() {}).annotatedWith(ProcessId.class).toProvider(ProcessIdProvider.INSTANCE).asEagerSingleton();
         bind(ClassLoading.class).toProvider(ClassLoadingProvider.INSTANCE);
         bind(Threads.class).toProvider(ThreadsProvider.INSTANCE);
         bind(garbageCollectionEventList()).annotatedWith(GarbageCollectionEvents.class).toProvider(GarbageCollectionEventsProvider.INSTANCE);
-        bind(optionalDouble()).annotatedWith(SystemLoadAverage.class).toProvider(SystemLoadAverageProvider.INSTANCE);
+        bind(new TypeLiteral<Optional<Double>>() {}).annotatedWith(SystemLoadAverage.class).toProvider(SystemLoadAverageProvider.INSTANCE);
         bind(VirtualRuntime.class).toProvider(VirtualRuntime.Builder.class);
     }
 
@@ -82,8 +80,7 @@ public class RuntimeModule extends AbstractModule {
     }
 
     private static TypeLiteral<List<GarbageCollectionEvent>> garbageCollectionEventList() {
-        return new TypeLiteral<List<GarbageCollectionEvent>>() {
-        };
+        return new TypeLiteral<List<GarbageCollectionEvent>>() {};
     }
 
 }
