@@ -1,7 +1,6 @@
 package org.kuali.common.jute.logging;
 
 import static com.google.common.base.StandardSystemProperty.LINE_SEPARATOR;
-import static com.google.common.collect.Lists.newArrayList;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,7 +10,6 @@ import java.util.logging.LogRecord;
 
 import org.kuali.common.jute.runtime.ProcessIdProvider;
 
-import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
 import com.google.common.base.Splitter;
 
@@ -20,6 +18,7 @@ public class LogFormatter extends Formatter {
     private static final String FORMAT = "yyyy-MM-dd hh:mm:ss.SSS";
     private static final String LS = LINE_SEPARATOR.value();
     private static final Optional<Integer> PID = ProcessIdProvider.INSTANCE.get();
+    private static final Splitter SPLITTER = Splitter.on('.').omitEmptyStrings().trimResults();
 
     @Override
     public String format(LogRecord record) {
@@ -36,7 +35,7 @@ public class LogFormatter extends Formatter {
         sb.append(record.getLevel());
         sb.append(" ");
         sb.append(PID.orNull());
-        sb.append(" --- [");
+        sb.append(" [");
         sb.append(thread);
         sb.append("] ");
         sb.append(name);
@@ -53,13 +52,14 @@ public class LogFormatter extends Formatter {
         if (name == null) {
             return "root";
         }
-        List<String> tokens = Splitter.on('.').omitEmptyStrings().trimResults().splitToList(name);
-        List<String> list = newArrayList();
+        List<String> tokens = SPLITTER.splitToList(name);
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < tokens.size() - 1; i++) {
-            list.add(tokens.get(i).substring(0, 1));
+            sb.append(tokens.get(i).substring(0, 1));
+            sb.append('.');
         }
-        list.add(tokens.get(tokens.size() - 1));
-        return Joiner.on('.').join(list);
+        sb.append(tokens.get(tokens.size() - 1));
+        return sb.toString();
     }
 
 }
