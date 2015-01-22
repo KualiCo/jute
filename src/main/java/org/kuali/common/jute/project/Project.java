@@ -5,7 +5,6 @@ import static com.google.common.collect.Lists.newArrayList;
 import static org.kuali.common.jute.base.Precondition.checkNotBlank;
 import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 
-import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Properties;
 
@@ -22,7 +21,7 @@ public final class Project {
     private final String artifactId;
     private final String version;
     private final String packaging;
-    private final Charset charset;
+    private final String encoding;
     private final Optional<Scm> scm;
     private final Optional<String> name;
     private final Optional<String> description;
@@ -45,7 +44,7 @@ public final class Project {
         this.properties = ImmutableProperties.copyOf(builder.properties);
         this.inceptionYear = builder.inceptionYear;
         this.packaging = builder.packaging;
-        this.charset = builder.charset;
+        this.encoding = builder.encoding;
     }
 
     public static Builder builder() {
@@ -57,7 +56,7 @@ public final class Project {
         private String groupId;
         private String artifactId;
         private String version;
-        private Charset charset;
+        private String encoding;
         private String packaging = "jar";
         private Optional<Scm> scm = absent();
         private Optional<String> name = absent();
@@ -68,8 +67,8 @@ public final class Project {
         private Properties properties = new Properties();
         private Optional<String> inceptionYear = absent();
 
-        public Builder withCharset(Charset charset) {
-            this.charset = charset;
+        public Builder withEncoding(String encoding) {
+            this.encoding = encoding;
             return this;
         }
 
@@ -195,8 +194,8 @@ public final class Project {
         return packaging;
     }
 
-    public Charset getCharset() {
-        return charset;
+    public String getEncoding() {
+        return encoding;
     }
 
 }

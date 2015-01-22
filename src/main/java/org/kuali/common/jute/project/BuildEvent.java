@@ -1,6 +1,7 @@
 package org.kuali.common.jute.project;
 
 import static java.lang.System.currentTimeMillis;
+import static org.kuali.common.jute.base.Exceptions.illegalState;
 import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 
 import java.io.IOException;
@@ -29,13 +30,17 @@ public final class BuildEvent {
         this.host = builder.host;
     }
 
-    public static BuildEvent build() throws IOException {
+    public static BuildEvent build() {
         Builder builder = builder();
         builder.withJava(Java.build());
         builder.withOs(OperatingSystem.build());
         builder.withTimestamp(currentTimeMillis());
         builder.withUsername(User.build().getName());
-        builder.withHost(InetAddress.buildLocalHost());
+        try {
+            builder.withHost(InetAddress.buildLocalHost());
+        } catch (IOException e) {
+            throw illegalState(e);
+        }
         return builder.build();
     }
 
