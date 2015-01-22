@@ -1,6 +1,9 @@
 package org.kuali.common.jute.project;
 
+import static com.google.common.base.Functions.compose;
 import static org.kuali.common.jute.base.Exceptions.illegalState;
+import static org.kuali.common.jute.project.ProjectFunctions.metadataPathFunction;
+import static org.kuali.common.jute.project.ProjectFunctions.projectIdentifierFunction;
 import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 
 import java.io.File;
@@ -24,7 +27,7 @@ public final class CreateMetadataRunnable implements Runnable {
     public void run() {
         Project project = metadata.getProject();
         File output = dirs.getMain().getOutput();
-        String path = MetadataPathFunction.INSTANCE.apply(project);
+        String path = compose(metadataPathFunction(), projectIdentifierFunction()).apply(project);
         File file = new File(output, path);
         try {
             json.write(file, metadata);
