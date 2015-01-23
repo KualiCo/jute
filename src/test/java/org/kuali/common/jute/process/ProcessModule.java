@@ -5,7 +5,6 @@ import static java.util.Arrays.asList;
 import java.io.File;
 import java.util.List;
 
-import com.google.common.base.Optional;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 
@@ -24,7 +23,7 @@ public class ProcessModule extends AbstractModule {
         ProcessContext.Builder builder = ProcessContext.builder();
         builder.withArgs(args);
         builder.withCommand(command);
-        builder.withDirectory(Optional.of(directory));
+        builder.withDirectory(directory);
         return builder.build();
     }
 
