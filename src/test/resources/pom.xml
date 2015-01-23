@@ -59,7 +59,65 @@
     <jackson.version>2.5.0</jackson.version>
     <jackson-databind.version>${jackson.version}</jackson-databind.version>
     <jackson-datatype-guava.version>${jackson.version}</jackson-datatype-guava.version>
+    <plugin.guice.version>1.0.2-SNAPSHOT</plugin.guice.version>
+    <kuali-jute.version>1.0.2-SNAPSHOT</kuali-jute.version>
+    <kuali-project.version>1.0.0-SNAPSHOT</kuali-project.version>
   </properties>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.kuali.maven.plugins</groupId>
+        <artifactId>guice-maven-plugin</artifactId>
+        <version>${plugin.guice.version}</version>
+        <executions>
+          <execution>
+            <id>metadata</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <modules>
+                <module>org.kuali.common.jute.system.SystemModule</module>
+                <module>org.kuali.common.jute.env.EnvModule</module>
+                <module>org.kuali.common.jute.json.jackson.JacksonModule</module>
+                <module>org.kuali.common.maven.project.MavenModule</module>
+                <module>org.kuali.common.jute.project.CreateMetadataModule</module>
+              </modules>
+            </configuration>
+          </execution>
+          <execution>
+            <id>metadata2</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <modules>
+                <module>org.kuali.common.jute.system.SystemModule</module>
+                <module>org.kuali.common.jute.env.EnvModule</module>
+                <module>org.kuali.common.jute.json.jackson.JacksonModule</module>
+                <module>org.kuali.common.maven.project.MavenModule</module>
+                <module>org.kuali.common.jute.project.CreateMetadataModule</module>
+              </modules>
+            </configuration>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>org.kuali.common</groupId>
+            <artifactId>kuali-jute</artifactId>
+            <version>${kuali-jute.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>org.kuali.common</groupId>
+            <artifactId>kuali-project</artifactId>
+            <version>${kuali-project.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+  </build>
   <dependencies>
     <!-- test dependencies -->
     <dependency>
