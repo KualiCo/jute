@@ -9,11 +9,7 @@ public class LocalhostModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(networkInterfaceList()).annotatedWith(NetworkInterfaces.class).toProvider(NetworkInterfacesProvider.class).asEagerSingleton();
-    }
-
-    public static TypeLiteral<List<NetworkInterface>> networkInterfaceList() {
-        return new TypeLiteral<List<NetworkInterface>>() {};
+        bind(new TypeLiteral<List<NetworkInterface>>() {}).annotatedWith(NetworkInterfaces.class).toProvider(NetworkInterfacesProvider.class).asEagerSingleton();
     }
 
 }

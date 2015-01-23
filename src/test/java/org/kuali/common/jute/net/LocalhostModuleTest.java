@@ -17,7 +17,6 @@ package org.kuali.common.jute.net;
 
 import static com.google.common.base.Stopwatch.createStarted;
 import static com.google.inject.Guice.createInjector;
-import static org.kuali.common.jute.net.LocalhostModule.networkInterfaceList;
 
 import java.util.List;
 
@@ -31,6 +30,7 @@ import org.kuali.common.jute.system.SystemModule;
 import com.google.common.base.Stopwatch;
 import com.google.inject.Injector;
 import com.google.inject.Key;
+import com.google.inject.TypeLiteral;
 
 public class LocalhostModuleTest extends BaseUnitTest {
 
@@ -39,7 +39,7 @@ public class LocalhostModuleTest extends BaseUnitTest {
         Stopwatch sw = createStarted();
         Injector injector = createInjector(new SystemModule(), new EnvModule(), new JacksonModule(), new LocalhostModule());
         JsonService json = injector.getInstance(JsonService.class);
-        Key<List<NetworkInterface>> key = Key.get(networkInterfaceList(), NetworkInterfaces.class);
+        Key<List<NetworkInterface>> key = Key.get(new TypeLiteral<List<NetworkInterface>>() {}, NetworkInterfaces.class);
         List<NetworkInterface> nics = injector.getInstance(key);
         show(json, nics);
         elapsed(sw);
