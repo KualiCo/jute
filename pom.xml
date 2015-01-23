@@ -64,6 +64,7 @@
     <kuali-jute.version>1.0.2-SNAPSHOT</kuali-jute.version>
     <kuali-project.version>1.0.0-SNAPSHOT</kuali-project.version>
   </properties>
+  <!-- 
   <build>
     <plugins>
       <plugin>
@@ -103,6 +104,7 @@
       </plugin>
     </plugins>
   </build>
+   -->
   <dependencies>
     <!-- test dependencies -->
     <dependency>
