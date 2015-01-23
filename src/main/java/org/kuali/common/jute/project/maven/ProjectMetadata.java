@@ -1,9 +1,11 @@
-package org.kuali.common.jute.project;
+package org.kuali.common.jute.project.maven;
 
 import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
+
+import org.kuali.common.jute.project.BuildEvent;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 

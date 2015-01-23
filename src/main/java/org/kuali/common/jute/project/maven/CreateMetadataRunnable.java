@@ -1,9 +1,9 @@
-package org.kuali.common.jute.project;
+package org.kuali.common.jute.project.maven;
 
 import static com.google.common.base.Functions.compose;
 import static org.kuali.common.jute.base.Exceptions.illegalState;
-import static org.kuali.common.jute.project.ProjectFunctions.metadataPathFunction;
-import static org.kuali.common.jute.project.ProjectFunctions.projectIdentifierFunction;
+import static org.kuali.common.jute.project.maven.ProjectFunctions.metadataPathFunction;
+import static org.kuali.common.jute.project.maven.ProjectFunctions.projectIdentifierFunction;
 import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 
 import java.io.File;

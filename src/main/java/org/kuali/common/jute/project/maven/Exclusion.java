@@ -1,31 +1,32 @@
-package org.kuali.common.jute.project;
+package org.kuali.common.jute.project.maven;
 
 import static org.kuali.common.jute.base.Precondition.checkNotBlank;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-@JsonDeserialize(builder = ProjectCoordinates.Builder.class)
-public final class ProjectCoordinates {
+@JsonDeserialize(builder = Exclusion.Builder.class)
+public final class Exclusion {
 
     private final String groupId;
     private final String artifactId;
-    private final String version;
 
-    private ProjectCoordinates(Builder builder) {
+    private Exclusion(Builder builder) {
         this.groupId = builder.groupId;
         this.artifactId = builder.artifactId;
-        this.version = builder.version;
+    }
+
+    public static Exclusion build(String groupId, String artifactId) {
+        return builder().withGroupId(groupId).withArtifactId(artifactId).build();
     }
 
     public static Builder builder() {
         return new Builder();
     }
 
-    public static class Builder implements org.apache.commons.lang3.builder.Builder<ProjectCoordinates> {
+    public static class Builder implements org.apache.commons.lang3.builder.Builder<Exclusion> {
 
         private String groupId;
         private String artifactId;
-        private String version;
 
         public Builder withGroupId(String groupId) {
             this.groupId = groupId;
@@ -37,20 +38,14 @@ public final class ProjectCoordinates {
             return this;
         }
 
-        public Builder withVersion(String version) {
-            this.version = version;
-            return this;
-        }
-
         @Override
-        public ProjectCoordinates build() {
-            return validate(new ProjectCoordinates(this));
+        public Exclusion build() {
+            return validate(new Exclusion(this));
         }
 
-        private static ProjectCoordinates validate(ProjectCoordinates instance) {
+        public static Exclusion validate(Exclusion instance) {
             checkNotBlank(instance.groupId, "groupId");
             checkNotBlank(instance.artifactId, "artifactId");
-            checkNotBlank(instance.version, "version");
             return instance;
         }
     }
@@ -61,10 +56,6 @@ public final class ProjectCoordinates {
 
     public String getArtifactId() {
         return artifactId;
-    }
-
-    public String getVersion() {
-        return version;
     }
 
 }

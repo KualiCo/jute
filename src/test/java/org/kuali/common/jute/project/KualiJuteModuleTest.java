@@ -24,7 +24,9 @@ import org.junit.Test;
 import org.kuali.common.jute.base.BaseUnitTest;
 import org.kuali.common.jute.env.EnvModule;
 import org.kuali.common.jute.json.jackson.JacksonModule;
-import org.kuali.common.jute.project.annotation.KualiJuteProjectMetadata;
+import org.kuali.common.jute.project.maven.KualiJuteModule;
+import org.kuali.common.jute.project.maven.ProjectMetadata;
+import org.kuali.common.jute.project.maven.annotation.KualiJuteProjectMetadata;
 import org.kuali.common.jute.system.SystemModule;
 
 import com.google.common.base.Stopwatch;

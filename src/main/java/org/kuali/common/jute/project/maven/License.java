@@ -1,4 +1,4 @@
-package org.kuali.common.jute.project;
+package org.kuali.common.jute.project.maven;
 
 import static com.google.common.base.Optional.absent;
 import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;

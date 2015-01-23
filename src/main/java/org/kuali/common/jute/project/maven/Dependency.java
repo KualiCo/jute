@@ -1,10 +1,10 @@
-package org.kuali.common.jute.project;
+package org.kuali.common.jute.project.maven;
 
 import static com.google.common.base.Optional.absent;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.kuali.common.jute.base.Precondition.checkNotBlank;
-import static org.kuali.common.jute.project.DependencyScope.COMPILE;
-import static org.kuali.common.jute.project.DependencyScope.SYSTEM;
+import static org.kuali.common.jute.project.maven.DependencyScope.COMPILE;
+import static org.kuali.common.jute.project.maven.DependencyScope.SYSTEM;
 import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 
 import java.util.List;

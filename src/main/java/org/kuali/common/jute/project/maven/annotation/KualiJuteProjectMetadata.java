@@ -1,4 +1,4 @@
-package org.kuali.common.jute.project.annotation;
+package org.kuali.common.jute.project.maven.annotation;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;

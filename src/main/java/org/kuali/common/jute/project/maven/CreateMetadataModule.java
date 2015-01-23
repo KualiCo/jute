@@ -1,4 +1,4 @@
-package org.kuali.common.jute.project;
+package org.kuali.common.jute.project.maven;
 
 import static java.lang.System.currentTimeMillis;
 import static org.kuali.common.jute.base.Exceptions.illegalState;
@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.inject.Provider;
 
 import org.kuali.common.jute.net.InetAddress;
+import org.kuali.common.jute.project.BuildEvent;
 import org.kuali.common.jute.project.annotation.BuildHost;
 import org.kuali.common.jute.project.annotation.BuildTimestamp;
 

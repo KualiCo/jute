@@ -1,4 +1,4 @@
-package org.kuali.common.jute.project;
+package org.kuali.common.jute.project.maven;
 
 import static java.util.Objects.hash;
 import static org.kuali.common.jute.base.Objects.equalByComparison;

@@ -1,8 +1,8 @@
-package org.kuali.common.jute.project;
+package org.kuali.common.jute.project.maven;
 
 import org.kuali.common.jute.json.JsonService;
-import org.kuali.common.jute.project.annotation.KualiJuteProjectId;
-import org.kuali.common.jute.project.annotation.KualiJuteProjectMetadata;
+import org.kuali.common.jute.project.maven.annotation.KualiJuteProjectId;
+import org.kuali.common.jute.project.maven.annotation.KualiJuteProjectMetadata;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;

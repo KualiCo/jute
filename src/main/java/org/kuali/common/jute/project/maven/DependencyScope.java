@@ -1,4 +1,4 @@
-package org.kuali.common.jute.project;
+package org.kuali.common.jute.project.maven;
 
 public enum DependencyScope {
 

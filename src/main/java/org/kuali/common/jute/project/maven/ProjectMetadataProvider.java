@@ -1,9 +1,9 @@
-package org.kuali.common.jute.project;
+package org.kuali.common.jute.project.maven;
 
 import static com.google.common.io.Resources.getResource;
 import static org.kuali.common.jute.base.Exceptions.illegalState;
 import static org.kuali.common.jute.base.Precondition.checkNotNull;
-import static org.kuali.common.jute.project.ProjectFunctions.metadataPathFunction;
+import static org.kuali.common.jute.project.maven.ProjectFunctions.metadataPathFunction;
 
 import java.io.IOException;
 import java.net.URL;
