@@ -18,6 +18,7 @@ import org.kuali.common.jute.base.TimedInterval;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.ByteSource;
+import com.google.common.io.Closer;
 
 public class DefaultProcessService implements ProcessService {
 
@@ -48,14 +49,20 @@ public class DefaultProcessService implements ProcessService {
 
         TimedInterval timing = TimedInterval.build(sw);
         int exitValue = process.exitValue();
-        ByteSource stdin = wrap(toByteArray(process.getInputStream()));
-        ByteSource stderr = wrap(toByteArray(process.getErrorStream()));
-
         ProcessResult.Builder builder = ProcessResult.builder();
-        builder.withExitValue(exitValue);
-        builder.withStderr(stderr);
-        builder.withStdin(stdin);
-        builder.withTiming(timing);
+        Closer closer = Closer.create();
+        try {
+            ByteSource stdin = wrap(toByteArray(closer.register(process.getInputStream())));
+            ByteSource stderr = wrap(toByteArray(closer.register(process.getErrorStream())));
+            builder.withExitValue(exitValue);
+            builder.withStderr(stderr);
+            builder.withStdin(stdin);
+            builder.withTiming(timing);
+        } catch (Throwable e) {
+            closer.rethrow(e);
+        } finally {
+            closer.close();
+        }
         return builder.build();
     }
 
