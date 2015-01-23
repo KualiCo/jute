@@ -11,7 +11,7 @@ public class KualiJuteModule extends AbstractModule {
 
     @Override
     public void configure() {
-        // the groupId + artifactId must *exactly* match what is in the pom
+        // the groupId/artifactId must *exactly* match what is in the pom
         bind(ProjectIdentifier.class).annotatedWith(KualiJuteProjectId.class).toInstance(ProjectIdentifier.build("org.kuali.common", "kuali-jute"));
     }
 
