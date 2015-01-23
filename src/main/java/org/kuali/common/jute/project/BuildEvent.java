@@ -1,5 +1,6 @@
 package org.kuali.common.jute.project;
 
+import static com.google.common.base.Optional.absent;
 import static java.lang.System.currentTimeMillis;
 import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 
@@ -10,6 +11,7 @@ import javax.inject.Provider;
 
 import org.kuali.common.jute.net.InetAddress;
 import org.kuali.common.jute.project.annotation.BuildHost;
+import org.kuali.common.jute.project.annotation.BuildRevision;
 import org.kuali.common.jute.project.annotation.BuildTimestamp;
 import org.kuali.common.jute.system.Java;
 import org.kuali.common.jute.system.OperatingSystem;
@@ -19,12 +21,14 @@ import org.kuali.common.jute.system.VirtualMachine;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.google.common.base.Optional;
 
 @JsonDeserialize(builder = BuildEvent.Builder.class)
 public final class BuildEvent {
 
     private final String user;
     private final long timestamp;
+    private final Optional<String> revision;
     private final VirtualMachine vm;
     private final RuntimeEnvironment runtime;
     private final OperatingSystem os;
@@ -37,6 +41,7 @@ public final class BuildEvent {
         this.runtime = builder.runtime;
         this.os = builder.os;
         this.host = builder.host;
+        this.revision = builder.revision;
     }
 
     public static BuildEvent build() throws IOException {
@@ -62,6 +67,13 @@ public final class BuildEvent {
         private VirtualMachine vm;
         private OperatingSystem os;
         private RuntimeEnvironment runtime;
+        private Optional<String> revision = absent();
+
+        @Inject
+        public Builder withRevision(@BuildRevision Optional<String> revision) {
+            this.revision = revision;
+            return this;
+        }
 
         @Inject
         public Builder withJava(Java java) {
@@ -142,6 +154,10 @@ public final class BuildEvent {
 
     public RuntimeEnvironment getRuntime() {
         return runtime;
+    }
+
+    public Optional<String> getRevision() {
+        return revision;
     }
 
 }
