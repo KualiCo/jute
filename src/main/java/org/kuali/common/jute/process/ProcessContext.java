@@ -9,6 +9,7 @@ import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 import java.io.File;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
@@ -56,9 +57,14 @@ public final class ProcessContext {
             return this;
         }
 
+        @JsonSetter
         public Builder withDirectory(Optional<File> directory) {
             this.directory = directory;
             return this;
+        }
+
+        public Builder withDirectory(File directory) {
+            return withDirectory(Optional.of(directory));
         }
 
         public Builder withTimeoutMillis(Optional<Long> timeoutMillis) {
