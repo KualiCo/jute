@@ -58,8 +58,7 @@ public final class SvnRevisionProvider implements Provider<String> {
             Iterable<String> filtered = filter(lines, containsPattern("^" + prefix));
             String revision = getSingleElement(filtered);
             String trimmed = trimToNull(removeStart(revision, prefix));
-            // make sure it's actually a number
-            parseLong(trimmed);
+            parseLong(trimmed); // make sure it's actually a number
             return trimmed;
         } catch (IOException e) {
             throw illegalState(e);
