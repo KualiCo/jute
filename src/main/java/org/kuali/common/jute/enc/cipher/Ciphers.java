@@ -14,8 +14,7 @@ import com.google.common.io.Closer;
 
 public final class Ciphers {
 
-    private Ciphers() {
-    }
+    private Ciphers() {}
 
     public static void cipheredCopy(ByteSource source, ByteSink sink, Cipher cipher) throws IOException {
         Closer closer = Closer.create();
@@ -23,7 +22,7 @@ public final class Ciphers {
             OutputStream out = closer.register(sink.openBufferedStream());
             cipheredCopy(source, out, cipher);
         } catch (Throwable e) {
-            closer.rethrow(e);
+            throw closer.rethrow(e);
         } finally {
             closer.close();
         }

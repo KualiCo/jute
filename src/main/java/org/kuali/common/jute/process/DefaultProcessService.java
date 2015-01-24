@@ -59,7 +59,7 @@ public class DefaultProcessService implements ProcessService {
             builder.withStdin(stdin);
             builder.withTiming(timing);
         } catch (Throwable e) {
-            closer.rethrow(e);
+            throw closer.rethrow(e);
         } finally {
             closer.close();
         }
