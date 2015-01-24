@@ -1,5 +1,6 @@
 package org.kuali.common.jute.process;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Stopwatch.createStarted;
 import static com.google.common.collect.Iterables.concat;
 import static com.google.common.io.ByteSource.wrap;
@@ -10,6 +11,7 @@ import static org.kuali.common.jute.base.Exceptions.ioException;
 import static org.kuali.common.jute.base.Formats.getTime;
 import static org.kuali.common.jute.base.Threads.sleep;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -32,7 +34,9 @@ public class DefaultProcessService implements ProcessService {
         List<String> command = ImmutableList.copyOf(concat(asList(context.getCommand()), context.getArgs()));
         ProcessBuilder pb = new ProcessBuilder(command);
         if (context.getDirectory().isPresent()) {
-            pb.directory(context.getDirectory().get());
+            File directory = context.getDirectory().get();
+            checkArgument(directory.isDirectory(), "%s must be an existing directory", directory);
+            pb.directory(directory);
         }
         Stopwatch sw = createStarted();
         Process process = pb.start();

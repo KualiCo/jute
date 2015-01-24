@@ -13,5 +13,5 @@ import com.google.inject.BindingAnnotation;
 @BindingAnnotation
 @Target({ FIELD, PARAMETER, METHOD })
 @Retention(RUNTIME)
-public @interface ScmRevisionTimeout {
+public @interface Timeout {
 }
