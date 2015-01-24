@@ -67,9 +67,14 @@ public final class ProcessContext {
             return withDirectory(Optional.of(directory));
         }
 
+        @JsonSetter
         public Builder withTimeoutMillis(Optional<Long> timeoutMillis) {
             this.timeoutMillis = timeoutMillis;
             return this;
+        }
+
+        public Builder withTimeoutMillis(long timeoutMillis) {
+            return withTimeoutMillis(Optional.of(timeoutMillis));
         }
 
         public Builder withSleepMillis(long sleepMillis) {
