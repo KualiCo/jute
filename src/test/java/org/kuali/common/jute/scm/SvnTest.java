@@ -22,20 +22,24 @@ import java.io.IOException;
 
 import org.junit.Test;
 import org.kuali.common.jute.base.BaseUnitTest;
+import org.kuali.common.jute.env.EnvModule;
 import org.kuali.common.jute.scm.annotation.Directory;
 import org.kuali.common.jute.scm.annotation.Revision;
+import org.kuali.common.jute.system.SystemModule;
 
+import com.google.common.base.Optional;
 import com.google.inject.Injector;
 import com.google.inject.Key;
+import com.google.inject.TypeLiteral;
 
 public class SvnTest extends BaseUnitTest {
 
     @Test
     public void test() throws IOException {
         try {
-            Injector injector = createInjector(new SvnModule());
+            Injector injector = createInjector(new SystemModule(), new EnvModule(), new SvnModule());
             File dir = injector.getInstance(Key.get(File.class, Directory.class));
-            String revision = injector.getInstance(Key.get(String.class, Revision.class));
+            Optional<String> revision = injector.getInstance(Key.get(new TypeLiteral<Optional<String>>() {}, Revision.class));
             info("directory -> %s", dir.getCanonicalFile());
             info("revision  -> %s", revision);
         } catch (Throwable e) {

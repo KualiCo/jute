@@ -103,6 +103,7 @@ public final class SvnRevisionProvider implements Provider<Optional<String>> {
             return this;
         }
 
+        @Inject
         public Builder withService(ProcessService service) {
             this.service = service;
             return this;
