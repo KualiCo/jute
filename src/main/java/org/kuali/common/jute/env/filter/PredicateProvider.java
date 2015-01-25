@@ -59,7 +59,7 @@ public final class PredicateProvider implements Provider<Predicate<CharSequence>
         private Predicate<CharSequence> absentDetector;
         private Splitter splitter;
 
-        public Builder withEnvironment(Environment env) {
+        public Builder withEnv(Environment env) {
             this.env = env;
             return this;
         }
@@ -71,6 +71,16 @@ public final class PredicateProvider implements Provider<Predicate<CharSequence>
 
         public Builder withExcludes(KeyValues excludes) {
             this.excludes = excludes;
+            return this;
+        }
+
+        public Builder withAbsentDetector(Predicate<CharSequence> absentDetector) {
+            this.absentDetector = absentDetector;
+            return this;
+        }
+
+        public Builder withSplitter(Splitter splitter) {
+            this.splitter = splitter;
             return this;
         }
 
