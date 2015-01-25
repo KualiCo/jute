@@ -7,13 +7,19 @@ import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.inject.Provider;
 
 import org.kuali.common.jute.env.Environment;
+import org.kuali.common.jute.env.filter.annotation.AbsenceDetector;
+import org.kuali.common.jute.env.filter.annotation.CsvSplitter;
+import org.kuali.common.jute.process.ProcessContext;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.Predicate;
 import com.google.common.base.Splitter;
 
+@JsonDeserialize(builder = ProcessContext.Builder.class)
 public final class PredicateProvider implements Provider<Predicate<CharSequence>> {
 
     private final Environment env;
@@ -59,22 +65,26 @@ public final class PredicateProvider implements Provider<Predicate<CharSequence>
         private FilterContext context;
         private Predicate<CharSequence> absenceDetector = absentPredicate();
 
-        public Builder withSplitter(Splitter splitter) {
+        @Inject
+        public Builder withSplitter(@CsvSplitter Splitter splitter) {
             this.splitter = splitter;
             return this;
         }
 
+        @Inject
         public Builder withEnv(Environment env) {
             this.env = env;
             return this;
         }
 
+        @Inject
         public Builder withContext(FilterContext context) {
             this.context = context;
             return this;
         }
 
-        public Builder withAbsenceDetector(Predicate<CharSequence> absenceDetector) {
+        @Inject
+        public Builder withAbsenceDetector(@AbsenceDetector Predicate<CharSequence> absenceDetector) {
             this.absenceDetector = absenceDetector;
             return this;
         }
