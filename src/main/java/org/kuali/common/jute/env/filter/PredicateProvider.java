@@ -13,7 +13,7 @@ import javax.inject.Provider;
 import org.kuali.common.jute.env.Environment;
 import org.kuali.common.jute.env.filter.annotation.AbsentDetector;
 import org.kuali.common.jute.env.filter.annotation.CsvSplitter;
-import org.kuali.common.jute.env.filter.annotation.PropertyFilterContext;
+import org.kuali.common.maven.project.annotation.PropertyFilterContext;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.Predicate;
