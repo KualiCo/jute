@@ -1,6 +1,7 @@
 package org.kuali.common.jute.process;
 
 import static com.google.common.base.Optional.absent;
+import static com.google.common.base.Optional.fromNullable;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
 import static org.kuali.common.jute.base.Precondition.checkMin;
@@ -75,7 +76,7 @@ public final class ProcessContext {
         }
 
         public Builder withDirectory(File directory) {
-            return withDirectory(Optional.of(directory));
+            return withDirectory(fromNullable(directory));
         }
 
         @JsonSetter
