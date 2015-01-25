@@ -28,7 +28,7 @@ public final class BuildEvent {
 
     private final String user;
     private final long timestamp;
-    private final Optional<String> revision;
+    private final Optional<BuildScm> scm;
     private final VirtualMachine vm;
     private final RuntimeEnvironment runtime;
     private final OperatingSystem os;
@@ -41,7 +41,7 @@ public final class BuildEvent {
         this.runtime = builder.runtime;
         this.os = builder.os;
         this.host = builder.host;
-        this.revision = builder.revision;
+        this.scm = builder.scm;
     }
 
     public static BuildEvent build() throws IOException {
@@ -67,11 +67,11 @@ public final class BuildEvent {
         private VirtualMachine vm;
         private OperatingSystem os;
         private RuntimeEnvironment runtime;
-        private Optional<String> revision = absent();
+        private Optional<BuildScm> scm = absent();
 
         @Inject
-        public Builder withRevision(@BuildRevision Optional<String> revision) {
-            this.revision = revision;
+        public Builder withScm(@BuildRevision Optional<BuildScm> scm) {
+            this.scm = scm;
             return this;
         }
 
@@ -156,8 +156,8 @@ public final class BuildEvent {
         return runtime;
     }
 
-    public Optional<String> getRevision() {
-        return revision;
+    public Optional<BuildScm> getScm() {
+        return scm;
     }
 
 }
