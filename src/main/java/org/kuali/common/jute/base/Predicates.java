@@ -24,7 +24,7 @@ public final class Predicates {
     /**
      * 1 - Return false if there is a match on any of the exclude patterns.<br>
      * 2 - Return true if no include patterns were provided.<br>
-     * 3 - Return true if there is a match on any of the include patterns.<br>
+     * 3 - Return true if there is a match on one of the include patterns.<br>
      */
     public static Predicate<CharSequence> includesExcludes(Iterable<String> includes, Iterable<String> excludes) {
         checkNotNull(includes, "includes");
@@ -35,7 +35,7 @@ public final class Predicates {
     }
 
     /**
-     * Return true on a match of any of the patterns, false otherwise.
+     * Return true if there is a match on one (or more) of the patterns, false otherwise.
      */
     public static Predicate<CharSequence> containsAny(Iterable<String> patterns) {
         checkNotNull(patterns, "patterns");
