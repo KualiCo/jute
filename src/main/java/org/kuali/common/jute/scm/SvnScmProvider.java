@@ -20,15 +20,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.inject.Provider;
 
 import org.kuali.common.jute.process.ProcessContext;
 import org.kuali.common.jute.process.ProcessResult;
 import org.kuali.common.jute.process.ProcessService;
 import org.kuali.common.jute.project.BuildScm;
-import org.kuali.common.jute.scm.annotation.Directory;
-import org.kuali.common.jute.scm.annotation.Timeout;
 
 import com.google.common.io.ByteSource;
 
@@ -99,20 +96,17 @@ public final class SvnScmProvider implements Provider<BuildScm> {
         private ProcessService service;
         private long timeoutMillis = getMillis("30s");
 
-        @Inject
-        public Builder withDirectory(@Directory File directory) {
+        public Builder withDirectory(File directory) {
             this.directory = directory;
             return this;
         }
 
-        @Inject
         public Builder withService(ProcessService service) {
             this.service = service;
             return this;
         }
 
-        @Inject
-        public Builder withTimeoutMillis(@Timeout long timeoutMillis) {
+        public Builder withTimeoutMillis(long timeoutMillis) {
             this.timeoutMillis = timeoutMillis;
             return this;
         }

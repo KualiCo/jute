@@ -3,6 +3,7 @@ package org.kuali.common.jute.project.maven;
 import static java.lang.Boolean.parseBoolean;
 import static java.lang.System.currentTimeMillis;
 import static org.kuali.common.jute.base.Exceptions.illegalState;
+import static org.kuali.common.jute.base.Formats.getMillis;
 
 import java.io.IOException;
 
@@ -13,6 +14,8 @@ import org.kuali.common.jute.project.annotation.BuildHost;
 import org.kuali.common.jute.project.annotation.BuildTimestamp;
 import org.kuali.common.jute.project.annotation.Scm;
 import org.kuali.common.jute.project.maven.annotation.SkipProjectScm;
+import org.kuali.common.jute.scm.ScmType;
+import org.kuali.common.jute.scm.annotation.Timeout;
 
 import com.google.common.base.Optional;
 import com.google.inject.AbstractModule;
@@ -24,7 +27,9 @@ public class WriteMetadataModule extends AbstractModule {
     @Override
     protected void configure() {
         bindConstant().annotatedWith(BuildTimestamp.class).to(currentTimeMillis());
+        bindConstant().annotatedWith(Timeout.class).to(getMillis("15s"));
         bind(InetAddress.class).annotatedWith(BuildHost.class).toInstance(buildLocalHost());
+        bind(new TypeLiteral<Optional<ScmType>>() {}).toProvider(BuildScmTypeProvider.class);
         bind(new TypeLiteral<Optional<BuildScm>>() {}).annotatedWith(Scm.class).toProvider(BuildScmProvider.class);
         bind(BuildEvent.class).toProvider(BuildEvent.Builder.class);
         bind(ProjectMetadata.class).toProvider(ProjectMetadata.Builder.class);

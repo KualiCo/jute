@@ -12,15 +12,12 @@ import static org.kuali.common.jute.scm.ScmType.GIT;
 import java.io.File;
 import java.io.IOException;
 
-import javax.inject.Inject;
 import javax.inject.Provider;
 
 import org.kuali.common.jute.process.ProcessContext;
 import org.kuali.common.jute.process.ProcessResult;
 import org.kuali.common.jute.process.ProcessService;
 import org.kuali.common.jute.project.BuildScm;
-import org.kuali.common.jute.scm.annotation.Directory;
-import org.kuali.common.jute.scm.annotation.Timeout;
 
 import com.google.common.io.ByteSource;
 
@@ -28,8 +25,7 @@ public final class GitScmProvider implements Provider<BuildScm> {
 
     private static final String EXECUTABLE = "git";
 
-    @Inject
-    public GitScmProvider(@Directory File directory, ProcessService service, @Timeout long timeoutMillis) {
+    public GitScmProvider(File directory, ProcessService service, long timeoutMillis) {
         this.directory = checkNotNull(directory, "directory");
         this.service = checkNotNull(service, "service");
         this.timeoutMillis = checkMin(timeoutMillis, 0, "timeoutMillis");
