@@ -16,8 +16,8 @@ import org.kuali.common.jute.json.JsonService;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-@JsonDeserialize(builder = CreateMetadataRunnable.Builder.class)
-public final class CreateMetadataRunnable implements Runnable {
+@JsonDeserialize(builder = WriteMetadataRunnable.Builder.class)
+public final class WriteMetadataRunnable implements Runnable {
 
     private final ProjectMetadata metadata;
     private final DirectoryContext dirs;
@@ -36,7 +36,7 @@ public final class CreateMetadataRunnable implements Runnable {
         }
     }
 
-    private CreateMetadataRunnable(Builder builder) {
+    private WriteMetadataRunnable(Builder builder) {
         this.metadata = builder.metadata;
         this.json = builder.json;
         this.dirs = builder.dirs;
@@ -46,7 +46,7 @@ public final class CreateMetadataRunnable implements Runnable {
         return new Builder();
     }
 
-    public static class Builder implements org.apache.commons.lang3.builder.Builder<CreateMetadataRunnable>, Provider<CreateMetadataRunnable> {
+    public static class Builder implements org.apache.commons.lang3.builder.Builder<WriteMetadataRunnable>, Provider<WriteMetadataRunnable> {
 
         private DirectoryContext dirs;
         private ProjectMetadata metadata;
@@ -71,13 +71,13 @@ public final class CreateMetadataRunnable implements Runnable {
         }
 
         @Override
-        public CreateMetadataRunnable get() {
+        public WriteMetadataRunnable get() {
             return build();
         }
 
         @Override
-        public CreateMetadataRunnable build() {
-            return checkNoNulls(new CreateMetadataRunnable(this));
+        public WriteMetadataRunnable build() {
+            return checkNoNulls(new WriteMetadataRunnable(this));
         }
     }
 

@@ -12,7 +12,7 @@ import org.kuali.common.jute.project.annotation.BuildTimestamp;
 
 import com.google.inject.AbstractModule;
 
-public class CreateMetadataModule extends AbstractModule {
+public class WriteMetadataModule extends AbstractModule {
 
     @Override
     protected void configure() {
@@ -20,7 +20,7 @@ public class CreateMetadataModule extends AbstractModule {
         bind(InetAddress.class).annotatedWith(BuildHost.class).toInstance(buildLocalHost());
         bind(BuildEvent.class).toProvider(BuildEvent.Builder.class);
         bind(ProjectMetadata.class).toProvider(ProjectMetadata.Builder.class);
-        bind(Runnable.class).toProvider(CreateMetadataRunnable.Builder.class);
+        bind(Runnable.class).toProvider(WriteMetadataRunnable.Builder.class);
     }
 
     private static InetAddress buildLocalHost() {
