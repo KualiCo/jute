@@ -25,8 +25,7 @@ import com.google.common.collect.ImmutableList;
 
 public final class EnvironmentVariables {
 
-    private EnvironmentVariables() {
-    }
+    private EnvironmentVariables() {}
 
     public static ImmutableList<Function<String, String>> alternateKeyFunctions() {
         return ImmutableList.<Function<String, String>> copyOf(AlternateKeyFunctions.values());
