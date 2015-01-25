@@ -13,6 +13,7 @@ import javax.inject.Provider;
 import org.kuali.common.jute.env.Environment;
 import org.kuali.common.jute.env.filter.annotation.AbsentDetector;
 import org.kuali.common.jute.env.filter.annotation.CsvSplitter;
+import org.kuali.common.jute.env.filter.annotation.PropertyFilterContext;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.Predicate;
@@ -72,7 +73,8 @@ public final class PredicateProvider implements Provider<Predicate<CharSequence>
             return this;
         }
 
-        public Builder withContext(FilterContext context) {
+        @Inject
+        public Builder withContext(@PropertyFilterContext FilterContext context) {
             this.context = context;
             return this;
         }
