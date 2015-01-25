@@ -14,6 +14,7 @@ import static org.kuali.common.jute.base.Threads.sleep;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.kuali.common.jute.base.TimedInterval;
 
@@ -38,6 +39,10 @@ public class DefaultProcessService implements ProcessService {
             checkArgument(directory.isDirectory(), "%s must be an existing directory", directory);
             pb.directory(directory);
         }
+
+        Map<String, String> environment = pb.environment();
+        environment.putAll(context.getEnvironment());
+
         Stopwatch sw = createStarted();
         Process process = pb.start();
         while (isAlive(process)) {

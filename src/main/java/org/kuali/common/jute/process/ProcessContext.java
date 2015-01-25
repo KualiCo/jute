@@ -2,17 +2,20 @@ package org.kuali.common.jute.process;
 
 import static com.google.common.base.Optional.absent;
 import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Maps.newHashMap;
 import static org.kuali.common.jute.base.Precondition.checkMin;
 import static org.kuali.common.jute.base.Precondition.checkNotBlank;
 import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 
 @JsonDeserialize(builder = ProcessContext.Builder.class)
 public final class ProcessContext {
@@ -22,6 +25,7 @@ public final class ProcessContext {
     private final Optional<File> directory;
     private final Optional<Long> timeoutMillis;
     private final long sleepMillis;
+    private final ImmutableMap<String, String> environment;
 
     private ProcessContext(Builder builder) {
         this.command = builder.command;
@@ -29,6 +33,7 @@ public final class ProcessContext {
         this.directory = builder.directory;
         this.timeoutMillis = builder.timeoutMillis;
         this.sleepMillis = builder.sleepMillis;
+        this.environment = ImmutableMap.copyOf(builder.environment);
     }
 
     public static ProcessContext build(String command) {
@@ -46,6 +51,12 @@ public final class ProcessContext {
         private Optional<File> directory = absent();
         private Optional<Long> timeoutMillis = absent();
         private long sleepMillis = 10;
+        private Map<String, String> environment = newHashMap();
+
+        public Builder withEnvironment(Map<String, String> environment) {
+            this.environment = environment;
+            return this;
+        }
 
         public Builder withCommand(String command) {
             this.command = command;
@@ -113,6 +124,10 @@ public final class ProcessContext {
 
     public long getSleepMillis() {
         return sleepMillis;
+    }
+
+    public ImmutableMap<String, String> getEnvironment() {
+        return environment;
     }
 
 }
