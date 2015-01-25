@@ -16,6 +16,7 @@
 package org.kuali.common.jute.env;
 
 import com.google.common.base.Predicate;
+import com.google.common.base.Splitter;
 
 public final class Environments {
 
@@ -28,6 +29,10 @@ public final class Environments {
 
     public static Predicate<CharSequence> absentDetector() {
         return AbsentPredicate.INSTANCE;
+    }
+
+    public static Splitter csvSplitter() {
+        return Splitter.on(',').omitEmptyStrings().trimResults();
     }
 
     private enum AbsentPredicate implements Predicate<CharSequence> {
