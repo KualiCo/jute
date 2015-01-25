@@ -17,15 +17,18 @@ import javax.inject.Provider;
 import org.kuali.common.jute.process.ProcessContext;
 import org.kuali.common.jute.process.ProcessResult;
 import org.kuali.common.jute.process.ProcessService;
+import org.kuali.common.jute.project.BuildScm;
 import org.kuali.common.jute.scm.annotation.Directory;
 import org.kuali.common.jute.scm.annotation.Timeout;
 
 import com.google.common.io.ByteSource;
 
-public final class GitRevisionProvider implements Provider<String> {
+public final class GitScmProvider implements Provider<BuildScm> {
+
+    private static final String GIT = "git";
 
     @Inject
-    public GitRevisionProvider(@Directory File directory, ProcessService service, @Timeout long timeoutMillis) {
+    public GitScmProvider(@Directory File directory, ProcessService service, @Timeout long timeoutMillis) {
         this.directory = checkNotNull(directory, "directory");
         this.service = checkNotNull(service, "service");
         this.timeoutMillis = checkMin(timeoutMillis, 0, "timeoutMillis");
@@ -36,10 +39,18 @@ public final class GitRevisionProvider implements Provider<String> {
     private final long timeoutMillis;
 
     @Override
-    public String get() {
+    public BuildScm get() {
+        String revision = getOneLineResponse("rev-parse", "--verify", "HEAD");
+        String url = getOneLineResponse("config", "--get", "remote.origin.url");
+        return BuildScm.builder().withRevision(revision).withUrl(url).build();
+    }
+
+    private String getOneLineResponse(String... args) {
         ProcessContext.Builder builder = ProcessContext.builder();
-        builder.withCommand("git");
-        builder.withArgs(asList("rev-parse", "--verify", "HEAD"));
+        builder.withCommand(GIT);
+        if (args != null) {
+            builder.withArgs(asList(args));
+        }
         builder.withDirectory(directory);
         builder.withTimeoutMillis(timeoutMillis);
         ProcessContext context = builder.build();

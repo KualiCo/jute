@@ -1,6 +1,5 @@
 package org.kuali.common.jute.scm;
 
-import static com.google.common.base.Optional.absent;
 import static com.google.common.base.Predicates.containsPattern;
 import static com.google.common.base.Verify.verify;
 import static com.google.common.collect.Iterables.filter;
@@ -26,25 +25,20 @@ import javax.inject.Provider;
 import org.kuali.common.jute.process.ProcessContext;
 import org.kuali.common.jute.process.ProcessResult;
 import org.kuali.common.jute.process.ProcessService;
+import org.kuali.common.jute.project.BuildScm;
 import org.kuali.common.jute.scm.annotation.Directory;
-import org.kuali.common.jute.scm.annotation.Skip;
 import org.kuali.common.jute.scm.annotation.Timeout;
 
-import com.google.common.base.Optional;
 import com.google.common.io.ByteSource;
 
-public final class SvnRevisionProvider implements Provider<Optional<String>> {
+public final class SvnScmProvider implements Provider<BuildScm> {
 
     private final File directory;
     private final ProcessService service;
     private final long timeoutMillis;
-    private final boolean skip;
 
     @Override
-    public Optional<String> get() {
-        if (skip) {
-            return absent();
-        }
+    public BuildScm get() {
         ProcessContext.Builder builder = ProcessContext.builder();
         builder.withCommand("/usr/local/bin/svn");
         builder.withArgs(asList("info"));
@@ -56,15 +50,24 @@ public final class SvnRevisionProvider implements Provider<Optional<String>> {
             verify(result.getExitValue() == 0, "non-zero exit value -> %s", result.getExitValue());
             ByteSource stdin = result.getStdin();
             List<String> lines = readLines(new InputStreamReader(new ByteArrayInputStream(stdin.read())));
-            String prefix = "Revision:";
-            Iterable<String> filtered = filter(lines, containsPattern("^" + prefix));
-            String revision = getSingleElement(filtered);
-            String trimmed = trimToNull(removeStart(revision, prefix));
-            parseLong(trimmed); // make sure it's actually a number
-            return Optional.of(trimmed);
+            String revision = getRevision(lines);
+            String url = getLine(lines, "URL:");
+            return BuildScm.builder().withRevision(revision).withUrl(url).build();
         } catch (IOException e) {
             throw illegalState(e);
         }
+    }
+
+    private String getRevision(List<String> lines) {
+        String revision = getLine(lines, "Revision:");
+        parseLong(revision);
+        return revision;
+    }
+
+    private String getLine(List<String> lines, String prefix) {
+        Iterable<String> filtered = filter(lines, containsPattern("^" + prefix));
+        String revision = getSingleElement(filtered);
+        return trimToNull(removeStart(revision, prefix));
     }
 
     public File getDirectory() {
@@ -79,23 +82,21 @@ public final class SvnRevisionProvider implements Provider<Optional<String>> {
         return timeoutMillis;
     }
 
-    private SvnRevisionProvider(Builder builder) {
+    private SvnScmProvider(Builder builder) {
         this.directory = builder.directory;
         this.service = builder.service;
         this.timeoutMillis = builder.timeoutMillis;
-        this.skip = builder.skip;
     }
 
     public static Builder builder() {
         return new Builder();
     }
 
-    public static class Builder implements org.apache.commons.lang3.builder.Builder<SvnRevisionProvider>, Provider<SvnRevisionProvider> {
+    public static class Builder implements org.apache.commons.lang3.builder.Builder<SvnScmProvider>, Provider<SvnScmProvider> {
 
         private File directory;
         private ProcessService service;
         private long timeoutMillis = getMillis("30s");
-        private boolean skip = false;
 
         @Inject
         public Builder withDirectory(@Directory File directory) {
@@ -115,20 +116,14 @@ public final class SvnRevisionProvider implements Provider<Optional<String>> {
             return this;
         }
 
-        @Inject
-        public Builder withSkip(@Skip boolean skip) {
-            this.skip = skip;
-            return this;
-        }
-
         @Override
-        public SvnRevisionProvider get() {
+        public SvnScmProvider get() {
             return build();
         }
 
         @Override
-        public SvnRevisionProvider build() {
-            return checkNoNulls(new SvnRevisionProvider(this));
+        public SvnScmProvider build() {
+            return checkNoNulls(new SvnScmProvider(this));
         }
     }
 

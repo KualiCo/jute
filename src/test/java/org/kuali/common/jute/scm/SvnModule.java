@@ -25,8 +25,8 @@ public class SvnModule extends AbstractModule {
         bind(File.class).annotatedWith(Directory.class).toInstance(new File(USER_HOME.value() + "/ws/kuali-util"));
         bindConstant().annotatedWith(Timeout.class).to(getMillis("30s"));
         bind(ProcessService.class).to(DefaultProcessService.class);
-        bind(SvnRevisionProvider.class).toProvider(SvnRevisionProvider.Builder.class);
-        bind(optionalString()).annotatedWith(Revision.class).toProvider(SvnRevisionProvider.class);
+        bind(SvnScmProvider.class).toProvider(SvnScmProvider.Builder.class);
+        bind(optionalString()).annotatedWith(Revision.class).toProvider(SvnScmProvider.class);
     }
 
     @Provides
