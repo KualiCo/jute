@@ -40,9 +40,9 @@ public final class GitScmProvider implements Provider<BuildScm> {
 
     @Override
     public BuildScm get() {
-        String revision = getOneLineResponse("rev-parse", "--verify", "HEAD");
+        String rev = getOneLineResponse("rev-parse", "--verify", "HEAD");
         String url = getOneLineResponse("config", "--get", "remote.origin.url");
-        return BuildScm.builder().withRevision(revision).withUrl(url).build();
+        return BuildScm.builder().withRevision(rev).withUrl(url).build();
     }
 
     private String getOneLineResponse(String... args) {
