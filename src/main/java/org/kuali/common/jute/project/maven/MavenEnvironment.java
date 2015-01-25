@@ -2,28 +2,20 @@ package org.kuali.common.jute.project.maven;
 
 import static com.google.common.base.Optional.fromNullable;
 import static com.google.common.base.Preconditions.checkState;
-import static org.kuali.common.jute.base.Precondition.checkNotBlank;
-import static org.kuali.common.jute.base.Precondition.checkNotNull;
+import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 
 import java.util.Properties;
 
-import javax.inject.Inject;
+import javax.inject.Provider;
 
 import org.kuali.common.jute.collect.ImmutableProperties;
 import org.kuali.common.jute.env.Environment;
-import org.kuali.common.jute.project.maven.annotation.EnvPrefix;
-import org.kuali.common.jute.project.maven.annotation.ProjectProperties;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.Optional;
 
+@JsonDeserialize(builder = MavenEnvironment.Builder.class)
 public final class MavenEnvironment implements Environment {
-
-    @Inject
-    public MavenEnvironment(Environment env, @ProjectProperties Properties properties, @EnvPrefix String prefix) {
-        this.env = checkNotNull(env, "env");
-        this.properties = ImmutableProperties.copyOf(properties);
-        this.prefix = checkNotBlank(prefix, "prefix");
-    }
 
     private final Environment env;
     private final ImmutableProperties properties;
@@ -74,6 +66,44 @@ public final class MavenEnvironment implements Environment {
 
     public String getPrefix() {
         return prefix;
+    }
+
+    private MavenEnvironment(Builder builder) {
+        this.env = builder.env;
+        this.properties = ImmutableProperties.copyOf(builder.properties);
+        this.prefix = builder.prefix;
+    }
+
+    public static class Builder implements org.apache.commons.lang3.builder.Builder<MavenEnvironment>, Provider<MavenEnvironment> {
+
+        private Environment env;
+        private Properties properties;
+        private String prefix;
+
+        public Builder withEnv(Environment env) {
+            this.env = env;
+            return this;
+        }
+
+        public Builder withProperties(ImmutableProperties properties) {
+            this.properties = properties;
+            return this;
+        }
+
+        public Builder withPrefix(String prefix) {
+            this.prefix = prefix;
+            return this;
+        }
+
+        @Override
+        public MavenEnvironment get() {
+            return build();
+        }
+
+        @Override
+        public MavenEnvironment build() {
+            return checkNoNulls(new MavenEnvironment(this));
+        }
     }
 
 }
