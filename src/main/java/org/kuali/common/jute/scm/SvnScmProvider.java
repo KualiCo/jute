@@ -41,7 +41,7 @@ public final class SvnScmProvider implements Provider<BuildScm> {
     @Override
     public BuildScm get() {
         ProcessContext.Builder builder = ProcessContext.builder();
-        builder.withCommand("/usr/local/bin/svn");
+        builder.withCommand("svn");
         builder.withArgs(asList("info"));
         builder.withDirectory(directory);
         builder.withTimeoutMillis(timeoutMillis);

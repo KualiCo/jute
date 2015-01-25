@@ -15,6 +15,7 @@
  */
 package org.kuali.common.jute.process;
 
+import static com.google.common.base.Charsets.UTF_8;
 import static com.google.inject.Guice.createInjector;
 
 import org.junit.Test;
@@ -24,6 +25,7 @@ import org.kuali.common.jute.json.JsonService;
 import org.kuali.common.jute.json.jackson.JacksonModule;
 import org.kuali.common.jute.system.SystemModule;
 
+import com.google.common.base.Joiner;
 import com.google.inject.Injector;
 
 public class ProcessEnvironmentTest extends BaseUnitTest {
@@ -31,10 +33,15 @@ public class ProcessEnvironmentTest extends BaseUnitTest {
     @Test
     public void test() {
         try {
-            Injector injector = createInjector(new SystemModule(), new EnvModule(), new JacksonModule());
+            Injector injector = createInjector(new SystemModule(), new EnvModule(), new JacksonModule(), new ProcessModule());
             JsonService json = injector.getInstance(JsonService.class);
-            ProcessBuilder pb = new ProcessBuilder("git", "rev-parse", "--verify", "HEAD");
+            ProcessService service = injector.getInstance(ProcessService.class);
+            ProcessBuilder pb = new ProcessBuilder();
             show(json, pb.environment());
+            ProcessContext context = ProcessContext.build("which", "svn");
+            ProcessResult result = service.execute(context);
+            info("command -> %s %s", context.getCommand(), Joiner.on(' ').join(context.getArgs()));
+            info("stdin   -> '%s'", new String(result.getStdin().read(), UTF_8));
         } catch (Throwable e) {
             e.printStackTrace();
         }

@@ -38,7 +38,16 @@ public final class ProcessContext {
     }
 
     public static ProcessContext build(String command) {
-        return builder().withCommand(command).build();
+        return build(command, (String[]) null);
+    }
+
+    public static ProcessContext build(String command, String... args) {
+        Builder builder = builder();
+        builder.withCommand(command);
+        if (args != null && args.length > 0) {
+            builder.withArgs(ImmutableList.copyOf(args));
+        }
+        return builder.build();
     }
 
     public static Builder builder() {
