@@ -33,7 +33,7 @@ public final class BuildScmProvider implements Provider<Optional<BuildScm>> {
 
     @Override
     public Optional<BuildScm> get() {
-        if (type.isPresent()) {
+        if (!type.isPresent()) {
             return absent();
         }
         switch (type.get()) {
