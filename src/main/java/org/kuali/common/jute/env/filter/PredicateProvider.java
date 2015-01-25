@@ -13,13 +13,12 @@ import javax.inject.Provider;
 import org.kuali.common.jute.env.Environment;
 import org.kuali.common.jute.env.filter.annotation.AbsentDetector;
 import org.kuali.common.jute.env.filter.annotation.CsvSplitter;
-import org.kuali.common.jute.process.ProcessContext;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.Predicate;
 import com.google.common.base.Splitter;
 
-@JsonDeserialize(builder = ProcessContext.Builder.class)
+@JsonDeserialize(builder = PredicateProvider.Builder.class)
 public final class PredicateProvider implements Provider<Predicate<CharSequence>> {
 
     private final Environment env;
