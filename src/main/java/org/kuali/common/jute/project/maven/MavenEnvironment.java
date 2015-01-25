@@ -68,7 +68,7 @@ public final class MavenEnvironment implements Environment {
         return env;
     }
 
-    public ImmutableProperties getProperties() {
+    public Properties getProperties() {
         return properties;
     }
 
