@@ -46,7 +46,7 @@ public final class SvnRevisionProvider implements Provider<Optional<String>> {
             return absent();
         }
         ProcessContext.Builder builder = ProcessContext.builder();
-        builder.withCommand("svn");
+        builder.withCommand("/usr/local/bin/svn");
         builder.withArgs(asList("info"));
         builder.withDirectory(directory);
         builder.withTimeoutMillis(timeoutMillis);

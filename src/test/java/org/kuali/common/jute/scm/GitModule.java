@@ -16,7 +16,7 @@ public class GitModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(File.class).annotatedWith(Directory.class).toInstance(new File("."));
+        bind(File.class).annotatedWith(Directory.class).toInstance(new File("/Users/jcaddel/git/kc-api"));
         bindConstant().annotatedWith(Timeout.class).to(getMillis("30s"));
         bind(ProcessService.class).to(DefaultProcessService.class);
         bind(String.class).annotatedWith(Revision.class).toProvider(GitRevisionProvider.class);

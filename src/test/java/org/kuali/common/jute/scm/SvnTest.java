@@ -40,8 +40,8 @@ public class SvnTest extends BaseUnitTest {
             Injector injector = createInjector(new SystemModule(), new EnvModule(), new SvnModule());
             File dir = injector.getInstance(Key.get(File.class, Directory.class));
             Optional<String> revision = injector.getInstance(Key.get(optionalString(), Revision.class));
-            info("directory -> %s", dir.getCanonicalFile());
-            info("revision  -> %s", revision);
+            info("directory -> %s", dir);
+            info("revision  -> %s", revision.or("ABSENT"));
         } catch (Throwable e) {
             e.printStackTrace();
         }
