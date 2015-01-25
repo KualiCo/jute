@@ -95,5 +95,51 @@
       <version>${jackson-datatype-guava.version}</version>
     </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.kuali.maven.plugins</groupId>
+        <artifactId>guice-maven-plugin</artifactId>
+        <version>1.0.2-SNAPSHOT</version>
+        <executions>
+          <execution>
+            <id>metadata</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <modules>
+                <module>org.kuali.common.jute.system.SystemModule</module>
+                <module>org.kuali.common.jute.env.EnvModule</module>
+                <module>org.kuali.common.jute.json.jackson.JacksonModule</module>
+                <module>org.kuali.common.jute.process.ProcessModule</module>
+                <module>org.kuali.common.maven.project.MavenModule</module>
+                <module>org.kuali.common.jute.project.maven.WriteMetadataModule</module>
+              </modules>
+            </configuration>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>org.kuali.common</groupId>
+            <artifactId>kuali-jute</artifactId>
+            <version>1.0.2-SNAPSHOT</version>
+          </dependency>
+          <dependency>
+            <groupId>org.kuali.common</groupId>
+            <artifactId>kuali-project</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+          </dependency>
+          <dependency>
+            <groupId>org.kuali.common</groupId>
+            <artifactId>kuali-project</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <type>test-jar</type>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+  </build>
 </project>
 
