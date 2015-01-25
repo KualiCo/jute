@@ -51,6 +51,7 @@
     <kuali.release.goals>deploy</kuali.release.goals>
     <project.augment.phase>none</project.augment.phase>
     <project.metainf.phase>none</project.metainf.phase>
+    <project.metadata.phase>none</project.metadata.phase>
 
     <junit.version>4.11</junit.version>
     <lang.version>3.3.2</lang.version>
@@ -95,6 +96,16 @@
       <version>${jackson-datatype-guava.version}</version>
     </dependency>
   </dependencies>
+  <profiles>
+    <profile>
+      <id>release</id>
+      <properties>
+        <project.metadata.phase>generate-resources</project.metadata.phase>
+        <project.scm.skip>false</project.scm.skip>
+        <project.metainf.includes>^project\.id</project.metainf.includes>
+      </properties>
+    </profile>
+  </profiles>
   <build>
     <plugins>
       <plugin>
@@ -104,11 +115,12 @@
         <executions>
           <execution>
             <id>metadata</id>
-            <phase>generate-resources</phase>
+            <phase>${project.metadata.phase}</phase>
             <goals>
               <goal>run</goal>
             </goals>
             <configuration>
+              <skip>${project.metadata.skip}</skip>
               <modules>
                 <module>org.kuali.common.jute.system.SystemModule</module>
                 <module>org.kuali.common.jute.env.EnvModule</module>
