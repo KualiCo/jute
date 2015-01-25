@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 import org.kuali.common.jute.collect.ImmutableProperties;
 import org.kuali.common.jute.env.Environment;
+import org.kuali.common.jute.project.maven.annotation.EnvironmentPrefix;
 import org.kuali.common.jute.project.maven.annotation.ProjectProperties;
 
 import com.google.common.base.Optional;
@@ -18,7 +19,7 @@ import com.google.common.base.Optional;
 public final class MavenEnvironment implements Environment {
 
     @Inject
-    public MavenEnvironment(Environment env, @ProjectProperties Properties properties, String prefix) {
+    public MavenEnvironment(Environment env, @ProjectProperties Properties properties, @EnvironmentPrefix String prefix) {
         this.env = checkNotNull(env, "env");
         this.properties = ImmutableProperties.copyOf(properties);
         this.prefix = checkNotBlank(prefix, "prefix");
