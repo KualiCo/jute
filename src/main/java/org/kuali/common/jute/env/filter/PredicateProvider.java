@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 import org.kuali.common.jute.env.Environment;
-import org.kuali.common.jute.env.filter.annotation.AbsenceDetector;
+import org.kuali.common.jute.env.filter.annotation.AbsentDetector;
 import org.kuali.common.jute.env.filter.annotation.CsvSplitter;
 import org.kuali.common.jute.process.ProcessContext;
 
@@ -84,7 +84,7 @@ public final class PredicateProvider implements Provider<Predicate<CharSequence>
         }
 
         @Inject
-        public Builder withAbsenceDetector(@AbsenceDetector Predicate<CharSequence> absenceDetector) {
+        public Builder withAbsenceDetector(@AbsentDetector Predicate<CharSequence> absenceDetector) {
             this.absenceDetector = absenceDetector;
             return this;
         }
