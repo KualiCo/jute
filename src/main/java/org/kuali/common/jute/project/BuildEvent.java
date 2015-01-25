@@ -11,7 +11,7 @@ import javax.inject.Provider;
 
 import org.kuali.common.jute.net.InetAddress;
 import org.kuali.common.jute.project.annotation.BuildHost;
-import org.kuali.common.jute.project.annotation.BuildRevision;
+import org.kuali.common.jute.project.annotation.Scm;
 import org.kuali.common.jute.project.annotation.BuildTimestamp;
 import org.kuali.common.jute.system.Java;
 import org.kuali.common.jute.system.OperatingSystem;
@@ -70,7 +70,7 @@ public final class BuildEvent {
         private Optional<BuildScm> scm = absent();
 
         @Inject
-        public Builder withScm(@BuildRevision Optional<BuildScm> scm) {
+        public Builder withScm(@Scm Optional<BuildScm> scm) {
             this.scm = scm;
             return this;
         }
