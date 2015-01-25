@@ -21,7 +21,7 @@ public final class Project {
     private final ProjectCoordinates coordinates;
     private final String packaging;
     private final String encoding;
-    private final Optional<Scm> scm;
+    private final Optional<MavenScm> scm;
     private final Optional<String> name;
     private final Optional<String> description;
     private final Optional<String> url;
@@ -55,7 +55,7 @@ public final class Project {
         private ProjectCoordinates coordinates;
         private String encoding;
         private String packaging = "jar";
-        private Optional<Scm> scm = absent();
+        private Optional<MavenScm> scm = absent();
         private Optional<String> name = absent();
         private Optional<String> description = absent();
         private Optional<String> url = absent();
@@ -104,7 +104,7 @@ public final class Project {
             return this;
         }
 
-        public Builder withScm(Optional<Scm> scm) {
+        public Builder withScm(Optional<MavenScm> scm) {
             this.scm = scm;
             return this;
         }
@@ -155,7 +155,7 @@ public final class Project {
         return licenses;
     }
 
-    public Optional<Scm> getScm() {
+    public Optional<MavenScm> getScm() {
         return scm;
     }
 

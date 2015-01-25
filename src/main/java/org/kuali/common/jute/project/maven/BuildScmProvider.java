@@ -11,14 +11,14 @@ import com.google.common.base.Optional;
 
 public final class BuildScmProvider implements Provider<Optional<BuildScm>> {
 
-    public BuildScmProvider(DirectoryContext dirs, Optional<Scm> scm, boolean skip) {
+    public BuildScmProvider(DirectoryContext dirs, Project project, boolean skip) {
         this.dirs = checkNotNull(dirs, "dirs");
-        this.scm = checkNotNull(scm, "scm");
+        this.project = checkNotNull(project, "project");
         this.skip = skip;
     }
 
     private final DirectoryContext dirs;
-    private final Optional<Scm> scm;
+    private final Project project;
     private final boolean skip;
 
     @Override
@@ -26,8 +26,8 @@ public final class BuildScmProvider implements Provider<Optional<BuildScm>> {
         return absent();
     }
 
-    public Optional<Scm> getScm() {
-        return scm;
+    public Project getProject() {
+        return project;
     }
 
     public boolean isSkip() {

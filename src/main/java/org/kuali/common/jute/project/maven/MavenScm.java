@@ -6,15 +6,15 @@ import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.Optional;
 
-@JsonDeserialize(builder = Scm.Builder.class)
-public final class Scm {
+@JsonDeserialize(builder = MavenScm.Builder.class)
+public final class MavenScm {
 
     private final Optional<String> connection;
     private final Optional<String> developerConnection;
     private final Optional<String> tag;
     private final Optional<String> url;
 
-    private Scm(Builder builder) {
+    private MavenScm(Builder builder) {
         this.connection = builder.connection;
         this.developerConnection = builder.developerConnection;
         this.tag = builder.tag;
@@ -25,7 +25,7 @@ public final class Scm {
         return new Builder();
     }
 
-    public static class Builder implements org.apache.commons.lang3.builder.Builder<Scm> {
+    public static class Builder implements org.apache.commons.lang3.builder.Builder<MavenScm> {
 
         private Optional<String> connection = absent();
         private Optional<String> developerConnection = absent();
@@ -53,8 +53,8 @@ public final class Scm {
         }
 
         @Override
-        public Scm build() {
-            return checkNoNulls(new Scm(this));
+        public MavenScm build() {
+            return checkNoNulls(new MavenScm(this));
         }
     }
 
