@@ -2,7 +2,7 @@ package org.kuali.common.jute.env.filter;
 
 import static org.apache.commons.lang3.StringUtils.trimToNull;
 import static org.kuali.common.jute.base.Predicates.includesExcludes;
-import static org.kuali.common.jute.env.Environments.absentPredicate;
+import static org.kuali.common.jute.env.Environments.absentDetector;
 import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 
 import java.util.List;
@@ -63,7 +63,7 @@ public final class PredicateProvider implements Provider<Predicate<CharSequence>
         private Environment env;
         private Splitter splitter;
         private FilterContext context;
-        private Predicate<CharSequence> absenceDetector = absentPredicate();
+        private Predicate<CharSequence> absenceDetector = absentDetector();
 
         @Inject
         public Builder withSplitter(@CsvSplitter Splitter splitter) {

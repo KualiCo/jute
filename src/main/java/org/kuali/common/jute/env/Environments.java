@@ -26,7 +26,7 @@ public final class Environments {
     // This does mean that environments cannot contain a real property with the value ABSENT.
     public static final String ABSENT = "ABSENT";
 
-    public static Predicate<CharSequence> absentPredicate() {
+    public static Predicate<CharSequence> absentDetector() {
         return AbsentPredicate.INSTANCE;
     }
 
