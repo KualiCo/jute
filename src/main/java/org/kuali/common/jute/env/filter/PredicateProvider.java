@@ -24,7 +24,7 @@ public final class PredicateProvider implements Provider<Predicate<CharSequence>
 
     private final Environment env;
     private final FilterContext context;
-    private final Predicate<CharSequence> absenceDetector;
+    private final Predicate<CharSequence> absentDetector;
     private final Splitter splitter;
 
     @Override
@@ -40,7 +40,7 @@ public final class PredicateProvider implements Provider<Predicate<CharSequence>
 
     private List<String> buildList(Environment env, KeyValuesContext context) {
         String csv = trimToNull(env.getProperty(context.getKey(), null));
-        if (absenceDetector.apply(csv)) {
+        if (absentDetector.apply(csv)) {
             return context.getValues();
         } else {
             return splitter.splitToList(csv);
@@ -50,7 +50,7 @@ public final class PredicateProvider implements Provider<Predicate<CharSequence>
     private PredicateProvider(Builder builder) {
         this.env = builder.env;
         this.context = builder.context;
-        this.absenceDetector = builder.absenceDetector;
+        this.absentDetector = builder.absentDetector;
         this.splitter = builder.splitter;
     }
 
@@ -63,7 +63,7 @@ public final class PredicateProvider implements Provider<Predicate<CharSequence>
         private Environment env;
         private Splitter splitter;
         private FilterContext context;
-        private Predicate<CharSequence> absenceDetector = absentDetector();
+        private Predicate<CharSequence> absentDetector = absentDetector();
 
         @Inject
         public Builder withSplitter(@CsvSplitter Splitter splitter) {
@@ -84,8 +84,8 @@ public final class PredicateProvider implements Provider<Predicate<CharSequence>
         }
 
         @Inject
-        public Builder withAbsenceDetector(@AbsentDetector Predicate<CharSequence> absenceDetector) {
-            this.absenceDetector = absenceDetector;
+        public Builder withAbsentDetector(@AbsentDetector Predicate<CharSequence> absentDetector) {
+            this.absentDetector = absentDetector;
             return this;
         }
 
@@ -108,12 +108,12 @@ public final class PredicateProvider implements Provider<Predicate<CharSequence>
         return context;
     }
 
-    public Predicate<CharSequence> getAbsenceDetector() {
-        return absenceDetector;
-    }
-
     public Splitter getSplitter() {
         return splitter;
+    }
+
+    public Predicate<CharSequence> getAbsentDetector() {
+        return absentDetector;
     }
 
 }
