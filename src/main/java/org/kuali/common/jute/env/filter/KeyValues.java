@@ -6,27 +6,29 @@ import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 import java.util.Collections;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.collect.ImmutableList;
 
-public final class KeyValuesContext {
+@JsonDeserialize(builder = KeyValues.Builder.class)
+public final class KeyValues {
 
     private final String key;
     private final ImmutableList<String> values;
 
-    private KeyValuesContext(Builder builder) {
+    private KeyValues(Builder builder) {
         this.key = builder.key;
         this.values = ImmutableList.copyOf(builder.values);
     }
 
-    public static KeyValuesContext build(String key) {
+    public static KeyValues build(String key) {
         return build(key, Collections.<String> emptyList());
     }
 
-    public static KeyValuesContext build(String key, String value) {
+    public static KeyValues build(String key, String value) {
         return build(key, singletonList(value));
     }
 
-    public static KeyValuesContext build(String key, List<String> values) {
+    public static KeyValues build(String key, List<String> values) {
         return builder().withKey(key).withValues(values).build();
     }
 
@@ -34,7 +36,7 @@ public final class KeyValuesContext {
         return new Builder();
     }
 
-    public static class Builder implements org.apache.commons.lang3.builder.Builder<KeyValuesContext> {
+    public static class Builder implements org.apache.commons.lang3.builder.Builder<KeyValues> {
 
         private String key;
         private List<String> values;
@@ -50,8 +52,8 @@ public final class KeyValuesContext {
         }
 
         @Override
-        public KeyValuesContext build() {
-            return checkNoNulls(new KeyValuesContext(this));
+        public KeyValues build() {
+            return checkNoNulls(new KeyValues(this));
         }
     }
 
@@ -59,7 +61,7 @@ public final class KeyValuesContext {
         return key;
     }
 
-    public ImmutableList<String> getValues() {
+    public List<String> getValues() {
         return values;
     }
 

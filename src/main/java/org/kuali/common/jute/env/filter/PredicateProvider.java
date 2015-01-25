@@ -2,18 +2,13 @@ package org.kuali.common.jute.env.filter;
 
 import static org.apache.commons.lang3.StringUtils.trimToNull;
 import static org.kuali.common.jute.base.Predicates.includesExcludes;
-import static org.kuali.common.jute.env.Environments.absentDetector;
 import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.inject.Provider;
 
 import org.kuali.common.jute.env.Environment;
-import org.kuali.common.jute.env.filter.annotation.AbsentDetector;
-import org.kuali.common.jute.env.filter.annotation.CsvSplitter;
-import org.kuali.common.maven.project.annotation.PropertyFilterContext;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.Predicate;
@@ -23,18 +18,19 @@ import com.google.common.base.Splitter;
 public final class PredicateProvider implements Provider<Predicate<CharSequence>> {
 
     private final Environment env;
-    private final FilterContext context;
+    private final KeyValues includes;
+    private final KeyValues excludes;
     private final Predicate<CharSequence> absentDetector;
     private final Splitter splitter;
 
     @Override
     public Predicate<CharSequence> get() {
-        List<String> includes = buildList(env, context.getIncludes());
-        List<String> excludes = buildList(env, context.getExcludes());
+        List<String> includes = buildList(env, this.includes);
+        List<String> excludes = buildList(env, this.excludes);
         return includesExcludes(includes, excludes);
     }
 
-    private List<String> buildList(Environment env, KeyValuesContext context) {
+    private List<String> buildList(Environment env, KeyValues context) {
         String csv = trimToNull(env.getProperty(context.getKey(), null));
         if (absentDetector.apply(csv)) {
             return context.getValues();
@@ -44,50 +40,38 @@ public final class PredicateProvider implements Provider<Predicate<CharSequence>
     }
 
     private PredicateProvider(Builder builder) {
-        this.env = builder.env;
-        this.context = builder.context;
+        this.includes = builder.includes;
+        this.excludes = builder.excludes;
         this.absentDetector = builder.absentDetector;
         this.splitter = builder.splitter;
+        this.env = builder.env;
     }
 
     public static Builder builder() {
         return new Builder();
     }
 
-    public static class Builder implements org.apache.commons.lang3.builder.Builder<PredicateProvider>, Provider<PredicateProvider> {
+    public static class Builder implements org.apache.commons.lang3.builder.Builder<PredicateProvider> {
 
         private Environment env;
+        private KeyValues includes;
+        private KeyValues excludes;
+        private Predicate<CharSequence> absentDetector;
         private Splitter splitter;
-        private FilterContext context;
-        private Predicate<CharSequence> absentDetector = absentDetector();
 
-        @Inject
-        public Builder withSplitter(@CsvSplitter Splitter splitter) {
-            this.splitter = splitter;
-            return this;
-        }
-
-        @Inject
-        public Builder withEnv(Environment env) {
+        public Builder withEnvironment(Environment env) {
             this.env = env;
             return this;
         }
 
-        @Inject
-        public Builder withContext(@PropertyFilterContext FilterContext context) {
-            this.context = context;
+        public Builder withIncludes(KeyValues includes) {
+            this.includes = includes;
             return this;
         }
 
-        @Inject
-        public Builder withAbsentDetector(@AbsentDetector Predicate<CharSequence> absentDetector) {
-            this.absentDetector = absentDetector;
+        public Builder withExcludes(KeyValues excludes) {
+            this.excludes = excludes;
             return this;
-        }
-
-        @Override
-        public PredicateProvider get() {
-            return build();
         }
 
         @Override
@@ -100,16 +84,20 @@ public final class PredicateProvider implements Provider<Predicate<CharSequence>
         return env;
     }
 
-    public FilterContext getContext() {
-        return context;
+    public KeyValues getIncludes() {
+        return includes;
     }
 
-    public Splitter getSplitter() {
-        return splitter;
+    public KeyValues getExcludes() {
+        return excludes;
     }
 
     public Predicate<CharSequence> getAbsentDetector() {
         return absentDetector;
+    }
+
+    public Splitter getSplitter() {
+        return splitter;
     }
 
 }
