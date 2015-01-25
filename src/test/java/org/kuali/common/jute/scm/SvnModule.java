@@ -3,13 +3,13 @@ package org.kuali.common.jute.scm;
 import static com.google.common.base.StandardSystemProperty.USER_HOME;
 import static java.lang.Boolean.parseBoolean;
 import static org.kuali.common.jute.base.Formats.getMillis;
-import static org.kuali.common.jute.guice.TypeLiterals.optionalString;
 
 import java.io.File;
 
 import org.kuali.common.jute.env.Environment;
 import org.kuali.common.jute.process.DefaultProcessService;
 import org.kuali.common.jute.process.ProcessService;
+import org.kuali.common.jute.project.BuildScm;
 import org.kuali.common.jute.scm.annotation.Directory;
 import org.kuali.common.jute.scm.annotation.Revision;
 import org.kuali.common.jute.scm.annotation.Skip;
@@ -26,7 +26,7 @@ public class SvnModule extends AbstractModule {
         bindConstant().annotatedWith(Timeout.class).to(getMillis("30s"));
         bind(ProcessService.class).to(DefaultProcessService.class);
         bind(SvnScmProvider.class).toProvider(SvnScmProvider.Builder.class);
-        bind(optionalString()).annotatedWith(Revision.class).toProvider(SvnScmProvider.class);
+        bind(BuildScm.class).annotatedWith(Revision.class).toProvider(SvnScmProvider.class);
     }
 
     @Provides

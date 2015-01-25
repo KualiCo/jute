@@ -30,6 +30,11 @@ public final class BuildScm {
         private String revision;
         private ScmType type;
 
+        public Builder withType(ScmType type) {
+            this.type = type;
+            return this;
+        }
+
         public Builder withUrl(String url) {
             this.url = url;
             return this;

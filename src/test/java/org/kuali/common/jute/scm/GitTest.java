@@ -22,8 +22,12 @@ import java.io.IOException;
 
 import org.junit.Test;
 import org.kuali.common.jute.base.BaseUnitTest;
+import org.kuali.common.jute.env.EnvModule;
+import org.kuali.common.jute.json.JsonService;
+import org.kuali.common.jute.json.jackson.JacksonModule;
+import org.kuali.common.jute.project.BuildScm;
 import org.kuali.common.jute.scm.annotation.Directory;
-import org.kuali.common.jute.scm.annotation.Revision;
+import org.kuali.common.jute.system.SystemModule;
 
 import com.google.inject.Injector;
 import com.google.inject.Key;
@@ -32,11 +36,11 @@ public class GitTest extends BaseUnitTest {
 
     @Test
     public void test() throws IOException {
-        Injector injector = createInjector(new GitModule());
+        Injector injector = createInjector(new SystemModule(), new EnvModule(), new JacksonModule(), new GitModule());
+        JsonService json = injector.getInstance(JsonService.class);
         File dir = injector.getInstance(Key.get(File.class, Directory.class));
-        String revision = injector.getInstance(Key.get(String.class, Revision.class));
+        BuildScm scm = injector.getInstance(BuildScm.class);
         info("directory -> %s", dir.getCanonicalFile());
-        info("revision  -> %s", revision);
+        show(json, scm);
     }
-
 }

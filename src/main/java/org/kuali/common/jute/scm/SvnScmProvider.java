@@ -12,6 +12,7 @@ import static org.kuali.common.jute.base.Exceptions.illegalState;
 import static org.kuali.common.jute.base.Formats.getMillis;
 import static org.kuali.common.jute.collect.Iterables.getSingleElement;
 import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
+import static org.kuali.common.jute.scm.ScmType.SVN;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -52,7 +53,7 @@ public final class SvnScmProvider implements Provider<BuildScm> {
             List<String> lines = readLines(new InputStreamReader(new ByteArrayInputStream(stdin.read())));
             String revision = getRevision(lines);
             String url = getLine(lines, "URL:");
-            return BuildScm.builder().withRevision(revision).withUrl(url).build();
+            return BuildScm.builder().withRevision(revision).withUrl(url).withType(SVN).build();
         } catch (IOException e) {
             throw illegalState(e);
         }

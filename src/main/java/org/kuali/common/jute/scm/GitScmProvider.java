@@ -7,6 +7,7 @@ import static java.util.Arrays.asList;
 import static org.kuali.common.jute.base.Exceptions.illegalState;
 import static org.kuali.common.jute.base.Precondition.checkMin;
 import static org.kuali.common.jute.base.Precondition.checkNotNull;
+import static org.kuali.common.jute.scm.ScmType.GIT;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +26,7 @@ import com.google.common.io.ByteSource;
 
 public final class GitScmProvider implements Provider<BuildScm> {
 
-    private static final String GIT = "git";
+    private static final String EXECUTABLE = "git";
 
     @Inject
     public GitScmProvider(@Directory File directory, ProcessService service, @Timeout long timeoutMillis) {
@@ -42,12 +43,12 @@ public final class GitScmProvider implements Provider<BuildScm> {
     public BuildScm get() {
         String rev = getOneLineResponse("rev-parse", "--verify", "HEAD");
         String url = getOneLineResponse("config", "--get", "remote.origin.url");
-        return BuildScm.builder().withRevision(rev).withUrl(url).build();
+        return BuildScm.builder().withRevision(rev).withUrl(url).withType(GIT).build();
     }
 
     private String getOneLineResponse(String... args) {
         ProcessContext.Builder builder = ProcessContext.builder();
-        builder.withCommand(GIT);
+        builder.withCommand(EXECUTABLE);
         if (args != null) {
             builder.withArgs(asList(args));
         }
