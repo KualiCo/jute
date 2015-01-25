@@ -32,6 +32,6 @@ public final class Predicates {
         for (String token : tokens) {
             predicate = or(containsPattern(token), predicate);
         }
-        return predicate;x
+        return predicate;
     }
 }
