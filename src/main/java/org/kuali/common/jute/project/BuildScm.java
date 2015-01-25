@@ -1,6 +1,9 @@
 package org.kuali.common.jute.project;
 
 import static org.kuali.common.jute.base.Precondition.checkNotBlank;
+import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
+
+import org.kuali.common.jute.scm.ScmType;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -9,10 +12,12 @@ public final class BuildScm {
 
     private final String url;
     private final String revision;
+    private final ScmType type;
 
     private BuildScm(Builder builder) {
         this.url = builder.url;
         this.revision = builder.revision;
+        this.type = builder.type;
     }
 
     public static Builder builder() {
@@ -23,6 +28,7 @@ public final class BuildScm {
 
         private String url;
         private String revision;
+        private ScmType type;
 
         public Builder withUrl(String url) {
             this.url = url;
@@ -36,7 +42,7 @@ public final class BuildScm {
 
         @Override
         public BuildScm build() {
-            return validate(new BuildScm(this));
+            return validate(checkNoNulls(new BuildScm(this)));
         }
 
         private static final BuildScm validate(BuildScm instance) {
@@ -52,6 +58,10 @@ public final class BuildScm {
 
     public String getRevision() {
         return revision;
+    }
+
+    public ScmType getType() {
+        return type;
     }
 
 }
