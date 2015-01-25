@@ -6,10 +6,13 @@ import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 
 import java.util.Properties;
 
+import javax.inject.Inject;
 import javax.inject.Provider;
 
 import org.kuali.common.jute.collect.ImmutableProperties;
 import org.kuali.common.jute.env.Environment;
+import org.kuali.common.jute.project.maven.annotation.EnvPrefix;
+import org.kuali.common.jute.project.maven.annotation.ProjectProperties;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.Optional;
@@ -80,17 +83,20 @@ public final class MavenEnvironment implements Environment {
         private Properties properties;
         private String prefix;
 
+        @Inject
         public Builder withEnv(Environment env) {
             this.env = env;
             return this;
         }
 
-        public Builder withProperties(ImmutableProperties properties) {
+        @Inject
+        public Builder withProperties(@ProjectProperties Properties properties) {
             this.properties = properties;
             return this;
         }
 
-        public Builder withPrefix(String prefix) {
+        @Inject
+        public Builder withPrefix(@EnvPrefix String prefix) {
             this.prefix = prefix;
             return this;
         }
