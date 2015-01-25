@@ -26,11 +26,11 @@ public final class Predicates {
         return and(incl, not(excl));
     }
 
-    public static Predicate<String> containsAny(Iterable<String> tokens) {
-        checkNotNull(tokens, "tokens");
+    public static Predicate<String> containsAny(Iterable<String> patterns) {
+        checkNotNull(patterns, "patterns");
         Predicate<String> predicate = alwaysFalse();
-        for (String token : tokens) {
-            predicate = or(containsPattern(token), predicate);
+        for (String pattern : patterns) {
+            predicate = or(containsPattern(pattern), predicate);
         }
         return predicate;
     }
