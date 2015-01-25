@@ -15,6 +15,8 @@
  */
 package org.kuali.common.jute.env;
 
+import com.google.common.base.Predicate;
+
 public final class Environments {
 
     private Environments() {}
@@ -23,5 +25,18 @@ public final class Environments {
     // This is useful when there are properties with a default value, that need to be "unset", for one reason or another.
     // This does mean that environments cannot contain a real property with the value ABSENT.
     public static final String ABSENT = "ABSENT";
+
+    public static Predicate<CharSequence> absentPredicate() {
+        return AbsentPredicate.INSTANCE;
+    }
+
+    private enum AbsentPredicate implements Predicate<CharSequence> {
+        INSTANCE;
+
+        @Override
+        public boolean apply(CharSequence input) {
+            return (input == null) || input.equals(ABSENT);
+        }
+    }
 
 }
