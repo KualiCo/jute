@@ -11,7 +11,6 @@ import org.kuali.common.jute.process.DefaultProcessService;
 import org.kuali.common.jute.process.ProcessService;
 import org.kuali.common.jute.project.BuildScm;
 import org.kuali.common.jute.scm.annotation.Directory;
-import org.kuali.common.jute.scm.annotation.Revision;
 import org.kuali.common.jute.scm.annotation.Skip;
 import org.kuali.common.jute.scm.annotation.Timeout;
 
@@ -26,7 +25,7 @@ public class SvnModule extends AbstractModule {
         bindConstant().annotatedWith(Timeout.class).to(getMillis("30s"));
         bind(ProcessService.class).to(DefaultProcessService.class);
         bind(SvnScmProvider.class).toProvider(SvnScmProvider.Builder.class);
-        bind(BuildScm.class).annotatedWith(Revision.class).toProvider(SvnScmProvider.class);
+        bind(BuildScm.class).toProvider(SvnScmProvider.class);
     }
 
     @Provides

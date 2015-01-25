@@ -16,7 +16,6 @@
 package org.kuali.common.jute.scm;
 
 import static com.google.inject.Guice.createInjector;
-import static org.kuali.common.jute.guice.TypeLiterals.optionalString;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,11 +23,12 @@ import java.io.IOException;
 import org.junit.Test;
 import org.kuali.common.jute.base.BaseUnitTest;
 import org.kuali.common.jute.env.EnvModule;
+import org.kuali.common.jute.json.JsonService;
+import org.kuali.common.jute.json.jackson.JacksonModule;
+import org.kuali.common.jute.project.BuildScm;
 import org.kuali.common.jute.scm.annotation.Directory;
-import org.kuali.common.jute.scm.annotation.Revision;
 import org.kuali.common.jute.system.SystemModule;
 
-import com.google.common.base.Optional;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 
@@ -37,11 +37,12 @@ public class SvnTest extends BaseUnitTest {
     @Test
     public void test() throws IOException {
         try {
-            Injector injector = createInjector(new SystemModule(), new EnvModule(), new SvnModule());
+            Injector injector = createInjector(new SystemModule(), new EnvModule(), new JacksonModule(), new SvnModule());
+            JsonService json = injector.getInstance(JsonService.class);
             File dir = injector.getInstance(Key.get(File.class, Directory.class));
-            Optional<String> revision = injector.getInstance(Key.get(optionalString(), Revision.class));
+            BuildScm scm = injector.getInstance(BuildScm.class);
             info("directory -> %s", dir);
-            info("revision  -> %s", revision.or("ABSENT"));
+            show(json, scm);
         } catch (Throwable e) {
             e.printStackTrace();
         }
