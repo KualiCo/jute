@@ -28,10 +28,6 @@ public final class PredicateProvider implements Provider<Predicate<CharSequence>
 
     @Override
     public Predicate<CharSequence> get() {
-        return buildPredicate();
-    }
-
-    private Predicate<CharSequence> buildPredicate() {
         List<String> includes = buildList(env, context.getIncludes());
         List<String> excludes = buildList(env, context.getExcludes());
         return includesExcludes(includes, excludes);
@@ -76,7 +72,6 @@ public final class PredicateProvider implements Provider<Predicate<CharSequence>
             return this;
         }
 
-        @Inject
         public Builder withContext(FilterContext context) {
             this.context = context;
             return this;

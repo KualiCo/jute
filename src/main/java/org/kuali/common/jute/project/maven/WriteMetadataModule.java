@@ -11,6 +11,7 @@ import org.kuali.common.jute.project.BuildEvent;
 import org.kuali.common.jute.project.BuildScm;
 import org.kuali.common.jute.project.annotation.BuildHost;
 import org.kuali.common.jute.project.annotation.BuildTimestamp;
+import org.kuali.common.jute.project.annotation.Scm;
 import org.kuali.common.jute.project.maven.annotation.SkipProjectScm;
 
 import com.google.common.base.Optional;
@@ -24,7 +25,7 @@ public class WriteMetadataModule extends AbstractModule {
     protected void configure() {
         bindConstant().annotatedWith(BuildTimestamp.class).to(currentTimeMillis());
         bind(InetAddress.class).annotatedWith(BuildHost.class).toInstance(buildLocalHost());
-        bind(new TypeLiteral<Optional<BuildScm>>() {}).toProvider(BuildScmProvider.class);
+        bind(new TypeLiteral<Optional<BuildScm>>() {}).annotatedWith(Scm.class).toProvider(BuildScmProvider.class);
         bind(BuildEvent.class).toProvider(BuildEvent.Builder.class);
         bind(ProjectMetadata.class).toProvider(ProjectMetadata.Builder.class);
         bind(Runnable.class).toProvider(WriteMetadataRunnable.Builder.class);
