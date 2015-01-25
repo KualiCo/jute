@@ -23,7 +23,7 @@ public final class Environments {
 
     // Magic value used to indicate that a property value coming from the environment should be treated as though the property was not set.
     // This is useful when there are properties with a default value, that need to be "unset", for one reason or another.
-    // This does mean that environments cannot contain a real property with the value ABSENT.
+    // It does however mean that environments cannot contain a real property with the value ABSENT.
     public static final String ABSENT = "ABSENT";
 
     public static Predicate<CharSequence> absentDetector() {
