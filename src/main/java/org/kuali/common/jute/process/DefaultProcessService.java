@@ -61,11 +61,11 @@ public class DefaultProcessService implements ProcessService {
         ProcessResult.Builder builder = ProcessResult.builder();
         Closer closer = Closer.create();
         try {
-            ByteSource stdin = wrap(toByteArray(closer.register(process.getInputStream())));
+            ByteSource stdout = wrap(toByteArray(closer.register(process.getInputStream())));
             ByteSource stderr = wrap(toByteArray(closer.register(process.getErrorStream())));
             builder.withExitValue(exitValue);
             builder.withStderr(stderr);
-            builder.withStdin(stdin);
+            builder.withStdout(stdout);
             builder.withTiming(timing);
         } catch (Throwable e) {
             throw closer.rethrow(e);

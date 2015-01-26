@@ -54,8 +54,8 @@ public final class GitScmProvider implements Provider<BuildScm> {
         try {
             ProcessResult result = service.execute(context);
             verify(result.getExitValue() == 0, "non-zero exit value -> %s", result.getExitValue());
-            ByteSource stdin = result.getStdin();
-            return WHITESPACE.trimFrom(new String(stdin.read(), UTF_8));
+            ByteSource stdout = result.getStdout();
+            return WHITESPACE.trimFrom(new String(stdout.read(), UTF_8));
         } catch (IOException e) {
             throw illegalState(e);
         }

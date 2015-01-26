@@ -11,13 +11,13 @@ import com.google.common.io.ByteSource;
 public final class ProcessResult {
 
     private final int exitValue;
-    private final ByteSource stdin;
+    private final ByteSource stdout;
     private final ByteSource stderr;
     private final TimedInterval timing;
 
     private ProcessResult(Builder builder) {
         this.exitValue = builder.exitValue;
-        this.stdin = builder.stdin;
+        this.stdout = builder.stdout;
         this.stderr = builder.stderr;
         this.timing = builder.timing;
     }
@@ -29,7 +29,7 @@ public final class ProcessResult {
     public static class Builder implements org.apache.commons.lang3.builder.Builder<ProcessResult> {
 
         private int exitValue;
-        private ByteSource stdin;
+        private ByteSource stdout;
         private ByteSource stderr;
         private TimedInterval timing;
 
@@ -38,8 +38,8 @@ public final class ProcessResult {
             return this;
         }
 
-        public Builder withStdin(ByteSource stdin) {
-            this.stdin = stdin;
+        public Builder withStdout(ByteSource stdout) {
+            this.stdout = stdout;
             return this;
         }
 
@@ -63,8 +63,8 @@ public final class ProcessResult {
         return exitValue;
     }
 
-    public ByteSource getStdin() {
-        return stdin;
+    public ByteSource getStdout() {
+        return stdout;
     }
 
     public ByteSource getStderr() {

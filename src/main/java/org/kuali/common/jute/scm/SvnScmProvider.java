@@ -46,8 +46,8 @@ public final class SvnScmProvider implements Provider<BuildScm> {
         try {
             ProcessResult result = service.execute(context);
             verify(result.getExitValue() == 0, "non-zero exit value -> %s", result.getExitValue());
-            ByteSource stdin = result.getStdin();
-            List<String> lines = readLines(new InputStreamReader(new ByteArrayInputStream(stdin.read())));
+            ByteSource stdout = result.getStdout();
+            List<String> lines = readLines(new InputStreamReader(new ByteArrayInputStream(stdout.read())));
             String revision = getRevision(lines);
             String url = getLine(lines, "URL:");
             return BuildScm.builder().withRevision(revision).withUrl(url).withType(SVN).build();
