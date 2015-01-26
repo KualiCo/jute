@@ -29,7 +29,6 @@ public class VirtualSystemTest extends BaseUnitTest {
 
     @Test
     public void test() {
-        info("hello world");
         VirtualSystem vs = VirtualSystem.build();
         ObjectMapper mapper = ObjectMapperProvider.build().get();
         JsonService json = new JacksonJsonService(mapper);
