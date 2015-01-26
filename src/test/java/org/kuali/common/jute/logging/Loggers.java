@@ -44,6 +44,9 @@ public class Loggers {
     public static Logger newLogger(String name) {
         Logger logger = getLogger(name);
         logger.setUseParentHandlers(false);
+        for (Handler handler : logger.getHandlers()) {
+            logger.removeHandler(handler);
+        }
         logger.addHandler(HANDLER);
         return logger;
     }

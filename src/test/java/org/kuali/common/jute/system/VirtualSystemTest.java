@@ -29,6 +29,7 @@ public class VirtualSystemTest extends BaseUnitTest {
 
     @Test
     public void test() {
+        info("hello world");
         VirtualSystem vs = VirtualSystem.build();
         ObjectMapper mapper = ObjectMapperProvider.build().get();
         JsonService json = new JacksonJsonService(mapper);
@@ -45,6 +46,7 @@ public class VirtualSystemTest extends BaseUnitTest {
             VirtualSystem.builder().build();
             fail("This should have failed");
         } catch (Exception e) {
+            ; // ignore
         }
     }
 
