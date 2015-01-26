@@ -28,8 +28,7 @@ import com.google.common.collect.ImmutableSet;
 
 public final class Reflection {
 
-    private Reflection() {
-    }
+    private Reflection() {}
 
     private static final Map<Class<?>, ImmutableSet<Field>> CACHE = newConcurrentMap();
 
