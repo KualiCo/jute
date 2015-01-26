@@ -15,14 +15,12 @@
  */
 package org.kuali.common.jute.enc.openssl;
 
-import static com.google.inject.Guice.createInjector;
 import static org.kuali.common.jute.base.Precondition.checkEquals;
+import static org.kuali.common.jute.project.Injection.createBasicInjector;
 
 import org.junit.Test;
 import org.kuali.common.jute.base.BaseUnitTest;
 import org.kuali.common.jute.enc.Encryptor;
-import org.kuali.common.jute.env.EnvModule;
-import org.kuali.common.jute.system.SystemModule;
 
 import com.google.inject.Injector;
 
@@ -30,7 +28,7 @@ public class OpenSSLModuleTest extends BaseUnitTest {
 
     @Test
     public void test() {
-        Injector injector = createInjector(new SystemModule(), new EnvModule(), new OpenSSLModule());
+        Injector injector = createBasicInjector();
         Encryptor enc = injector.getInstance(Encryptor.class);
         String plaintext = "foobar";
         String encrypted = enc.encrypt(plaintext);
