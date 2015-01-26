@@ -14,7 +14,6 @@ import static org.kuali.common.jute.base.Threads.sleep;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import org.kuali.common.jute.base.TimedInterval;
 
@@ -36,12 +35,12 @@ public class DefaultProcessService implements ProcessService {
         ProcessBuilder pb = new ProcessBuilder(command);
         if (context.getDirectory().isPresent()) {
             File directory = context.getDirectory().get();
-            checkArgument(directory.isDirectory(), "%s must be an existing directory", directory);
+            checkArgument(directory.isDirectory(), "[%s] must be an existing directory", directory);
             pb.directory(directory);
         }
 
-        Map<String, String> environment = pb.environment();
-        environment.putAll(context.getEnvironment());
+        // Add environment variables (if there were any)
+        pb.environment().putAll(context.getEnvironment());
 
         Stopwatch sw = createStarted();
         Process process = pb.start();
