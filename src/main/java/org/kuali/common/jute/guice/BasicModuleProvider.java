@@ -23,9 +23,9 @@ public final class BasicModuleProvider implements Provider<Iterable<AbstractModu
         list.add(new SystemModule());
         list.add(new EnvModule());
         list.add(new RuntimeModule());
+        list.add(new ProcessModule());
         list.add(new JacksonModule());
         list.add(new OpenSSLModule());
-        list.add(new ProcessModule());
         return list;
     }
 
