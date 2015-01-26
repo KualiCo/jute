@@ -8,14 +8,15 @@ import java.util.List;
 import org.kuali.common.jute.enc.openssl.OpenSSLModule;
 import org.kuali.common.jute.env.EnvModule;
 import org.kuali.common.jute.json.jackson.JacksonModule;
+import org.kuali.common.jute.process.ProcessModule;
 import org.kuali.common.jute.system.SystemModule;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Injector;
 
-public final class Injectors {
+public final class Injection {
 
-    private Injectors() {}
+    private Injection() {}
 
     public static List<AbstractModule> getBasicModules() {
         List<AbstractModule> list = newArrayList();
@@ -23,6 +24,7 @@ public final class Injectors {
         list.add(new EnvModule());
         list.add(new JacksonModule());
         list.add(new OpenSSLModule());
+        list.add(new ProcessModule());
         return list;
     }
 
