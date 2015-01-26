@@ -41,7 +41,7 @@ public class ProcessEnvironmentTest extends BaseUnitTest {
             ProcessContext context = ProcessContext.build("which", "svn");
             ProcessResult result = service.execute(context);
             info("command -> %s %s", context.getCommand(), Joiner.on(' ').join(context.getArgs()));
-            info("stdin   -> '%s'", new String(result.getStdin().read(), UTF_8));
+            info("stdin   -> '%s'", new String(result.getStdout().read(), UTF_8));
         } catch (Throwable e) {
             e.printStackTrace();
         }

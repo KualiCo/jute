@@ -32,7 +32,7 @@ public class DefaultProcessServiceTest extends BaseUnitTest {
             ProcessService service = injector.getInstance(ProcessService.class);
             ProcessContext context = injector.getInstance(ProcessContext.class);
             ProcessResult result = service.execute(context);
-            info("'%s'", new String(result.getStdin().read(), UTF_8));
+            info("'%s'", new String(result.getStdout().read(), UTF_8));
         } catch (Throwable e) {
             e.printStackTrace();
         }
