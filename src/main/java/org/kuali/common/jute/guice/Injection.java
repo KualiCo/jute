@@ -9,6 +9,7 @@ import org.kuali.common.jute.enc.openssl.OpenSSLModule;
 import org.kuali.common.jute.env.EnvModule;
 import org.kuali.common.jute.json.jackson.JacksonModule;
 import org.kuali.common.jute.process.ProcessModule;
+import org.kuali.common.jute.runtime.RuntimeModule;
 import org.kuali.common.jute.system.SystemModule;
 
 import com.google.inject.AbstractModule;
@@ -22,6 +23,7 @@ public final class Injection {
         List<AbstractModule> list = newArrayList();
         list.add(new SystemModule());
         list.add(new EnvModule());
+        list.add(new RuntimeModule());
         list.add(new JacksonModule());
         list.add(new OpenSSLModule());
         list.add(new ProcessModule());
