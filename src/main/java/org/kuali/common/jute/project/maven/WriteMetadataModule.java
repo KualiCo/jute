@@ -27,7 +27,7 @@ public class WriteMetadataModule extends AbstractModule {
     @Override
     protected void configure() {
         bindConstant().annotatedWith(BuildTimestamp.class).to(currentTimeMillis());
-        bindConstant().annotatedWith(Timeout.class).to(getMillis("15s"));
+        bindConstant().annotatedWith(Timeout.class).to(getMillis("5s"));
         bind(InetAddress.class).annotatedWith(BuildHost.class).toInstance(buildLocalHost());
         bind(new TypeLiteral<Optional<ScmType>>() {}).toProvider(BuildScmTypeProvider.class);
         bind(new TypeLiteral<Optional<BuildScm>>() {}).annotatedWith(Scm.class).toProvider(BuildScmProvider.class);
