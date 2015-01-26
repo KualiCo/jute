@@ -17,6 +17,10 @@ import com.google.inject.AbstractModule;
 
 public final class BasicModuleProvider implements Provider<Iterable<AbstractModule>> {
 
+    public static final Iterable<AbstractModule> getBasicModules() {
+        return new BasicModuleProvider().get();
+    }
+
     @Override
     public Iterable<AbstractModule> get() {
         List<AbstractModule> list = newArrayList();
