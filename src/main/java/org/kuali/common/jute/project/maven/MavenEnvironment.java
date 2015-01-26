@@ -17,6 +17,9 @@ import org.kuali.common.jute.project.maven.annotation.ProjectProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.Optional;
 
+/**
+ * Maven provides project properties + they use the prefixe "env" when referencing environment variables.
+ */
 @JsonDeserialize(builder = MavenEnvironment.Builder.class)
 public final class MavenEnvironment implements Environment {
 
