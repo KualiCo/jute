@@ -9,9 +9,9 @@ import static java.util.Arrays.asList;
 import static org.apache.commons.lang3.StringUtils.removeStart;
 import static org.apache.commons.lang3.StringUtils.trimToNull;
 import static org.kuali.common.jute.base.Exceptions.illegalState;
-import static org.kuali.common.jute.base.Formats.getMillis;
+import static org.kuali.common.jute.base.Precondition.checkMin;
+import static org.kuali.common.jute.base.Precondition.checkNotNull;
 import static org.kuali.common.jute.collect.Iterables.getSingleElement;
-import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 import static org.kuali.common.jute.scm.ScmType.SVN;
 
 import java.io.ByteArrayInputStream;
@@ -30,6 +30,12 @@ import org.kuali.common.jute.project.BuildScm;
 import com.google.common.io.ByteSource;
 
 public final class SvnScmProvider implements Provider<BuildScm> {
+
+    public SvnScmProvider(File directory, ProcessService service, long timeoutMillis) {
+        this.directory = checkNotNull(directory, "directory");
+        this.service = checkNotNull(service, "service");
+        this.timeoutMillis = checkMin(timeoutMillis, 0, "timeoutMillis");
+    }
 
     private final File directory;
     private final ProcessService service;
@@ -78,48 +84,6 @@ public final class SvnScmProvider implements Provider<BuildScm> {
 
     public long getTimeoutMillis() {
         return timeoutMillis;
-    }
-
-    private SvnScmProvider(Builder builder) {
-        this.directory = builder.directory;
-        this.service = builder.service;
-        this.timeoutMillis = builder.timeoutMillis;
-    }
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public static class Builder implements org.apache.commons.lang3.builder.Builder<SvnScmProvider>, Provider<SvnScmProvider> {
-
-        private File directory;
-        private ProcessService service;
-        private long timeoutMillis = getMillis("30s");
-
-        public Builder withDirectory(File directory) {
-            this.directory = directory;
-            return this;
-        }
-
-        public Builder withService(ProcessService service) {
-            this.service = service;
-            return this;
-        }
-
-        public Builder withTimeoutMillis(long timeoutMillis) {
-            this.timeoutMillis = timeoutMillis;
-            return this;
-        }
-
-        @Override
-        public SvnScmProvider get() {
-            return build();
-        }
-
-        @Override
-        public SvnScmProvider build() {
-            return checkNoNulls(new SvnScmProvider(this));
-        }
     }
 
 }

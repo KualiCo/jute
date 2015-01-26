@@ -40,12 +40,7 @@ public final class BuildScmProvider implements Provider<Optional<BuildScm>> {
             case GIT:
                 return Optional.of(new GitScmProvider(dirs.getBasedir(), service, timeoutMillis).get());
             case SVN:
-                SvnScmProvider.Builder builder = SvnScmProvider.builder();
-                builder.withDirectory(dirs.getBasedir());
-                builder.withService(service);
-                builder.withTimeoutMillis(timeoutMillis);
-                SvnScmProvider provider = builder.build();
-                return Optional.of(provider.get());
+                return Optional.of(new SvnScmProvider(dirs.getBasedir(), service, timeoutMillis).get());
             default:
                 return absent();
         }
