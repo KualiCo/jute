@@ -16,8 +16,7 @@
 package org.kuali.common.jute.base;
 
 import static com.google.common.base.Stopwatch.createStarted;
-import static com.google.inject.Guice.createInjector;
-import static org.kuali.common.jute.project.BasicModuleProvider.getBasicModules;
+import static org.kuali.common.jute.project.Injection.createBasicInjector;
 
 import org.junit.Test;
 import org.kuali.common.jute.json.JsonService;
@@ -30,7 +29,7 @@ public class TimedIntervalTest extends BaseUnitTest {
     @Test
     public void test() {
         Stopwatch sw = createStarted();
-        Injector injector = createInjector(getBasicModules());
+        Injector injector = createBasicInjector();
         JsonService json = injector.getInstance(JsonService.class);
         TimedInterval timing = TimedInterval.build(sw);
         show(json, timing);
