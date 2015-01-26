@@ -17,7 +17,7 @@ package org.kuali.common.jute.base;
 
 import static com.google.common.base.Stopwatch.createStarted;
 import static com.google.inject.Guice.createInjector;
-import static org.kuali.common.jute.guice.BasicModuleProvider.getBasicModules;
+import static org.kuali.common.jute.project.BasicModuleProvider.getBasicModules;
 
 import org.junit.Test;
 import org.kuali.common.jute.json.JsonService;

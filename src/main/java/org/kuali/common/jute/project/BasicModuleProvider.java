@@ -1,4 +1,4 @@
-package org.kuali.common.jute.guice;
+package org.kuali.common.jute.project;
 
 import static com.google.common.collect.Lists.newArrayList;
 
@@ -13,13 +13,10 @@ import org.kuali.common.jute.process.ProcessModule;
 import org.kuali.common.jute.runtime.RuntimeModule;
 import org.kuali.common.jute.system.SystemModule;
 
+import com.google.common.collect.ImmutableList;
 import com.google.inject.AbstractModule;
 
 public final class BasicModuleProvider implements Provider<Iterable<AbstractModule>> {
-
-    public static final Iterable<AbstractModule> getBasicModules() {
-        return new BasicModuleProvider().get();
-    }
 
     @Override
     public Iterable<AbstractModule> get() {
@@ -30,7 +27,7 @@ public final class BasicModuleProvider implements Provider<Iterable<AbstractModu
         list.add(new ProcessModule());
         list.add(new JacksonModule());
         list.add(new OpenSSLModule());
-        return list;
+        return ImmutableList.copyOf(list);
     }
 
 }
