@@ -1,9 +1,10 @@
 package org.kuali.common.jute.guice;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.google.inject.Guice.createInjector;
 
 import java.util.List;
+
+import javax.inject.Provider;
 
 import org.kuali.common.jute.enc.openssl.OpenSSLModule;
 import org.kuali.common.jute.env.EnvModule;
@@ -13,13 +14,11 @@ import org.kuali.common.jute.runtime.RuntimeModule;
 import org.kuali.common.jute.system.SystemModule;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Injector;
 
-public final class Injection {
+public final class BasicModuleProvider implements Provider<Iterable<AbstractModule>> {
 
-    private Injection() {}
-
-    public static List<AbstractModule> getBasicModules() {
+    @Override
+    public Iterable<AbstractModule> get() {
         List<AbstractModule> list = newArrayList();
         list.add(new SystemModule());
         list.add(new EnvModule());
@@ -28,10 +27,6 @@ public final class Injection {
         list.add(new OpenSSLModule());
         list.add(new ProcessModule());
         return list;
-    }
-
-    public static Injector getBasicInjector() {
-        return createInjector(getBasicModules());
     }
 
 }
