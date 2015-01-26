@@ -35,7 +35,7 @@ public final class Ciphers {
             InputStream in = closer.register(source.openBufferedStream());
             cipheredCopy(in, out, cipher);
         } catch (Throwable e) {
-            closer.rethrow(e);
+            throw closer.rethrow(e);
         } finally {
             closer.close();
         }
