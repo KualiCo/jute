@@ -8,7 +8,6 @@ import javax.inject.Provider;
 import org.kuali.common.jute.project.BuildEvent;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.google.common.base.Optional;
 
 @JsonDeserialize(builder = ProjectMetadata.Builder.class)
 public final class ProjectMetadata {
@@ -59,10 +58,6 @@ public final class ProjectMetadata {
 
     public BuildEvent getBuild() {
         return build;
-    }
-
-    public Optional<DirectoryContext> getDirs() {
-        return dirs;
     }
 
 }
