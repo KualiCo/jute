@@ -39,7 +39,7 @@ public class DefaultProcessService implements ProcessService {
             pb.directory(directory);
         }
 
-        // Add environment variables (if there were any)
+        // Add environment variables
         pb.environment().putAll(context.getEnvironment());
 
         Stopwatch sw = createStarted();
