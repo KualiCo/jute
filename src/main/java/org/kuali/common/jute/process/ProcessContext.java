@@ -136,7 +136,7 @@ public final class ProcessContext {
         return sleepMillis;
     }
 
-    public ImmutableMap<String, String> getEnvironment() {
+    public Map<String, String> getEnvironment() {
         return environment;
     }
 
