@@ -19,8 +19,7 @@ import static org.kuali.common.jute.base.Exceptions.illegalState;
 
 public final class Threads {
 
-    private Threads() {
-    }
+    private Threads() {}
 
     public static long sleep(long millis) {
         try {

@@ -22,9 +22,11 @@ public final class Predicates {
     private static final Predicate<CharSequence> ALWAYS_FALSE = alwaysFalse();
 
     /**
-     * 1 - Return false if there is a match on any of the exclude patterns.<br>
-     * 2 - Return true if no include patterns were provided.<br>
-     * 3 - If include patterns were provided, only return true if there is a match on one of the include patterns.<br>
+     * Return false if there is a match on any of the exclude patterns,<br>
+     * otherwise,<br>
+     * return true if no include patterns were provided,<br>
+     * otherwise,<br>
+     * return true if there is a match on one of the include patterns.<br>
      */
     public static Predicate<CharSequence> includesExcludes(Iterable<String> includes, Iterable<String> excludes) {
         checkNotNull(includes, "includes");

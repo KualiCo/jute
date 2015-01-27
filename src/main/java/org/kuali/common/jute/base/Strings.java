@@ -22,8 +22,7 @@ import static org.apache.commons.lang3.StringUtils.replace;
  */
 public final class Strings {
 
-    private Strings() {
-    }
+    private Strings() {}
 
     public static final String SPACE = " ";
     public static final String CR = "\r";
