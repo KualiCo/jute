@@ -16,18 +16,14 @@
 package org.kuali.common.jute.project;
 
 import static com.google.common.base.Stopwatch.createStarted;
-import static com.google.inject.Guice.createInjector;
+import static org.kuali.common.jute.project.UnitTestInjection.createUnitTestInjector;
 
 import java.util.Date;
 
 import org.junit.Test;
 import org.kuali.common.jute.base.BaseUnitTest;
-import org.kuali.common.jute.env.EnvModule;
-import org.kuali.common.jute.json.jackson.JacksonModule;
-import org.kuali.common.jute.project.maven.KualiJuteModule;
 import org.kuali.common.jute.project.maven.ProjectMetadata;
 import org.kuali.common.jute.project.maven.annotation.KualiJuteProjectMetadata;
-import org.kuali.common.jute.system.SystemModule;
 
 import com.google.common.base.Stopwatch;
 import com.google.inject.Injector;
@@ -37,17 +33,13 @@ public class KualiJuteModuleTest extends BaseUnitTest {
 
     @Test
     public void test() {
-        try {
-            Stopwatch sw = createStarted();
-            Injector injector = createInjector(new SystemModule(), new EnvModule(), new JacksonModule(), new KualiJuteModule());
-            Key<ProjectMetadata> key = Key.get(ProjectMetadata.class, KualiJuteProjectMetadata.class);
-            ProjectMetadata metadata = injector.getInstance(key);
-            info("user    -> %s", metadata.getBuild().getUser());
-            info("date    -> %s", new Date(metadata.getBuild().getTimestamp()));
-            elapsed(sw);
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
+        Stopwatch sw = createStarted();
+        Injector injector = createUnitTestInjector();
+        Key<ProjectMetadata> key = Key.get(ProjectMetadata.class, KualiJuteProjectMetadata.class);
+        ProjectMetadata metadata = injector.getInstance(key);
+        info("user    -> %s", metadata.getBuild().getUser());
+        info("date    -> %s", new Date(metadata.getBuild().getTimestamp()));
+        elapsed(sw);
     }
 
 }
