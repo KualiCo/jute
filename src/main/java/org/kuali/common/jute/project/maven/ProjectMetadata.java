@@ -8,6 +8,7 @@ import javax.inject.Provider;
 
 import org.kuali.common.jute.project.BuildEvent;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.Optional;
 
@@ -38,6 +39,17 @@ public final class ProjectMetadata {
         public Builder withProject(Project project) {
             this.project = project;
             return this;
+        }
+
+        @JsonSetter
+        public Builder withDirs(Optional<DirectoryContext> dirs) {
+            this.dirs = dirs;
+            return this;
+        }
+
+        @Inject
+        public Builder withDirs(DirectoryContext dirs) {
+            return withDirs(Optional.of(dirs));
         }
 
         @Inject
