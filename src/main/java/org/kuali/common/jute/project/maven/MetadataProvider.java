@@ -8,13 +8,15 @@ import static org.kuali.common.jute.project.maven.ProjectFunctions.metadataPathF
 import java.io.IOException;
 import java.net.URL;
 
+import javax.inject.Inject;
 import javax.inject.Provider;
 
 import org.kuali.common.jute.json.JsonService;
 
-public final class ProjectMetadataProvider implements Provider<ProjectMetadata> {
+public final class MetadataProvider implements Provider<ProjectMetadata> {
 
-    public ProjectMetadataProvider(ProjectIdentifier pid, JsonService json) {
+    @Inject
+    public MetadataProvider(ProjectIdentifier pid, JsonService json) {
         this.pid = checkNotNull(pid, "pid");
         this.json = checkNotNull(json, "json");
     }
@@ -23,7 +25,7 @@ public final class ProjectMetadataProvider implements Provider<ProjectMetadata> 
     private final JsonService json;
 
     public static ProjectMetadata get(ProjectIdentifier pid, JsonService json) {
-        return new ProjectMetadataProvider(pid, json).get();
+        return new MetadataProvider(pid, json).get();
     }
 
     @Override

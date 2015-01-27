@@ -18,7 +18,7 @@ public class KualiJuteModule extends AbstractModule {
     @Provides
     @KualiJuteProjectMetadata
     protected ProjectMetadata projectMetadata(@KualiJuteProjectId ProjectIdentifier pid, JsonService json) {
-        return ProjectMetadataProvider.get(pid, json);
+        return MetadataProvider.get(pid, json);
     }
 
 }
