@@ -16,7 +16,7 @@
 package org.kuali.common.jute.base;
 
 import static com.google.common.base.Stopwatch.createStarted;
-import static org.kuali.common.jute.project.Injection.createBasicInjector;
+import static org.kuali.common.jute.project.UnitTestInjection.createBasicInjector;
 
 import org.junit.Test;
 import org.kuali.common.jute.json.JsonService;

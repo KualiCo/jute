@@ -16,7 +16,7 @@
 package org.kuali.common.jute.enc.openssl;
 
 import static org.kuali.common.jute.base.Precondition.checkEquals;
-import static org.kuali.common.jute.project.Injection.createBasicInjector;
+import static org.kuali.common.jute.project.UnitTestInjection.createBasicInjector;
 
 import org.junit.Test;
 import org.kuali.common.jute.base.BaseUnitTest;
