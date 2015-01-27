@@ -18,7 +18,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.Optional;
 
 /**
- * Maven provides project properties + they use the prefixe "env" when referencing environment variables.
+ * Maven resolves property values using system properties, environment variables, and project properties.
+ *
+ * It looks up environment variables using the prefix 'env'.
  */
 @JsonDeserialize(builder = MavenEnvironment.Builder.class)
 public final class MavenEnvironment implements Environment {
