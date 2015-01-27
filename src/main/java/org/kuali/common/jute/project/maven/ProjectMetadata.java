@@ -1,5 +1,6 @@
 package org.kuali.common.jute.project.maven;
 
+import static com.google.common.base.Optional.absent;
 import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 
 import javax.inject.Inject;
@@ -8,16 +9,19 @@ import javax.inject.Provider;
 import org.kuali.common.jute.project.BuildEvent;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.google.common.base.Optional;
 
 @JsonDeserialize(builder = ProjectMetadata.Builder.class)
 public final class ProjectMetadata {
 
     private final Project project;
     private final BuildEvent build;
+    private final Optional<DirectoryContext> dirs;
 
     private ProjectMetadata(Builder builder) {
         this.project = builder.project;
         this.build = builder.build;
+        this.dirs = builder.dirs;
     }
 
     public static Builder builder() {
@@ -28,6 +32,7 @@ public final class ProjectMetadata {
 
         private Project project;
         private BuildEvent build;
+        private Optional<DirectoryContext> dirs = absent();
 
         @Inject
         public Builder withProject(Project project) {
@@ -58,6 +63,10 @@ public final class ProjectMetadata {
 
     public BuildEvent getBuild() {
         return build;
+    }
+
+    public Optional<DirectoryContext> getDirs() {
+        return dirs;
     }
 
 }
