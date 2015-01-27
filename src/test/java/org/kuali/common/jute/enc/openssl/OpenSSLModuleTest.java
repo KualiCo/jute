@@ -16,7 +16,7 @@
 package org.kuali.common.jute.enc.openssl;
 
 import static org.kuali.common.jute.base.Precondition.checkEquals;
-import static org.kuali.common.jute.project.UnitTestInjection.createBasicInjector;
+import static org.kuali.common.jute.project.UnitTestInjection.createUnitTestInjector;
 
 import org.junit.Test;
 import org.kuali.common.jute.base.BaseUnitTest;
@@ -28,7 +28,7 @@ public class OpenSSLModuleTest extends BaseUnitTest {
 
     @Test
     public void test() {
-        Injector injector = createBasicInjector();
+        Injector injector = createUnitTestInjector();
         Encryptor enc = injector.getInstance(Encryptor.class);
         String plaintext = "foobar";
         String encrypted = enc.encrypt(plaintext);
