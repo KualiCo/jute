@@ -42,7 +42,7 @@ public final class VersionProvider implements Provider<Version> {
         int patch = parseInt(remainderIterator.next());
         Optional<String> qualifier = getQualifier(remainderIterator);
 
-        // store the version number info into an immutable object
+        // store the version info into an immutable object
         Version.Builder builder = Version.builder();
         builder.withMajor(major);
         builder.withMinor(minor);
