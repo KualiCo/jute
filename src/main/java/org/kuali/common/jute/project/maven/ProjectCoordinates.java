@@ -21,6 +21,14 @@ public final class ProjectCoordinates implements Comparable<ProjectCoordinates> 
         this.version = builder.version;
     }
 
+    public static ProjectCoordinates build(String groupId, String artifactId, String version) {
+        Builder builder = builder();
+        builder.withGroupId(groupId);
+        builder.withArtifactId(artifactId);
+        builder.withVersion(version);
+        return builder.build();
+    }
+
     public static Builder builder() {
         return new Builder();
     }
