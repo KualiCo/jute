@@ -6,8 +6,7 @@ import com.google.common.io.BaseEncoding;
 
 public final class Jackson {
 
-    private Jackson() {
-    }
+    private Jackson() {}
 
     static final BaseEncoding DEFAULT_BASE_ENCODING = base64();
 
