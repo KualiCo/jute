@@ -1,14 +1,21 @@
 package org.kuali.common.jute.project.maven;
 
+import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Optional.absent;
+import static java.util.Objects.hash;
+import static org.kuali.common.jute.base.Objects.equalByComparison;
 import static org.kuali.common.jute.base.Precondition.checkMin;
 import static org.kuali.common.jute.base.Precondition.checkNotBlank;
 
+import org.kuali.common.jute.base.Orderings;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.google.common.base.MoreObjects.ToStringHelper;
 import com.google.common.base.Optional;
+import com.google.common.collect.ComparisonChain;
 
 @JsonDeserialize(builder = Version.Builder.class)
-public final class Version {
+public final class Version implements Comparable<Version> {
 
     private final int major;
     private final int minor;
@@ -93,6 +100,38 @@ public final class Version {
 
     public boolean isSnapshot() {
         return snapshot;
+    }
+
+    @Override
+    public int compareTo(Version other) {
+        ComparisonChain chain = ComparisonChain.start();
+        chain.compare(major, other.major);
+        chain.compare(minor, other.minor);
+        chain.compare(patch, other.patch);
+        chain.compare(qualifier.orNull(), other.qualifier.orNull(), Orderings.NULLS_FIRST);
+        chain.compare(snapshot, other.snapshot);
+        return chain.result();
+    }
+
+    @Override
+    public int hashCode() {
+        return hash(major, minor, patch, qualifier.orNull(), snapshot);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return equalByComparison(this, other);
+    }
+
+    @Override
+    public String toString() {
+        ToStringHelper h = toStringHelper(this);
+        h.add("major", major);
+        h.add("minor", minor);
+        h.add("patch", patch);
+        h.add("qualifier", qualifier.orNull());
+        h.add("snapshot", snapshot);
+        return h.toString();
     }
 
 }
