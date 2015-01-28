@@ -47,8 +47,8 @@ public final class NightlyVersionProvider implements Provider<String> {
             case GIT:
                 // Pre-pending the revision with the current date so sorting works correctly
                 // Git revision's are a 128 bit hash, so sorting would not work otherwise
-                // Even with this, 2 builds done on the same day, will not sort correctly
                 // For the "normal" use case, where builds are done once per day, we should be good to go
+                // If two builds are done on the same day, they will not sort correctly
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 String day = sdf.format(new Date(currentTimeMillis()));
                 return day + "-r" + left(scm.getRevision(), 8);
