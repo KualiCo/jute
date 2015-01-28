@@ -23,11 +23,9 @@ import java.util.Date;
 import org.junit.Test;
 import org.kuali.common.jute.base.BaseUnitTest;
 import org.kuali.common.jute.project.maven.ProjectMetadata;
-import org.kuali.common.jute.project.maven.annotation.KualiJuteProjectMetadata;
 
 import com.google.common.base.Stopwatch;
 import com.google.inject.Injector;
-import com.google.inject.Key;
 
 public class KualiJuteModuleTest extends BaseUnitTest {
 
@@ -35,8 +33,7 @@ public class KualiJuteModuleTest extends BaseUnitTest {
     public void test() {
         Stopwatch sw = createStarted();
         Injector injector = createUnitTestInjector();
-        Key<ProjectMetadata> key = Key.get(ProjectMetadata.class, KualiJuteProjectMetadata.class);
-        ProjectMetadata metadata = injector.getInstance(key);
+        ProjectMetadata metadata = injector.getInstance(ProjectMetadata.class);
         info("user    -> %s", metadata.getBuild().getUser());
         info("date    -> %s", new Date(metadata.getBuild().getTimestamp()));
         elapsed(sw);
