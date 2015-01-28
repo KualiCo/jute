@@ -8,7 +8,7 @@ public final class Injection {
 
     private Injection() {}
 
-    public static Injector createUnitTestInjector() {
+    public static Injector createBasicInjector() {
         return createInjector(new BasicModuleProvider().get());
     }
 
