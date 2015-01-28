@@ -39,15 +39,11 @@ public abstract class BaseUnitTest {
     }
 
     public void debug(String msg, Object... args) {
-        logger.info((args == null || args.length == 0) ? msg : format(msg, args));
+        logger.fine((args == null || args.length == 0) ? msg : format(msg, args));
     }
 
     public void info(String msg, Object... args) {
-        if (args == null || args.length == 0) {
-            logger.info(msg);
-        } else {
-            logger.info(format(msg, args));
-        }
+        logger.info((args == null || args.length == 0) ? msg : format(msg, args));
     }
 
     public void elapsed(Stopwatch sw) {
