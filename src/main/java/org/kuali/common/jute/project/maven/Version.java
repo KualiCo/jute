@@ -4,10 +4,9 @@ import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Optional.absent;
 import static java.util.Objects.hash;
 import static org.kuali.common.jute.base.Objects.equalByComparison;
+import static org.kuali.common.jute.base.Orderings.NULLS_FIRST;
 import static org.kuali.common.jute.base.Precondition.checkMin;
 import static org.kuali.common.jute.base.Precondition.checkNotBlank;
-
-import org.kuali.common.jute.base.Orderings;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.MoreObjects.ToStringHelper;
@@ -108,7 +107,7 @@ public final class Version implements Comparable<Version> {
         chain.compare(major, other.major);
         chain.compare(minor, other.minor);
         chain.compare(patch, other.patch);
-        chain.compare(qualifier.orNull(), other.qualifier.orNull(), Orderings.NULLS_FIRST);
+        chain.compare(qualifier.orNull(), other.qualifier.orNull(), NULLS_FIRST);
         chain.compare(snapshot, other.snapshot);
         return chain.result();
     }
