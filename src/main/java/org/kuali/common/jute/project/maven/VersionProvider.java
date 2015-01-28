@@ -3,6 +3,7 @@ package org.kuali.common.jute.project.maven;
 import static com.google.common.base.Optional.absent;
 import static java.lang.Integer.parseInt;
 import static org.apache.commons.lang3.StringUtils.endsWithIgnoreCase;
+import static org.apache.commons.lang3.StringUtils.removeEnd;
 import static org.kuali.common.jute.base.Precondition.checkNotNull;
 
 import java.util.Iterator;
@@ -52,10 +53,15 @@ public final class VersionProvider implements Provider<Version> {
     }
 
     private Optional<String> getQualifier(Iterator<String> itr) {
-        if (itr.hasNext()) {
-            return Optional.of(itr.next());
-        } else {
+        StringBuilder sb = new StringBuilder();
+        while (itr.hasNext()) {
+            sb.append(itr.next());
+            sb.append('-');
+        }
+        if (sb.length() == 0) {
             return absent();
+        } else {
+            return Optional.of(removeEnd(sb.toString(), "-"));
         }
     }
 
