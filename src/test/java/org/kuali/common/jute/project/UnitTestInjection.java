@@ -5,6 +5,7 @@ import static com.google.inject.Guice.createInjector;
 import static java.util.Arrays.asList;
 
 import org.kuali.common.jute.project.maven.KualiJuteModule;
+import org.kuali.common.jute.project.maven.MetadataModule;
 
 import com.google.inject.Injector;
 
@@ -13,7 +14,6 @@ public final class UnitTestInjection {
     private UnitTestInjection() {}
 
     public static Injector createUnitTestInjector() {
-        return createInjector(concat(new BasicModuleProvider().get(), asList(new KualiJuteModule())));
+        return createInjector(concat(new BasicModuleProvider().get(), asList(new KualiJuteModule(), new MetadataModule())));
     }
-
 }
