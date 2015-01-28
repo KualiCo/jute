@@ -13,7 +13,7 @@ public class VersionProviderTest extends BaseUnitTest {
     public void test() {
         try {
             Injector injector = createUnitTestInjector();
-            Project project = injector.getInstance(Project.class);
+            ProjectMetadata project = injector.getInstance(Project.class);
             info(project.getEncoding());
         } catch (Throwable e) {
             e.printStackTrace();
