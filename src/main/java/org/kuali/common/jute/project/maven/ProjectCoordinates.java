@@ -1,11 +1,15 @@
 package org.kuali.common.jute.project.maven;
 
+import static java.util.Objects.hash;
+import static org.kuali.common.jute.base.Objects.equalByComparison;
 import static org.kuali.common.jute.base.Precondition.checkNotBlank;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.google.common.base.Joiner;
+import com.google.common.collect.ComparisonChain;
 
 @JsonDeserialize(builder = ProjectCoordinates.Builder.class)
-public final class ProjectCoordinates {
+public final class ProjectCoordinates implements Comparable<ProjectCoordinates> {
 
     private final String groupId;
     private final String artifactId;
@@ -65,6 +69,30 @@ public final class ProjectCoordinates {
 
     public String getVersion() {
         return version;
+    }
+
+    @Override
+    public int compareTo(ProjectCoordinates other) {
+        ComparisonChain chain = ComparisonChain.start();
+        chain.compare(groupId, other.groupId);
+        chain.compare(artifactId, other.artifactId);
+        chain.compare(version, other.version);
+        return chain.result();
+    }
+
+    @Override
+    public int hashCode() {
+        return hash(groupId, artifactId, version);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return equalByComparison(this, other);
+    }
+
+    @Override
+    public String toString() {
+        return Joiner.on(':').join(groupId, artifactId, version);
     }
 
 }

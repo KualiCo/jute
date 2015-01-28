@@ -2,6 +2,8 @@ package org.kuali.common.jute.project.maven;
 
 import static com.google.common.base.Optional.absent;
 import static com.google.common.collect.Lists.newArrayList;
+import static java.util.Objects.hash;
+import static org.kuali.common.jute.base.Objects.equalByComparison;
 import static org.kuali.common.jute.base.Precondition.checkNotBlank;
 import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 
@@ -15,7 +17,7 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 
 @JsonDeserialize(builder = Project.Builder.class)
-public final class Project {
+public final class Project implements Comparable<Project> {
 
     private final Optional<ProjectCoordinates> parent;
     private final ProjectCoordinates coordinates;
@@ -181,6 +183,26 @@ public final class Project {
 
     public ProjectCoordinates getCoordinates() {
         return coordinates;
+    }
+
+    @Override
+    public int compareTo(Project other) {
+        return coordinates.compareTo(other.getCoordinates());
+    }
+
+    @Override
+    public int hashCode() {
+        return hash(coordinates);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return equalByComparison(this, other);
+    }
+
+    @Override
+    public String toString() {
+        return coordinates.toString();
     }
 
 }
