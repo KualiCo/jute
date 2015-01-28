@@ -18,7 +18,7 @@ public class ProjectModule extends AbstractModule {
     }
 
     @Provides
-    protected BuildEvent scm(ProjectMetadata meta) {
+    protected BuildEvent build(ProjectMetadata meta) {
         return meta.getBuild();
     }
 
