@@ -31,7 +31,7 @@ public final class ProcessRunnable implements Runnable {
                 String range = allowedExitValues.toString();
                 String command = context.getCommand();
                 String args = Joiner.on(' ').join(context.getArgs());
-                String msg = "invalid exit value '%s', allowed values %s.  [%s %s]";
+                String msg = "invalid exit value '%s', allowed values '%s' -> [%s %s]";
                 throw new VerifyException(format(msg, exitValue, range, command, args));
             }
         } catch (IOException e) {
