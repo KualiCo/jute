@@ -12,7 +12,7 @@ public class NightlyVersionModule extends AbstractModule {
     protected void configure() {
         bind(String.class).annotatedWith(Version.class).toProvider(NightlyVersionProvider.class);
         bind(ProcessContext.class).toProvider(SetVersionProcessContextProvider.class);
-        bind(Runnable.class).to(ProcessRunnable.class);
+        bind(Runnable.class).toProvider(ProcessRunnable.Builder.class);
     }
 
 }
