@@ -44,7 +44,7 @@ public final class NightlyVersionProvider implements Provider<String> {
                 // However, if more than one build is done per day, sorting isn't going to work.
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 String day = sdf.format(new Date(currentTimeMillis()));
-                return day + "-r" + left(scm.getRevision(), 8);
+                return day + "-r" + left(scm.getRevision(), 7);
             case SVN:
                 // Subversion uses a simple, incrementing, number. Works well with sorting
                 return "r" + scm.getRevision();
