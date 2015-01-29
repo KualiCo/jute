@@ -15,14 +15,6 @@ public final class ProcessRunnable implements Runnable {
     private final ProcessService service;
     private final ProcessContext context;
 
-    public ProcessService getService() {
-        return service;
-    }
-
-    public ProcessContext getContext() {
-        return context;
-    }
-
     @Override
     public void run() {
         try {
@@ -30,6 +22,14 @@ public final class ProcessRunnable implements Runnable {
         } catch (IOException e) {
             throw illegalState(e);
         }
+    }
+
+    public ProcessService getService() {
+        return service;
+    }
+
+    public ProcessContext getContext() {
+        return context;
     }
 
 }
