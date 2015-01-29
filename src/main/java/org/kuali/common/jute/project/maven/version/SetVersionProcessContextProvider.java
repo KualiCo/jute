@@ -13,14 +13,14 @@ import javax.inject.Provider;
 
 import org.kuali.common.jute.process.ProcessContext;
 import org.kuali.common.jute.project.maven.DirectoryContext;
-import org.kuali.common.jute.project.maven.annotation.NightlyVersion;
+import org.kuali.common.jute.project.maven.annotation.Version;
 
 import com.google.common.collect.ImmutableList;
 
 public final class SetVersionProcessContextProvider implements Provider<ProcessContext> {
 
     @Inject
-    public SetVersionProcessContextProvider(DirectoryContext dirs, @NightlyVersion String version) {
+    public SetVersionProcessContextProvider(DirectoryContext dirs, @Version String version) {
         this.dirs = checkNotNull(dirs, "dirs");
         this.version = checkNotBlank(version, "version");
     }

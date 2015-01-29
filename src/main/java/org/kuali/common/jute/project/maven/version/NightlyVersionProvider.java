@@ -1,9 +1,12 @@
 package org.kuali.common.jute.project.maven.version;
 
+import static com.google.common.base.Preconditions.checkState;
 import static java.lang.System.currentTimeMillis;
 import static org.apache.commons.lang3.StringUtils.left;
+import static org.apache.commons.lang3.StringUtils.removeEnd;
 import static org.kuali.common.jute.base.Exceptions.illegalArgument;
 import static org.kuali.common.jute.base.Precondition.checkNotNull;
+import static org.kuali.common.jute.project.maven.Maven.SNAPSHOT_QUALIFIER;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,37 +15,27 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 import org.kuali.common.jute.project.BuildScm;
+import org.kuali.common.jute.project.maven.ProjectCoordinates;
+import org.kuali.common.jute.project.maven.ProjectMetadata;
 
 public final class NightlyVersionProvider implements Provider<String> {
 
     @Inject
-    public NightlyVersionProvider(Version version, BuildScm scm) {
-        this.version = checkNotNull(version, "version");
-        this.scm = checkNotNull(scm, "scm");
+    public NightlyVersionProvider(ProjectMetadata metadata) {
+        this.metadata = checkNotNull(metadata, "metadata");
     }
 
-    private final Version version;
-    private final BuildScm scm;
+    private final ProjectMetadata metadata;
 
     @Override
     public String get() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(version.getMajor() + "");
-        sb.append(".");
-        sb.append(version.getMinor() + "");
-        sb.append(".");
-        sb.append(version.getPatch() + "");
-        sb.append(".");
-        if (version.getQualifier().isPresent()) {
-            sb.append("-");
-            sb.append(version.getQualifier().get());
-        }
-        sb.append("-");
-        sb.append(getQualifier(scm));
-        return sb.toString();
+        checkState(metadata.getBuild().getScm().isPresent(), "scm info is required for a nightly build version");
+        ProjectCoordinates coords = metadata.getProject().getCoordinates();
+        String version = removeEnd(coords.getVersion(), SNAPSHOT_QUALIFIER);
+        return version + "-" + getScmQualifier(metadata.getBuild().getScm().get());
     }
 
-    private String getQualifier(BuildScm scm) {
+    private String getScmQualifier(BuildScm scm) {
         switch (scm.getType()) {
             case GIT:
                 // Prefix the revision with the current date so sorting works correctly.
@@ -58,14 +51,6 @@ public final class NightlyVersionProvider implements Provider<String> {
             default:
                 throw illegalArgument("%s is unknown", scm.getType());
         }
-    }
-
-    public Version getVersion() {
-        return version;
-    }
-
-    public BuildScm getScm() {
-        return scm;
     }
 
 }
