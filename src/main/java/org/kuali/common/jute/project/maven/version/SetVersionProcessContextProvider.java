@@ -48,6 +48,7 @@ public final class SetVersionProcessContextProvider implements Provider<ProcessC
         List<String> args = newArrayList();
         args.add("versions:set");
         args.add(format("-DnewVersion=%s", version));
+        args.add("-N");
         return ImmutableList.copyOf(args);
     }
 
