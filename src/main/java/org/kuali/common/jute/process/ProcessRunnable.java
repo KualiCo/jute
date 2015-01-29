@@ -7,6 +7,7 @@ import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
 import javax.inject.Provider;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -57,11 +58,13 @@ public final class ProcessRunnable implements Runnable {
         private Range<Integer> allowedExitValues = closed(0, 0);
         private boolean validateExitValue = true;
 
+        @Inject
         public Builder withService(ProcessService service) {
             this.service = service;
             return this;
         }
 
+        @Inject
         public Builder withContext(ProcessContext context) {
             this.context = context;
             return this;
