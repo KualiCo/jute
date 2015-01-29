@@ -31,12 +31,12 @@ public final class SetVersionProcessContextProvider implements Provider<ProcessC
     @Override
     public ProcessContext get() {
 
-        //
+        // setup the info needed for the process context
         String command = "mvn";
         List<String> args = getArgs(version);
         File directory = dirs.getBasedir();
 
-        //
+        // create an immutable process context
         ProcessContext.Builder builder = ProcessContext.builder();
         builder.withCommand(command);
         builder.withArgs(args);
