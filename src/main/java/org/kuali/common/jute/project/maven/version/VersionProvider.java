@@ -1,4 +1,4 @@
-package org.kuali.common.jute.project.maven;
+package org.kuali.common.jute.project.maven.version;
 
 import static com.google.common.base.Optional.absent;
 import static java.lang.Integer.parseInt;
@@ -11,6 +11,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
+
+import org.kuali.common.jute.project.maven.Project;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Splitter;

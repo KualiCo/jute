@@ -1,4 +1,4 @@
-package org.kuali.common.jute.project.maven;
+package org.kuali.common.jute.project.maven.version;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Optional.absent;

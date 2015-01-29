@@ -1,4 +1,4 @@
-package org.kuali.common.jute.project.maven;
+package org.kuali.common.jute.project.maven.version;
 
 import static java.lang.System.currentTimeMillis;
 import static org.apache.commons.lang3.StringUtils.left;
@@ -45,15 +45,15 @@ public final class NightlyVersionProvider implements Provider<String> {
     private String getQualifier(BuildScm scm) {
         switch (scm.getType()) {
             case GIT:
-                // Pre-pending the revision with the current date so sorting works correctly
-                // Git revision's are a 128 bit hash, so sorting would not work otherwise
-                // For the "normal" use case, where builds are done once per day, we should be good to go
-                // If two builds are done on the same day, they will not sort correctly
+                // Prefix the revision with the current date so sorting works correctly.
+                // Git revision's are a 128 bit hash, so sorting would not work otherwise.
+                // For the "normal" use case, where builds are done once per day, things will be a-ok.
+                // However, if more than one build is done per day, sorting isn't going to work.
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 String day = sdf.format(new Date(currentTimeMillis()));
                 return day + "-r" + left(scm.getRevision(), 8);
             case SVN:
-                // Subversion uses a simple, incrementing, number. Sorting is going to work correctly out of the box
+                // Subversion uses a simple, incrementing, number. Works well with sorting
                 return "r" + scm.getRevision();
             default:
                 throw illegalArgument("%s is unknown", scm.getType());

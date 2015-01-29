@@ -7,6 +7,7 @@ import static org.kuali.common.jute.project.UnitTestInjection.createUnitTestInje
 import org.junit.Test;
 import org.kuali.common.jute.base.BaseUnitTest;
 import org.kuali.common.jute.json.JsonService;
+import org.kuali.common.jute.project.maven.version.VersionProvider;
 
 public class VersionProviderTest extends BaseUnitTest {
 
