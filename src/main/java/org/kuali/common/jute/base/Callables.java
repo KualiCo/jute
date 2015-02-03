@@ -29,8 +29,7 @@ import java.util.concurrent.Future;
 
 public final class Callables {
 
-    private Callables() {
-    }
+    private Callables() {}
 
     public static <T> List<T> submitCallables(List<? extends Callable<T>> callables) {
         checkNotNull(callables);
