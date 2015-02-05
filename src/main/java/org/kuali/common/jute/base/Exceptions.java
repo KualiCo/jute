@@ -35,8 +35,7 @@ import java.io.StringWriter;
  */
 public final class Exceptions {
 
-    private Exceptions() {
-    }
+    private Exceptions() {}
 
     public static String getStackTrace(Throwable throwable) {
         StringWriter sw = new StringWriter();
