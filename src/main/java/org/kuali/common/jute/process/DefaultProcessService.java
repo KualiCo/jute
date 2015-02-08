@@ -74,7 +74,7 @@ public class DefaultProcessService implements ProcessService {
         }
     }
 
-    private boolean isAlive(Process process) {
+    protected boolean isAlive(Process process) {
         try {
             process.exitValue();
             return false;
