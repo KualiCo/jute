@@ -57,21 +57,21 @@ public class DefaultProcessService implements ProcessService {
 
         TimedInterval timing = TimedInterval.build(sw);
         int exitValue = process.exitValue();
-        ProcessResult.Builder builder = ProcessResult.builder();
         Closer closer = Closer.create();
         try {
+            ProcessResult.Builder builder = ProcessResult.builder();
             ByteSource stdout = wrap(toByteArray(closer.register(process.getInputStream())));
             ByteSource stderr = wrap(toByteArray(closer.register(process.getErrorStream())));
             builder.withExitValue(exitValue);
             builder.withStderr(stderr);
             builder.withStdout(stdout);
             builder.withTiming(timing);
+            return builder.build();
         } catch (Throwable e) {
             throw closer.rethrow(e);
         } finally {
             closer.close();
         }
-        return builder.build();
     }
 
     private boolean isAlive(Process process) {
