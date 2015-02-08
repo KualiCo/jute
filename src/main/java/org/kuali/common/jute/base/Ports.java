@@ -19,8 +19,7 @@ import com.google.common.collect.Range;
 
 public final class Ports {
 
-    private Ports() {
-    }
+    private Ports() {}
 
     public static final int MIN = 0;
     public static final int MAX = 65535;

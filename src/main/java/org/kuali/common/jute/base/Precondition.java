@@ -37,7 +37,9 @@ import com.google.common.collect.Iterables;
  * this.foo = checkNotBlank(foo, &quot;foo&quot;);
  * </pre>
  */
-public class Precondition {
+public final class Precondition {
+
+    private Precondition() {}
 
     private static final String NOT_NULL_MSG = "'%s' cannot be null";
     private static final String EXISTS_MSG = "[%s] does not exist";

@@ -16,7 +16,7 @@ import com.google.common.base.Predicate;
 
 public final class Predicates {
 
-    private Predicates() {};
+    private Predicates() {}
 
     private static final Predicate<CharSequence> ALWAYS_TRUE = alwaysTrue();
     private static final Predicate<CharSequence> ALWAYS_FALSE = alwaysFalse();

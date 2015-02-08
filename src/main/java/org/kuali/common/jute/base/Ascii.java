@@ -5,8 +5,7 @@ import static com.google.common.base.Ascii.isUpperCase;
 
 public final class Ascii {
 
-    private Ascii() {
-    }
+    private Ascii() {}
 
     public static boolean isLetter(char c) {
         return isLowerCase(c) || isUpperCase(c);

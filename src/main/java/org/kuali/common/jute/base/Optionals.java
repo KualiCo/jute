@@ -13,6 +13,8 @@ import com.google.common.base.Optional;
 
 public final class Optionals {
 
+    private Optionals() {}
+
     private static final long NEGATIVE_ONE = -1;
 
     public static Optional<Integer> optionalInteger(String text) {

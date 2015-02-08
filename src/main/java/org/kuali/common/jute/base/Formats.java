@@ -44,7 +44,9 @@ import com.google.common.collect.Iterables;
  * @author Jeff Caddel
  * @since May 27, 2010 6:46:17 PM
  */
-public class Formats {
+public final class Formats {
+
+    private Formats() {}
 
     public static final double SECOND = 1000;
     public static final double MINUTE = 60 * SECOND;

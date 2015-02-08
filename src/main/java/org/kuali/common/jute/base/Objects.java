@@ -17,7 +17,9 @@ package org.kuali.common.jute.base;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class Objects {
+public final class Objects {
+
+    private Objects() {}
 
     /**
      * Return true if {@code reference} and {@code object} are not null, the exact same runtime type, and {@code reference.compareTo(object) == 0}
