@@ -13,5 +13,4 @@ import com.google.inject.BindingAnnotation;
 @BindingAnnotation
 @Target({ FIELD, PARAMETER, METHOD })
 @Retention(RUNTIME)
-public @interface OpenSSLCharset {
-}
+public @interface OpenSSLCharset {}
