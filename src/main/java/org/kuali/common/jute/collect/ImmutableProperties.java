@@ -34,7 +34,7 @@ import com.google.common.collect.ImmutableSet;
 public final class ImmutableProperties extends Properties {
 
     private static final long serialVersionUID = 0;
-    private static final String UOE_MSG = "Immutable properties cannot be changed";
+    private static final String UOE_MSG = "immutable properties cannot be changed";
     private static final Properties EMPTY = copyOf(new Properties());
 
     private ImmutableProperties(Properties mutable) {
@@ -47,7 +47,7 @@ public final class ImmutableProperties extends Properties {
             Set<String> keys = mutable.stringPropertyNames();
 
             // If the sizes are different, it contains at least one key or value that is not a string
-            checkArgument(keys.size() == mutable.size(), "Immutable properties only support strings");
+            checkArgument(keys.size() == mutable.size(), "immutable properties only support strings");
 
             // Copy every key/value pair - can't use putAll() since it calls put() which is now disabled
             for (String key : keys) {
