@@ -17,6 +17,8 @@ package org.kuali.common.jute.runtime;
 
 import static org.kuali.common.jute.base.Precondition.checkMin;
 
+import javax.inject.Provider;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @JsonDeserialize(builder = Memory.Builder.class)
@@ -55,7 +57,7 @@ public final class Memory {
         return new Builder();
     }
 
-    public static class Builder implements org.apache.commons.lang3.builder.Builder<Memory> {
+    public static class Builder implements org.apache.commons.lang3.builder.Builder<Memory>, Provider<Memory> {
 
         // Total amount of memory the JVM is allowed to use
         private long max;
@@ -87,6 +89,11 @@ public final class Memory {
         public Builder withMax(long max) {
             this.max = max;
             return this;
+        }
+
+        @Override
+        public Memory get() {
+            return build();
         }
 
         @Override
