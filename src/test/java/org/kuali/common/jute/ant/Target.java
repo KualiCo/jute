@@ -1,5 +1,6 @@
 package org.kuali.common.jute.ant;
 
+import static com.google.common.base.Optional.absent;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.kuali.common.jute.base.Objects.equalByComparison;
 import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
@@ -7,6 +8,7 @@ import static org.kuali.common.jute.reflect.Reflection.checkNoNulls;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 
 @JsonDeserialize(builder = Target.Builder.class)
@@ -14,9 +16,13 @@ public final class Target implements Comparable<Target> {
 
     private final String name;
     private final ImmutableList<Target> depends;
+    private final Optional<String> unless;
+    private final Optional<String> iff;
 
     private Target(Builder builder) {
         this.name = builder.name;
+        this.unless = builder.unless;
+        this.iff = builder.iff;
         this.depends = ImmutableList.copyOf(builder.depends);
     }
 
@@ -24,6 +30,8 @@ public final class Target implements Comparable<Target> {
 
         private String name;
         private List<Target> depends = newArrayList();
+        private Optional<String> unless = absent();
+        private Optional<String> iff = absent();
 
         public Builder withName(String name) {
             this.name = name;
@@ -67,6 +75,14 @@ public final class Target implements Comparable<Target> {
     @Override
     public String toString() {
         return name;
+    }
+
+    public Optional<String> getUnless() {
+        return unless;
+    }
+
+    public Optional<String> getIff() {
+        return iff;
     }
 
 }
