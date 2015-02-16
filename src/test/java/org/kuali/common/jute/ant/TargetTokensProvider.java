@@ -1,9 +1,12 @@
 package org.kuali.common.jute.ant;
 
+import static com.google.common.base.Strings.nullToEmpty;
 import static com.google.common.collect.ImmutableList.copyOf;
 import static com.google.common.collect.Lists.transform;
 import static com.google.common.collect.Ordering.natural;
+import static org.apache.commons.lang3.StringUtils.substringBetween;
 import static org.apache.commons.lang3.StringUtils.substringsBetween;
+import static org.kuali.common.jute.base.Optionals.fromTrimToNull;
 import static org.kuali.common.jute.base.Precondition.checkNotBlank;
 import static org.kuali.common.jute.base.Strings.flatten;
 
@@ -15,8 +18,10 @@ import javax.inject.Provider;
 import org.kuali.common.jute.ant.annotation.BuildFileContent;
 
 import com.google.common.base.Function;
+import com.google.common.base.Optional;
+import com.google.common.base.Splitter;
 
-public class TargetTokensProvider implements Provider<List<String>> {
+public class TargetTokensProvider implements Provider<List<Target>> {
 
     @Inject
     public TargetTokensProvider(@BuildFileContent String content) {
@@ -26,14 +31,34 @@ public class TargetTokensProvider implements Provider<List<String>> {
     private final String content;
 
     @Override
-    public List<String> get() {
+    public List<Target> get() {
         String token = "<target";
         Function<String, String> transformer = new TokenFunction(token);
-        return natural().sortedCopy(transform(copyOf(substringsBetween(content, token, token)), transformer));
+        List<String> tokens = natural().sortedCopy(transform(copyOf(substringsBetween(content, token, token)), transformer));
+        return null;
     }
 
     public String getContent() {
         return content;
+    }
+
+    private enum TargetFunction implements Function<String, Target> {
+        INSTANCE;
+
+        Splitter splitter = Splitter.on(',').omitEmptyStrings().trimResults();
+
+        @Override
+        public Target apply(String input) {
+            String fragment = substringBetween(input, "<target", ">");
+            String name = substringBetween(fragment, "name=\"", "\"");
+            Optional<String> iff = fromTrimToNull(substringBetween(input, "if=\"", "\""));
+            Optional<String> unless = fromTrimToNull(substringBetween(input, "unless=\"", "\""));
+            List<String> depends = splitter.splitToList(nullToEmpty(substringBetween(fragment, "depends=\"", "\"")));
+            Target.Builder builder = Target.builder();
+            builder.withName(name);
+            builder.withDepends(depends);
+            return builder.build();
+        }
     }
 
     private static class TokenFunction implements Function<String, String> {

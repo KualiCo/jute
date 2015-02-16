@@ -15,7 +15,7 @@ import com.google.common.collect.ImmutableList;
 public final class Target implements Comparable<Target> {
 
     private final String name;
-    private final ImmutableList<Target> depends;
+    private final ImmutableList<String> depends;
     private final Optional<String> unless;
     private final Optional<String> iff;
 
@@ -26,19 +26,33 @@ public final class Target implements Comparable<Target> {
         this.depends = ImmutableList.copyOf(builder.depends);
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
     public static class Builder implements org.apache.commons.lang3.builder.Builder<Target> {
 
         private String name;
-        private List<Target> depends = newArrayList();
+        private List<String> depends = newArrayList();
         private Optional<String> unless = absent();
         private Optional<String> iff = absent();
+
+        public Builder withIff(Optional<String> iff) {
+            this.iff = iff;
+            return this;
+        }
+
+        public Builder withUnless(Optional<String> unless) {
+            this.unless = unless;
+            return this;
+        }
 
         public Builder withName(String name) {
             this.name = name;
             return this;
         }
 
-        public Builder withDepends(List<Target> depends) {
+        public Builder withDepends(List<String> depends) {
             this.depends = depends;
             return this;
         }
@@ -53,7 +67,7 @@ public final class Target implements Comparable<Target> {
         return name;
     }
 
-    public List<Target> getDepends() {
+    public List<String> getDepends() {
         return depends;
     }
 
