@@ -1,5 +1,6 @@
 package org.kuali.common.jute.ant;
 
+import static com.google.common.base.Functions.compose;
 import static com.google.common.base.Strings.nullToEmpty;
 import static com.google.common.collect.ImmutableList.copyOf;
 import static com.google.common.collect.Lists.transform;
@@ -33,9 +34,8 @@ public class TargetTokensProvider implements Provider<List<Target>> {
     @Override
     public List<Target> get() {
         String token = "<target";
-        Function<String, String> transformer = new TokenFunction(token);
-        List<String> tokens = natural().sortedCopy(transform(copyOf(substringsBetween(content, token, token)), transformer));
-        return null;
+        Function<String, Target> transformer = compose(TargetFunction.INSTANCE, new TokenFunction(token));
+        return natural().sortedCopy(transform(copyOf(substringsBetween(content, token, token)), transformer));
     }
 
     public String getContent() {
@@ -57,6 +57,8 @@ public class TargetTokensProvider implements Provider<List<Target>> {
             Target.Builder builder = Target.builder();
             builder.withName(name);
             builder.withDepends(depends);
+            builder.withIff(iff);
+            builder.withUnless(unless);
             return builder.build();
         }
     }

@@ -6,19 +6,18 @@ import static org.kuali.common.jute.base.Exceptions.illegalState;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
-import org.kuali.common.jute.ant.annotation.BuildFileContent;
 import org.kuali.common.jute.ant.annotation.BuildFile;
+import org.kuali.common.jute.ant.annotation.BuildFileContent;
 import org.kuali.common.jute.env.Environment;
 import org.kuali.common.jute.system.User;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import com.google.inject.TypeLiteral;
 
 public class AntModule extends AbstractModule {
-
-    @Override
-    protected void configure() {}
 
     @Provides
     @BuildFile
@@ -35,6 +34,11 @@ public class AntModule extends AbstractModule {
         } catch (IOException e) {
             throw illegalState(e);
         }
+    }
+
+    @Override
+    protected void configure() {
+        bind(new TypeLiteral<List<Target>>() {}).toProvider(TargetTokensProvider.class);
     }
 
 }
