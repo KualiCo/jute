@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.kuali.common.jute.ant.annotation.BuildFile;
 import org.kuali.common.jute.ant.annotation.BuildFileContent;
+import org.kuali.common.jute.ant.annotation.Targets;
 import org.kuali.common.jute.env.Environment;
 import org.kuali.common.jute.system.User;
 
@@ -38,7 +39,7 @@ public class AntModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(new TypeLiteral<List<Target>>() {}).toProvider(TargetTokensProvider.class);
+        bind(new TypeLiteral<List<Target>>() {}).annotatedWith(Targets.class).toProvider(TargetTokensProvider.class);
     }
 
 }
