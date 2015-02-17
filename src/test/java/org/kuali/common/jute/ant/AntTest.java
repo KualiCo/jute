@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.Test;
 import org.kuali.common.jute.ant.annotation.Targets;
 import org.kuali.common.jute.base.BaseUnitTest;
+import org.kuali.common.jute.json.JsonService;
 
 import com.google.inject.Injector;
 import com.google.inject.Key;
@@ -23,9 +24,8 @@ public class AntTest extends BaseUnitTest {
             Injector injector = createInjector(concat(getUnitTestModules(), asList(new AntModule())));
             Key<List<Target>> key = Key.get(new TypeLiteral<List<Target>>() {}, Targets.class);
             List<Target> targets = injector.getInstance(key);
-            for (Target target : targets) {
-                info(target.getName());
-            }
+            JsonService json = injector.getInstance(JsonService.class);
+            info("\n" + json.writeString(targets));
         } catch (Throwable e) {
             e.printStackTrace();
         }
