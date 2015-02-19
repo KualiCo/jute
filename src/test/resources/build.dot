@@ -1,0 +1,30 @@
+digraph "G" {
+    graph ["rankdir"="LR",];
+    node ["style"="filled","shape"="egg","color"="grey90",];
+    "init-property-files";
+    "init-properties";
+    "init-properties" -> "init-core-properties";
+    "init-properties" -> "init-property-files";
+    "init-properties" -> "init-base-properties";
+    "init-properties" -> "init-database-properties";
+    "init-properties" -> "init-spring-properties";
+    "init-properties" -> "init-rice-properties";
+    "init-properties" -> "init-b2b-properties";
+    "init-properties" -> "init-other-properties";
+    "init-properties" -> "init-test-properties";
+    "init-core-properties";
+    "init-base-properties";
+    "init-base-properties" -> "init-property-files";
+    "init-database-properties";
+    "init-database-properties" -> "init-property-files";
+    "init-spring-properties";
+    "init-spring-properties" -> "init-property-files";
+    "init-rice-properties";
+    "init-rice-properties" -> "init-property-files";
+    "init-b2b-properties";
+    "init-b2b-properties" -> "init-property-files";
+    "init-other-properties";
+    "init-other-properties" -> "init-property-files";
+    "init-test-properties";
+    "init-test-properties" -> "init-property-files";
+}

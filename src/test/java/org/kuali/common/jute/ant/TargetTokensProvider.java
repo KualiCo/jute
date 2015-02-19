@@ -33,9 +33,10 @@ public class TargetTokensProvider implements Provider<List<Target>> {
 
     @Override
     public List<Target> get() {
-        String token = "<target";
-        Function<String, Target> transformer = compose(TargetFunction.INSTANCE, new TokenFunction(token));
-        return natural().sortedCopy(transform(copyOf(substringsBetween(content, token, token)), transformer));
+        String open = "<target";
+        String close = ">";
+        Function<String, Target> transformer = compose(TargetFunction.INSTANCE, new TokenFunction(open, close));
+        return natural().sortedCopy(transform(copyOf(substringsBetween(content, open, close)), transformer));
     }
 
     public String getContent() {
@@ -65,15 +66,17 @@ public class TargetTokensProvider implements Provider<List<Target>> {
 
     private static class TokenFunction implements Function<String, String> {
 
-        public TokenFunction(String prefix) {
+        public TokenFunction(String prefix, String suffix) {
             this.prefix = prefix;
+            this.suffix = suffix;
         }
 
         private final String prefix;
+        private final String suffix;
 
         @Override
         public String apply(String input) {
-            return flatten(prefix + input);
+            return flatten(prefix + input + suffix);
         }
 
     }

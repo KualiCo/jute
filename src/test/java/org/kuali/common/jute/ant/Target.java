@@ -18,11 +18,13 @@ public final class Target implements Comparable<Target> {
     private final ImmutableList<String> depends;
     private final Optional<String> unless;
     private final Optional<String> iff;
+    private final Optional<String> description;
 
     private Target(Builder builder) {
         this.name = builder.name;
         this.unless = builder.unless;
         this.iff = builder.iff;
+        this.description = builder.description;
         this.depends = ImmutableList.copyOf(builder.depends);
     }
 
@@ -36,6 +38,12 @@ public final class Target implements Comparable<Target> {
         private List<String> depends = newArrayList();
         private Optional<String> unless = absent();
         private Optional<String> iff = absent();
+        private Optional<String> description = absent();
+
+        public Builder withDescription(Optional<String> description) {
+            this.description = description;
+            return this;
+        }
 
         public Builder withIff(Optional<String> iff) {
             this.iff = iff;
@@ -97,6 +105,10 @@ public final class Target implements Comparable<Target> {
 
     public Optional<String> getIff() {
         return iff;
+    }
+
+    public Optional<String> getDescription() {
+        return description;
     }
 
 }

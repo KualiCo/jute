@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<project name="vizant" basedir="." xmlns:rsel="antlib:org.apache.tools.ant.types.resources.selectors"
+  xmlns:rcmp="antlib:org.apache.tools.ant.types.resources.comparators" xmlns:ivy="antlib:org.apache.ivy.ant">
+  <taskdef name="vizant" classname="net.sourceforge.vizant.Vizant" classpath="/Users/jcaddel/Downloads/vizant-0.1.2.jar" />
+
+  <target name="vizant">
+    <vizant antfile="/Users/jcaddel/git/kfs/build.xml" outfile="build.dot">
+      <attrstmt type="node">
+        <attr name="style" value="filled" />
+        <attr name="shape" value="egg" />
+        <attr name="color" value="grey90" />
+      </attrstmt>
+    </vizant>
+    <exec executable="dot">
+      <arg line="-Tpng build.dot -o build.png" />
+    </exec>
+    <vizant antfile="/Users/jcaddel/git/kfs/build.xml" outfile="build.dot" from="dist-local">
+      <attrstmt type="node">
+        <attr name="style" value="filled" />
+        <attr name="shape" value="egg" />
+        <attr name="color" value="grey90" />
+      </attrstmt>
+    </vizant>
+    <exec executable="dot">
+      <arg line="-Tpng build.dot -o distlocal.png" />
+    </exec>
+    <vizant antfile="/Users/jcaddel/git/kfs/build.xml" outfile="build.dot" from="make-source">
+      <attrstmt type="node">
+        <attr name="style" value="filled" />
+        <attr name="shape" value="egg" />
+        <attr name="color" value="grey90" />
+      </attrstmt>
+    </vizant>
+    <exec executable="dot">
+      <arg line="-Tpng build.dot -o makesource.png" />
+    </exec>
+    <vizant antfile="/Users/jcaddel/git/kfs/build.xml" outfile="build.dot" from="init-properties">
+      <attrstmt type="node">
+        <attr name="style" value="filled" />
+        <attr name="shape" value="egg" />
+        <attr name="color" value="grey90" />
+      </attrstmt>
+    </vizant>
+    <exec executable="dot">
+      <arg line="-Tpng build.dot -o initprops.png" />
+    </exec>
+  </target>
+</project>
