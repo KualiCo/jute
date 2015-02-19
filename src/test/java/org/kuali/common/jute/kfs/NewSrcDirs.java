@@ -12,11 +12,15 @@ public final class NewSrcDirs {
     private final File basedir;
     private final DirPair main;
     private final DirPair test;
+    private final DirPair integration;
+    private final DirPair infrastructure;
 
     private NewSrcDirs(Builder builder) {
         this.basedir = builder.basedir;
         this.main = builder.main;
         this.test = builder.test;
+        this.integration = builder.integration;
+        this.infrastructure = builder.infrastructure;
     }
 
     public static Builder builder() {
@@ -28,9 +32,21 @@ public final class NewSrcDirs {
         private File basedir;
         private DirPair main;
         private DirPair test;
+        private DirPair integration;
+        private DirPair infrastructure;
 
         public Builder withBasedir(File basedir) {
             this.basedir = basedir;
+            return this;
+        }
+
+        public Builder withIntegration(DirPair integration) {
+            this.integration = integration;
+            return this;
+        }
+
+        public Builder withInfrastructure(DirPair infrastructure) {
+            this.infrastructure = infrastructure;
             return this;
         }
 
@@ -60,6 +76,14 @@ public final class NewSrcDirs {
 
     public DirPair getTest() {
         return test;
+    }
+
+    public DirPair getIntegration() {
+        return integration;
+    }
+
+    public DirPair getInfrastructure() {
+        return infrastructure;
     }
 
 }

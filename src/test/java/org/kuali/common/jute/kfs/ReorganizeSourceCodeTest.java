@@ -33,14 +33,14 @@ public class ReorganizeSourceCodeTest extends BaseUnitTest {
             List<File> files = injector.getInstance(Key.get(new TypeLiteral<List<File>>() {}, Files.class));
             List<String> moves = injector.getInstance(Key.get(new TypeLiteral<List<String>>() {}, MoveCommands.class));
             List<String> mkdirs = injector.getInstance(Key.get(new TypeLiteral<List<String>>() {}, MkdirCommands.class));
-            info("basedir  -> %s", basedir);
-            info("files    -> %s", files.size());
-            info("moves    -> %s", moves.size());
-            info("mkdirs   -> %s", mkdirs.size());
+            info("basedir -> %s", basedir);
+            info("files   -> %s", files.size());
+            info("mkdirs  -> %s", mkdirs.size());
+            info("moves   -> %s", moves.size());
             File output = new File(basedir, "reorganize").getCanonicalFile();
-            info("create   -> %s", output);
+            info("create  -> %s", output);
             createParentDirs(output);
-            write(Joiner.on('\n').join(concat(mkdirs, moves)), output, UTF_8);
+            write(Joiner.on('\n').join(concat(asList("#!/bin/bash", "date"), mkdirs, moves, asList("date"))), output, UTF_8);
         } catch (Exception e) {
             e.printStackTrace();
         }

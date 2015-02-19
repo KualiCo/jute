@@ -1,12 +1,16 @@
 package org.kuali.common.jute.kfs;
 
 import static com.google.common.collect.ImmutableList.copyOf;
+import static com.google.common.collect.Iterables.filter;
 import static com.google.common.collect.Iterables.transform;
 import static com.google.common.collect.Ordering.natural;
 import static com.google.common.io.Files.fileTreeTraverser;
+import static com.google.common.io.Files.isFile;
+import static org.kuali.common.jute.base.Exceptions.illegalState;
 import static org.kuali.common.jute.kfs.Functions.gitMoveCommand;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.kuali.common.jute.env.Environment;
@@ -32,14 +36,18 @@ public class KfsModule extends AbstractModule {
     @Provides
     @Basedir
     protected File basedir(Environment env, User user) {
-        String basedir = env.getProperty("kfs.basedir", user.getHome() + "/git/kfs");
-        return new File(basedir);
+        try {
+            String basedir = env.getProperty("kfs.basedir", user.getHome() + "/git/kfs");
+            return new File(basedir).getCanonicalFile();
+        } catch (IOException e) {
+            throw illegalState(e);
+        }
     }
 
     @Provides
     @Files
     protected List<File> files(@Basedir File basedir) {
-        return copyOf(natural().sortedCopy(copyOf(fileTreeTraverser().breadthFirstTraversal(basedir))));
+        return copyOf(natural().sortedCopy(filter(fileTreeTraverser().breadthFirstTraversal(basedir), isFile())));
     }
 
     @Provides
@@ -57,10 +65,14 @@ public class KfsModule extends AbstractModule {
     protected NewSrcDirs newSrcDirs(@Basedir File basedir) {
         DirPair main = DirPair.build(new File(basedir, "src/main/java"), new File(basedir, "src/main/resources"));
         DirPair test = DirPair.build(new File(basedir, "src/test/java"), new File(basedir, "src/test/resources"));
+        DirPair it = DirPair.build(new File(basedir, "src/it/java"), new File(basedir, "src/it/resources"));
+        DirPair in = DirPair.build(new File(basedir, "src/in/java"), new File(basedir, "src/in/resources"));
         NewSrcDirs.Builder builder = NewSrcDirs.builder();
         builder.withBasedir(basedir);
         builder.withMain(main);
         builder.withTest(test);
+        builder.withIntegration(it);
+        builder.withInfrastructure(in);
         return builder.build();
     }
 

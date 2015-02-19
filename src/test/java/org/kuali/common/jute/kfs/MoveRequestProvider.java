@@ -6,7 +6,7 @@ import static com.google.common.collect.ImmutableList.copyOf;
 import static com.google.common.collect.Iterables.concat;
 import static com.google.common.collect.Iterables.filter;
 import static com.google.common.collect.Iterables.transform;
-import static org.apache.commons.lang3.StringUtils.removeStart;
+import static org.kuali.common.jute.io.Files.relativePath;
 import static org.kuali.common.jute.kfs.Predicates.childOf;
 import static org.kuali.common.jute.kfs.Predicates.javaFile;
 
@@ -38,8 +38,8 @@ public final class MoveRequestProvider implements Provider<List<MoveRequest>> {
     public List<MoveRequest> get() {
         List<MoveRequest> list1 = split(oldDirs.getWork(), newDirs.getMain());
         List<MoveRequest> list2 = split(oldDirs.getUnit(), newDirs.getTest());
-        List<MoveRequest> list3 = split(oldDirs.getInfrastructure(), newDirs.getTest());
-        List<MoveRequest> list4 = split(oldDirs.getIntegration(), newDirs.getTest());
+        List<MoveRequest> list3 = split(oldDirs.getInfrastructure(), newDirs.getInfrastructure());
+        List<MoveRequest> list4 = split(oldDirs.getIntegration(), newDirs.getIntegration());
         return copyOf(concat(list1, list2, list3, list4));
     }
 
@@ -63,7 +63,7 @@ public final class MoveRequestProvider implements Provider<List<MoveRequest>> {
 
         @Override
         public MoveRequest apply(File input) {
-            String path = removeStart(removeStart(input.getAbsolutePath(), oldDir.getAbsolutePath()), File.separator);
+            String path = relativePath(oldDir, input);
             File dst = new File(newDir, path);
             return MoveRequest.builder().withDst(dst).withSrc(input).build();
         }
