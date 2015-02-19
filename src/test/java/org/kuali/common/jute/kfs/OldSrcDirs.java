@@ -14,6 +14,7 @@ public final class OldSrcDirs {
     private final File unit;
     private final File integration;
     private final File infrastructure;
+    private final File webapp;
 
     private OldSrcDirs(Builder builder) {
         this.basedir = builder.basedir;
@@ -21,6 +22,7 @@ public final class OldSrcDirs {
         this.unit = builder.unit;
         this.integration = builder.integration;
         this.infrastructure = builder.infrastructure;
+        this.webapp = builder.webapp;
     }
 
     public static Builder builder() {
@@ -34,6 +36,12 @@ public final class OldSrcDirs {
         private File unit;
         private File integration;
         private File infrastructure;
+        private File webapp;
+
+        public Builder withWebapp(File webapp) {
+            this.webapp = webapp;
+            return this;
+        }
 
         public Builder withBasedir(File basedir) {
             this.basedir = basedir;
@@ -84,6 +92,10 @@ public final class OldSrcDirs {
 
     public File getInfrastructure() {
         return infrastructure;
+    }
+
+    public File getWebapp() {
+        return webapp;
     }
 
 }
