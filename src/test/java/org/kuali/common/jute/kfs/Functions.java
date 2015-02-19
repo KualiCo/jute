@@ -1,5 +1,6 @@
 package org.kuali.common.jute.kfs;
 
+import static java.lang.String.format;
 import static org.apache.commons.lang3.StringUtils.removeStart;
 
 import java.io.File;
@@ -13,6 +14,24 @@ public final class Functions {
 
     public static Function<MoveRequest, String> gitMoveCommand(File basedir) {
         return new GitMoveCommandFunction(basedir);
+    }
+
+    public static Function<File, String> mkdirCommand(File basedir) {
+        return new MkdirCommandFunction(basedir);
+    }
+
+    private static class MkdirCommandFunction implements Function<File, String> {
+
+        public MkdirCommandFunction(File basedir) {
+            this.basedir = basedir;
+        }
+
+        private final File basedir;
+
+        @Override
+        public String apply(File input) {
+            return format("mkdir -p %s", removeStart(removeStart(input.getAbsolutePath(), basedir.getAbsolutePath()), File.separator));
+        }
     }
 
     private static class GitMoveCommandFunction implements Function<MoveRequest, String> {

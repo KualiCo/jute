@@ -12,6 +12,7 @@ import java.util.List;
 import org.kuali.common.jute.env.Environment;
 import org.kuali.common.jute.kfs.annotation.Basedir;
 import org.kuali.common.jute.kfs.annotation.Files;
+import org.kuali.common.jute.kfs.annotation.MkdirCommands;
 import org.kuali.common.jute.kfs.annotation.MoveCommands;
 import org.kuali.common.jute.kfs.annotation.MoveRequests;
 import org.kuali.common.jute.system.User;
@@ -25,6 +26,7 @@ public class KfsModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(new TypeLiteral<List<MoveRequest>>() {}).annotatedWith(MoveRequests.class).toProvider(MoveRequestProvider.class);
+        bind(new TypeLiteral<List<String>>() {}).annotatedWith(MkdirCommands.class).toProvider(MkdirsProvider.class);
     }
 
     @Provides
