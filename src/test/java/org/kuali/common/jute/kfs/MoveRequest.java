@@ -17,6 +17,10 @@ public final class MoveRequest {
         this.dst = builder.dst;
     }
 
+    public static MoveRequest build(File src, File dst) {
+        return builder().withDst(dst).withSrc(src).build();
+    }
+
     public static Builder builder() {
         return new Builder();
     }

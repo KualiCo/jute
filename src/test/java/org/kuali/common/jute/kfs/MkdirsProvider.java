@@ -21,13 +21,15 @@ import com.google.common.collect.ImmutableList;
 public final class MkdirsProvider implements Provider<List<String>> {
 
     @Inject
-    public MkdirsProvider(@Basedir File basedir, @MoveRequests List<MoveRequest> requests) {
+    public MkdirsProvider(@Basedir File basedir, NewSrcDirs newDirs, @MoveRequests List<MoveRequest> requests) {
         this.requests = copyOf(requests);
         this.basedir = basedir;
+        this.newDirs = newDirs;
     }
 
     private final ImmutableList<MoveRequest> requests;
     private final File basedir;
+    private final NewSrcDirs newDirs;
 
     @Override
     public List<String> get() {
@@ -35,7 +37,16 @@ public final class MkdirsProvider implements Provider<List<String>> {
         for (MoveRequest request : requests) {
             dirs.add(request.getDst().getParentFile());
         }
+        add(dirs, newDirs.getMain());
+        add(dirs, newDirs.getTest());
+        add(dirs, newDirs.getInfrastructure());
+        add(dirs, newDirs.getIntegration());
         return copyOf(transform(natural().sortedCopy(dirs), mkdirCommand(basedir)));
+    }
+
+    private void add(Set<File> dirs, DirPair pair) {
+        dirs.add(pair.getSource().getParentFile());
+        dirs.add(pair.getResources().getParentFile());
     }
 
     public ImmutableList<MoveRequest> getRequests() {

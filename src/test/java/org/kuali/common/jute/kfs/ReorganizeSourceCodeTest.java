@@ -37,10 +37,10 @@ public class ReorganizeSourceCodeTest extends BaseUnitTest {
             info("files   -> %s", files.size());
             info("mkdirs  -> %s", mkdirs.size());
             info("moves   -> %s", moves.size());
-            File output = new File(basedir, "reorganize").getCanonicalFile();
-            info("create  -> %s", output);
-            createParentDirs(output);
-            write(Joiner.on('\n').join(concat(asList("#!/bin/bash", "date"), mkdirs, moves, asList("date"))), output, UTF_8);
+            File reorganize = new File(basedir, "reorganize");
+            info("create  -> %s", reorganize);
+            createParentDirs(reorganize);
+            write(Joiner.on('\n').join(concat(asList("#!/bin/bash", "date"), mkdirs, moves, asList("date"))), reorganize, UTF_8);
         } catch (Exception e) {
             e.printStackTrace();
         }

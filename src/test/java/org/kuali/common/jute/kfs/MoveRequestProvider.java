@@ -3,9 +3,10 @@ package org.kuali.common.jute.kfs;
 import static com.google.common.base.Predicates.and;
 import static com.google.common.base.Predicates.not;
 import static com.google.common.collect.ImmutableList.copyOf;
-import static com.google.common.collect.Iterables.concat;
 import static com.google.common.collect.Iterables.filter;
 import static com.google.common.collect.Iterables.transform;
+import static com.google.common.collect.Lists.newArrayList;
+import static java.util.Arrays.asList;
 import static org.kuali.common.jute.io.Files.relativePath;
 import static org.kuali.common.jute.kfs.Predicates.childOf;
 import static org.kuali.common.jute.kfs.Predicates.javaFile;
@@ -36,36 +37,39 @@ public final class MoveRequestProvider implements Provider<List<MoveRequest>> {
 
     @Override
     public List<MoveRequest> get() {
-        List<MoveRequest> list1 = split(oldDirs.getWork(), newDirs.getMain());
-        List<MoveRequest> list2 = split(oldDirs.getUnit(), newDirs.getTest());
-        List<MoveRequest> list3 = split(oldDirs.getInfrastructure(), newDirs.getInfrastructure());
-        List<MoveRequest> list4 = split(oldDirs.getIntegration(), newDirs.getIntegration());
-        return copyOf(concat(list1, list2, list3, list4));
+        MoveRequest mr1 = MoveRequest.build(oldDirs.getWork(), newDirs.getMain().getSource());
+        MoveRequest mr2 = MoveRequest.build(oldDirs.getUnit(), newDirs.getTest().getSource());
+        MoveRequest mr3 = MoveRequest.build(oldDirs.getIntegration(), newDirs.getIntegration().getSource());
+        MoveRequest mr4 = MoveRequest.build(oldDirs.getInfrastructure(), newDirs.getInfrastructure().getSource());
+        List<MoveRequest> requests = newArrayList(asList(mr1, mr2, mr3, mr4));
+        requests.addAll(moveResources(oldDirs.getWork(), newDirs.getMain()));
+        requests.addAll(moveResources(oldDirs.getInfrastructure(), newDirs.getInfrastructure()));
+        requests.addAll(moveResources(oldDirs.getIntegration(), newDirs.getIntegration()));
+        requests.addAll(moveResources(oldDirs.getUnit(), newDirs.getTest()));
+        return copyOf(requests);
     }
 
-    private List<MoveRequest> split(File oldDir, DirPair pair) {
-        List<File> source = copyOf(filter(files, and(javaFile(), childOf(oldDir))));
+    private List<MoveRequest> moveResources(File oldDir, DirPair pair) {
         List<File> resources = copyOf(filter(files, and(not(javaFile()), childOf(oldDir))));
-        List<MoveRequest> list1 = copyOf(transform(source, new MoveRequestFunction(oldDir, pair.getSource())));
-        List<MoveRequest> list2 = copyOf(transform(resources, new MoveRequestFunction(oldDir, pair.getResources())));
-        return copyOf(concat(list1, list2));
+        return copyOf(transform(resources, new MoveRequestFunction(oldDir, pair)));
     }
 
     private static class MoveRequestFunction implements Function<File, MoveRequest> {
 
-        public MoveRequestFunction(File oldDir, File newDir) {
+        public MoveRequestFunction(File oldDir, DirPair pair) {
+            this.pair = pair;
             this.oldDir = oldDir;
-            this.newDir = newDir;
         }
 
+        private final DirPair pair;
         private final File oldDir;
-        private final File newDir;
 
         @Override
         public MoveRequest apply(File input) {
             String path = relativePath(oldDir, input);
-            File dst = new File(newDir, path);
-            return MoveRequest.builder().withDst(dst).withSrc(input).build();
+            File src = new File(pair.getSource(), path);
+            File dst = new File(pair.getResources(), path);
+            return MoveRequest.builder().withDst(dst).withSrc(src).build();
         }
     }
 
