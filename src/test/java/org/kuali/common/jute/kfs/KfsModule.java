@@ -58,6 +58,7 @@ public class KfsModule extends AbstractModule {
         builder.withIntegration(new File(basedir, "test/integration/src"));
         builder.withUnit(new File(basedir, "test/unit/src"));
         builder.withWork(new File(basedir, "work/src"));
+        builder.withWebapp(new File(basedir, "work/web-root"));
         return builder.build();
     }
 
@@ -67,12 +68,15 @@ public class KfsModule extends AbstractModule {
         DirPair test = DirPair.build(new File(basedir, "src/test/java"), new File(basedir, "src/test/resources"));
         DirPair it = DirPair.build(new File(basedir, "src/it/java"), new File(basedir, "src/it/resources"));
         DirPair in = DirPair.build(new File(basedir, "src/in/java"), new File(basedir, "src/in/resources"));
+        File webapp = new File(basedir, "src/main/webapp");
+
         NewSrcDirs.Builder builder = NewSrcDirs.builder();
         builder.withBasedir(basedir);
         builder.withMain(main);
         builder.withTest(test);
         builder.withIntegration(it);
         builder.withInfrastructure(in);
+        builder.withWebapp(webapp);
         return builder.build();
     }
 

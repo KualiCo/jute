@@ -14,6 +14,7 @@ public final class NewSrcDirs {
     private final DirPair test;
     private final DirPair integration;
     private final DirPair infrastructure;
+    private final File webapp;
 
     private NewSrcDirs(Builder builder) {
         this.basedir = builder.basedir;
@@ -21,6 +22,7 @@ public final class NewSrcDirs {
         this.test = builder.test;
         this.integration = builder.integration;
         this.infrastructure = builder.infrastructure;
+        this.webapp = builder.webapp;
     }
 
     public static Builder builder() {
@@ -34,6 +36,12 @@ public final class NewSrcDirs {
         private DirPair test;
         private DirPair integration;
         private DirPair infrastructure;
+        private File webapp;
+
+        public Builder withWebapp(File webapp) {
+            this.webapp = webapp;
+            return this;
+        }
 
         public Builder withBasedir(File basedir) {
             this.basedir = basedir;
@@ -84,6 +92,10 @@ public final class NewSrcDirs {
 
     public DirPair getInfrastructure() {
         return infrastructure;
+    }
+
+    public File getWebapp() {
+        return webapp;
     }
 
 }

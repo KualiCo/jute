@@ -41,7 +41,8 @@ public final class MoveRequestProvider implements Provider<List<MoveRequest>> {
         MoveRequest mr2 = MoveRequest.build(oldDirs.getUnit(), newDirs.getTest().getSource());
         MoveRequest mr3 = MoveRequest.build(oldDirs.getIntegration(), newDirs.getIntegration().getSource());
         MoveRequest mr4 = MoveRequest.build(oldDirs.getInfrastructure(), newDirs.getInfrastructure().getSource());
-        List<MoveRequest> requests = newArrayList(asList(mr1, mr2, mr3, mr4));
+        MoveRequest mr5 = MoveRequest.build(oldDirs.getWebapp(), newDirs.getWebapp());
+        List<MoveRequest> requests = newArrayList(asList(mr1, mr2, mr3, mr4, mr5));
         requests.addAll(moveResources(oldDirs.getWork(), newDirs.getMain()));
         requests.addAll(moveResources(oldDirs.getInfrastructure(), newDirs.getInfrastructure()));
         requests.addAll(moveResources(oldDirs.getIntegration(), newDirs.getIntegration()));
