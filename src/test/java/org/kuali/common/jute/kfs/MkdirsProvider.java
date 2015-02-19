@@ -37,16 +37,12 @@ public final class MkdirsProvider implements Provider<List<String>> {
         for (MoveRequest request : requests) {
             dirs.add(request.getDst().getParentFile());
         }
-        add(dirs, newDirs.getMain());
-        add(dirs, newDirs.getTest());
-        add(dirs, newDirs.getInfrastructure());
-        add(dirs, newDirs.getIntegration());
+        dirs.add(newDirs.getMain().getSource().getParentFile());
+        dirs.add(newDirs.getTest().getSource().getParentFile());
+        dirs.add(newDirs.getInfrastructure().getSource().getParentFile());
+        dirs.add(newDirs.getIntegration().getSource().getParentFile());
+        dirs.add(newDirs.getWebapp().getParentFile());
         return copyOf(transform(natural().sortedCopy(dirs), mkdirCommand(basedir)));
-    }
-
-    private void add(Set<File> dirs, DirPair pair) {
-        dirs.add(pair.getSource().getParentFile());
-        dirs.add(pair.getResources().getParentFile());
     }
 
     public ImmutableList<MoveRequest> getRequests() {
