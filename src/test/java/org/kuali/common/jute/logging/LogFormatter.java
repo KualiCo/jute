@@ -1,6 +1,7 @@
 package org.kuali.common.jute.logging;
 
 import static com.google.common.base.StandardSystemProperty.LINE_SEPARATOR;
+import static java.lang.Thread.currentThread;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,7 +41,7 @@ public class LogFormatter extends Formatter {
 
         SimpleDateFormat format = new SimpleDateFormat(FORMAT);
         String date = format.format(new Date(record.getMillis()));
-        String thread = Thread.currentThread().getName();
+        String thread = currentThread().getName();
         String name = shorten(record.getLoggerName());
         String method = record.getSourceMethodName();
 
