@@ -9,13 +9,41 @@ import static org.kuali.common.jute.base.Precondition.checkMax;
 
 import java.util.Date;
 
+import com.google.common.base.Function;
 import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
 
 public final class Optionals {
 
     private Optionals() {}
 
     private static final long NEGATIVE_ONE = -1;
+
+    public static <T> Function<Optional<T>, T> to() {
+        return new ToFunction<T>();
+    }
+
+    private static class ToFunction<T> implements Function<Optional<T>, T> {
+
+        @Override
+        public T apply(Optional<T> input) {
+            return input.get();
+        }
+
+    }
+
+    public static <T> Predicate<Optional<T>> isPresent() {
+        return new PresentPredicate<T>();
+    }
+
+    private static class PresentPredicate<T> implements Predicate<Optional<T>> {
+
+        @Override
+        public boolean apply(Optional<T> input) {
+            return input.isPresent();
+        }
+
+    }
 
     public static Optional<Integer> optionalInteger(String text) {
         Optional<String> optional = fromTrimToNull(text);
