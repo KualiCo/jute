@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.kuali.common.jute.env.Environment;
 import org.kuali.common.jute.kfs.annotation.Basedir;
+import org.kuali.common.jute.kfs.annotation.DepFragment;
 import org.kuali.common.jute.kfs.annotation.DepVersions;
 import org.kuali.common.jute.kfs.annotation.Deps;
 import org.kuali.common.jute.kfs.annotation.DepsContainer;
@@ -35,6 +36,7 @@ public class KfsDepModule extends AbstractModule {
         bind(new TypeLiteral<List<String>>() {}).annotatedWith(Deps.class).toProvider(DepsProvider.class);
         bind(new TypeLiteral<List<List<String>>>() {}).annotatedWith(DepsContainer.class).toProvider(DepsContainerProvider.class);
         bind(new TypeLiteral<List<String>>() {}).annotatedWith(DepVersions.class).toProvider(DepVersionsProvider.class);
+        bind(new TypeLiteral<String>() {}).annotatedWith(DepFragment.class).toProvider(DepFragmentProvider.class);
     }
 
     @Provides
