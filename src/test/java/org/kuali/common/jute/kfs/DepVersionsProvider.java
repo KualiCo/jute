@@ -4,6 +4,7 @@ import static com.google.common.base.Optional.absent;
 import static com.google.common.collect.ImmutableList.copyOf;
 import static com.google.common.collect.Iterables.filter;
 import static com.google.common.collect.Lists.transform;
+import static com.google.common.collect.Ordering.natural;
 import static org.apache.commons.lang3.StringUtils.substringBetween;
 import static org.kuali.common.jute.base.Exceptions.illegalState;
 
@@ -31,7 +32,7 @@ public final class DepVersionsProvider implements Provider<List<String>> {
     public List<String> get() {
         List<Optional<String>> list = transform(container, VersionPropertyFunction.INSTANCE);
         List<Optional<String>> present = copyOf(filter(list, Optionals.<String> isPresent()));
-        return transform(present, Optionals.<String> to());
+        return natural().immutableSortedCopy(transform(present, Optionals.<String> to()));
     }
 
     private enum VersionPropertyFunction implements Function<List<String>, Optional<String>> {
