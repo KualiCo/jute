@@ -47,7 +47,7 @@ public class LogFormatter extends Formatter {
 
         StringBuilder sb = new StringBuilder();
         sb.append(date);
-        sb.append("  ");
+        sb.append(" ");
         sb.append(record.getLevel());
         sb.append(" ");
         sb.append(PID.orNull());
@@ -55,8 +55,10 @@ public class LogFormatter extends Formatter {
         sb.append(thread);
         sb.append("] ");
         sb.append(name);
-        sb.append(".");
-        sb.append(method);
+        if (method != null) {
+            sb.append(".");
+            sb.append(method);
+        }
         sb.append(" : ");
         sb.append(record.getMessage());
         sb.append(" ");
