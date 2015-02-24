@@ -10,10 +10,10 @@ import javax.inject.Provider;
 
 import org.kuali.common.jute.kfs.annotation.Deps;
 
-public final class DepsContainer implements Provider<List<List<String>>> {
+public final class DepsContainerProvider implements Provider<List<List<String>>> {
 
     @Inject
-    public DepsContainer(@Deps List<String> lines) {
+    public DepsContainerProvider(@Deps List<String> lines) {
         this.lines = lines;
     }
 

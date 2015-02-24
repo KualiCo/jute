@@ -23,6 +23,7 @@ public class KfsDepModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(new TypeLiteral<List<String>>() {}).annotatedWith(Deps.class).toProvider(DepsProvider.class);
+        bind(new TypeLiteral<List<List<String>>>() {}).annotatedWith(Deps.class).toProvider(DepsContainerProvider.class);
     }
 
     @Provides
