@@ -5,14 +5,14 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-import org.kuali.common.jute.kfs.annotation.PomContent;
+import org.kuali.common.jute.kfs.annotation.PomLines;
 
 import com.google.common.collect.ImmutableList;
 
 public final class DepsProvider implements Provider<List<String>> {
 
     @Inject
-    public DepsProvider(@PomContent List<String> lines) {
+    public DepsProvider(@PomLines List<String> lines) {
         this.lines = lines;
     }
 

@@ -11,7 +11,7 @@ import java.util.List;
 import org.junit.Test;
 import org.kuali.common.jute.base.BaseUnitTest;
 import org.kuali.common.jute.kfs.annotation.Basedir;
-import org.kuali.common.jute.kfs.annotation.DepVersions;
+import org.kuali.common.jute.kfs.annotation.NewProperties;
 
 import com.google.common.base.Joiner;
 import com.google.inject.Injector;
@@ -25,10 +25,10 @@ public class DepsTest extends BaseUnitTest {
         try {
             Injector injector = createInjector(concat(getUnitTestModules(), asList(new KfsDepModule())));
             File basedir = injector.getInstance(Key.get(File.class, Basedir.class));
-            List<String> versions = injector.getInstance(Key.get(new TypeLiteral<List<String>>() {}, DepVersions.class));
+            List<String> properties = injector.getInstance(Key.get(new TypeLiteral<List<String>>() {}, NewProperties.class));
             info("basedir  -> %s", basedir);
-            info("versions -> %s", versions.size());
-            info("\n%s", Joiner.on('\n').join(versions));
+            info("properties -> %s", properties.size());
+            info("\n\n%s", Joiner.on('\n').join(properties));
         } catch (Exception e) {
             e.printStackTrace();
         }
