@@ -1,0 +1,4 @@
+commons-collections
+commons-digester
+eclipse:jdtcore
+com.lowagie:itext

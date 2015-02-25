@@ -44,5 +44,15 @@
     <exec executable="dot">
       <arg line="-Tpng build.dot -o initprops.png" />
     </exec>
+    <vizant antfile="/Users/jcaddel/git/kfs/build.xml" outfile="build.dot" from="refresh-db">
+      <attrstmt type="node">
+        <attr name="style" value="filled" />
+        <attr name="shape" value="egg" />
+        <attr name="color" value="grey90" />
+      </attrstmt>
+    </vizant>
+    <exec executable="dot">
+      <arg line="-Tpng build.dot -o refreshdb.png" />
+    </exec>
   </target>
 </project>

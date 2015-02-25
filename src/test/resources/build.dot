@@ -11,7 +11,6 @@ digraph "G" {
     "init-properties" -> "init-rice-properties";
     "init-properties" -> "init-b2b-properties";
     "init-properties" -> "init-other-properties";
-    "init-properties" -> "init-test-properties";
     "init-core-properties";
     "init-base-properties";
     "init-base-properties" -> "init-property-files";
@@ -25,6 +24,11 @@ digraph "G" {
     "init-b2b-properties" -> "init-property-files";
     "init-other-properties";
     "init-other-properties" -> "init-property-files";
-    "init-test-properties";
-    "init-test-properties" -> "init-property-files";
+    "refresh-db";
+    "refresh-db" -> "refresh-rice-db";
+    "refresh-db" -> "refresh-kfs-db";
+    "refresh-rice-db";
+    "refresh-rice-db" -> "init-properties";
+    "refresh-kfs-db";
+    "refresh-kfs-db" -> "init-properties";
 }
