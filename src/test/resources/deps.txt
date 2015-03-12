@@ -1,4 +1,18 @@
-commons-collections
-commons-digester
-eclipse:jdtcore
-com.lowagie:itext
+- ability to create JIRA sub-tasks
+
+- workflow ingestion automation
+-- i've modified Rice's poller impl such that it can load things from the classpath in addition to the file system
+
+- directory structure design
+-- do this in a way that transparently provides for the ability to manage that as an application runtime concern vs a build process concern
+
+- ide metadata
+- bump Guava to 18.0
+
+
+- commented out the Oracle jdbc driver?
+- walk through creating a sub-task in Jira
+- review scopes on pom.xml (is rice-*-impl) scoped as anything but runtime?
+
+Please accept this email as my formal resignation of the position of "Engineer" at KualiCo effective March 31, 2015.
+

@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.io.ByteSink;
 import com.google.common.io.ByteSource;
 
@@ -26,13 +27,23 @@ public interface JsonService {
 
     <T> T readString(String json, Class<T> type);
 
+    <T> T readString(String json, TypeReference<T> type);
+
     <T> T read(File file, Class<T> type) throws IOException;
+
+    <T> T read(File file, TypeReference<T> type) throws IOException;
 
     <T> T read(ByteSource source, Class<T> type) throws IOException;
 
+    <T> T read(ByteSource source, TypeReference<T> type) throws IOException;
+
     <T> T read(String url, Class<T> type) throws IOException;
 
+    <T> T read(String url, TypeReference<T> type) throws IOException;
+
     <T> T read(URL url, Class<T> type) throws IOException;
+
+    <T> T read(URL url, TypeReference<T> type) throws IOException;
 
     <T> String writeString(T reference);
 

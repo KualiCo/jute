@@ -34,6 +34,7 @@ import javax.inject.Inject;
 
 import org.kuali.common.jute.json.JsonService;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.ByteSink;
 import com.google.common.io.ByteSource;
@@ -64,9 +65,30 @@ public final class JacksonJsonService implements JsonService {
     }
 
     @Override
+    public <T> T readString(String json, TypeReference<T> type) {
+        try {
+            ByteSource source = wrap(json.getBytes(UTF_8));
+            return read(source, type);
+        } catch (IOException e) {
+            throw illegalState("unexpected io error");
+        }
+    }
+
+    @Override
+    public <T> T read(String url, TypeReference<T> type) throws IOException {
+        checkNotBlank(url, "url");
+        return read(new URL(url), type);
+    }
+
+    @Override
     public <T> T read(String url, Class<T> type) throws IOException {
         checkNotBlank(url, "url");
         return read(new URL(url), type);
+    }
+
+    @Override
+    public <T> T read(URL url, TypeReference<T> type) throws IOException {
+        return read(Resources.asByteSource(url), type);
     }
 
     @Override
@@ -77,6 +99,26 @@ public final class JacksonJsonService implements JsonService {
     @Override
     public <T> T read(File file, Class<T> type) throws IOException {
         return read(Files.asByteSource(file), type);
+    }
+
+    @Override
+    public <T> T read(File file, TypeReference<T> type) throws IOException {
+        return read(Files.asByteSource(file), type);
+    }
+
+    @Override
+    public <T> T read(ByteSource source, TypeReference<T> type) throws IOException {
+        checkNotNull(source, "source");
+        checkNotNull(type, "type");
+        Closer closer = Closer.create();
+        try {
+            InputStream in = closer.register(source.openBufferedStream());
+            return mapper.readValue(in, type);
+        } catch (Throwable e) {
+            throw closer.rethrow(e);
+        } finally {
+            closer.close();
+        }
     }
 
     @Override
