@@ -19,6 +19,7 @@ import java.util.List;
 import org.kuali.common.jute.base.TimedInterval;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Optional;
 import com.google.common.base.Stopwatch;
 import com.google.common.base.VerifyException;
 import com.google.common.collect.ImmutableList;
@@ -49,14 +50,7 @@ public class DefaultProcessService implements ProcessService {
         Stopwatch sw = createStarted();
         Process process = pb.start();
         while (isAlive(process)) {
-            sleep(context.getSleepMillis());
-            if (context.getTimeoutMillis().isPresent()) {
-                long elapsed = sw.elapsed(MILLISECONDS);
-                long timeout = context.getTimeoutMillis().get();
-                if (elapsed > timeout) {
-                    throw ioException("timeout exceeded -> [max: %s, elapsed: %s]", getTime(timeout), getTime(elapsed));
-                }
-            }
+            checkedSleep(context.getSleepMillis(), context.getTimeoutMillis(), sw);
         }
 
         // preserve the timing of this process execution
@@ -83,7 +77,18 @@ public class DefaultProcessService implements ProcessService {
         }
     }
 
-    protected void checkExitValue(int exitValue, ProcessContext context) {
+    private void checkedSleep(long sleep, Optional<Long> timeout, Stopwatch sw) throws IOException {
+        sleep(sleep);
+        if (timeout.isPresent()) {
+            long elapsed = sw.elapsed(MILLISECONDS);
+            long millis = timeout.get();
+            if (elapsed > millis) {
+                throw ioException("timeout exceeded -> [max: %s, elapsed: %s]", getTime(millis), getTime(elapsed));
+            }
+        }
+    }
+
+    private void checkExitValue(int exitValue, ProcessContext context) {
 
         // no exit values were supplied
         if (!context.getAllowedExitValues().isPresent()) {
