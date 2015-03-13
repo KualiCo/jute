@@ -81,9 +81,8 @@ public class DefaultProcessService implements ProcessService {
         sleep(sleep);
         if (timeout.isPresent()) {
             long elapsed = sw.elapsed(MILLISECONDS);
-            long millis = timeout.get();
-            if (elapsed > millis) {
-                throw ioException("timeout exceeded -> [max: %s, elapsed: %s]", getTime(millis), getTime(elapsed));
+            if (elapsed > timeout.get()) {
+                throw ioException("timeout exceeded -> [max: %s, elapsed: %s]", getTime(timeout.get()), getTime(elapsed));
             }
         }
     }

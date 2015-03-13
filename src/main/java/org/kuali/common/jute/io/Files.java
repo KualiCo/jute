@@ -16,7 +16,7 @@ public final class Files {
     public static String relativePath(File parent, File child) {
         checkNotNull(parent, "parent");
         checkNotNull(child, "child");
-        checkState(new ChildOfPredicate(parent).apply(child), "%s is not a child of %s", child, parent);
+        checkState(childOf(parent).apply(child), "%s is not a child of %s", child, parent);
         return removeStart(removeStart(child.getAbsolutePath(), parent.getAbsolutePath()), File.separator);
     }
 
