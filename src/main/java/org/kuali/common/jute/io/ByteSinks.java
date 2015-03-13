@@ -2,6 +2,7 @@ package org.kuali.common.jute.io;
 
 import static org.kuali.common.jute.base.Precondition.checkNotNull;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -10,47 +11,53 @@ import com.google.common.io.ByteSink;
 public final class ByteSinks {
 
     /**
+     * Return a ByteSink that wraps the provided ByteArrayOutputStream.
+     */
+    public static ByteSink asByteSink(ByteArrayOutputStream out) {
+        return new WrappingByteSink(out, true);
+    }
+
+    /**
      * Return a ByteSink that writes to System.out when openStream() is called. Calling close() on the returned OutputStream has no effect.
      */
     public static ByteSink systemOut() {
-        return new SystemByteSink(System.out);
+        return new WrappingByteSink(System.out, false);
     }
 
     /**
      * Return a ByteSink that writes to System.err when openStream() is called. Calling close() on the returned OutputStream has no effect.
      */
     public static ByteSink systemErr() {
-        return new SystemByteSink(System.err);
+        return new WrappingByteSink(System.err, false);
     }
 
-    private static class SystemByteSink extends ByteSink {
+    private static class WrappingByteSink extends ByteSink {
 
-        public SystemByteSink(OutputStream out) {
+        private WrappingByteSink(OutputStream out, boolean closeable) {
             this.out = checkNotNull(out, "out");
+            this.closeable = closeable;
         }
 
         private final OutputStream out;
+        private final boolean closeable;
 
         @Override
         public OutputStream openStream() throws IOException {
-            return new UncloseableOutputStream(out);
+            return new DelegatingOutputStream(out, closeable);
         }
 
     }
 
-    // delegate all method calls to the output stream passed in, with the exception of close()
-    private static class UncloseableOutputStream extends OutputStream {
+    // delegate all calls to the output stream passed in
+    private static class DelegatingOutputStream extends OutputStream {
 
-        public UncloseableOutputStream(OutputStream out) {
+        private DelegatingOutputStream(OutputStream out, boolean closeable) {
             this.out = checkNotNull(out, "out");
+            this.closeable = closeable;
         }
 
         private final OutputStream out;
-
-        @Override
-        public void close() throws IOException {
-            // never close it
-        }
+        private final boolean closeable;
 
         @Override
         public void write(int b) throws IOException {
@@ -70,6 +77,13 @@ public final class ByteSinks {
         @Override
         public void flush() throws IOException {
             out.flush();
+        }
+
+        @Override
+        public void close() throws IOException {
+            if (closeable) {
+                out.close();
+            }
         }
 
     }
