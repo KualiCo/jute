@@ -18,14 +18,14 @@ public final class ByteSinks {
     }
 
     /**
-     * Return a ByteSink that writes to System.out when openStream() is called. Calling close() on the returned OutputStream has no effect.
+     * Return a ByteSink that writes to System.out when openStream() is called. Calling close() on the returned OutputStream has no affect.
      */
     public static ByteSink systemOut() {
         return new WrappingByteSink(System.out, false);
     }
 
     /**
-     * Return a ByteSink that writes to System.err when openStream() is called. Calling close() on the returned OutputStream has no effect.
+     * Return a ByteSink that writes to System.err when openStream() is called. Calling close() on the returned OutputStream has no affect.
      */
     public static ByteSink systemErr() {
         return new WrappingByteSink(System.err, false);

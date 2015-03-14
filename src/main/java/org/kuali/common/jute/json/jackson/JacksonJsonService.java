@@ -60,7 +60,7 @@ public final class JacksonJsonService implements JsonService {
             ByteSource source = wrap(json.getBytes(UTF_8));
             return read(source, valueType);
         } catch (IOException e) {
-            throw illegalState("unexpected io error");
+            throw illegalState(e, "unexpected io error");
         }
     }
 
@@ -70,7 +70,7 @@ public final class JacksonJsonService implements JsonService {
             ByteSource source = wrap(json.getBytes(UTF_8));
             return read(source, type);
         } catch (IOException e) {
-            throw illegalState("unexpected io error");
+            throw illegalState(e, "unexpected io error");
         }
     }
 

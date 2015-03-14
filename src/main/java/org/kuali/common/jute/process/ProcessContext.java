@@ -28,9 +28,11 @@ public final class ProcessContext {
     private final long sleepMillis;
     private final ImmutableMap<String, String> environment;
     private final ImmutableList<Integer> allowedExitValues;
+    private final boolean inheritEnvironment;
 
     private ProcessContext(Builder builder) {
         this.command = builder.command;
+        this.inheritEnvironment = builder.inheritEnvironment;
         this.args = ImmutableList.copyOf(builder.args);
         this.directory = builder.directory;
         this.timeoutMillis = builder.timeoutMillis;
@@ -65,6 +67,16 @@ public final class ProcessContext {
         private long sleepMillis = 10;
         private Map<String, String> environment = newHashMap();
         private List<Integer> allowedExitValues = newArrayList(0);
+        private boolean inheritEnvironment = false;
+
+        public Builder withInheritEnvironment(boolean inheritEnvironment) {
+            this.inheritEnvironment = inheritEnvironment;
+            return this;
+        }
+
+        public Builder inheritEnvironment() {
+            return withInheritEnvironment(true);
+        }
 
         public Builder withAllowedExitValues(List<Integer> allowedExitValues) {
             this.allowedExitValues = allowedExitValues;
@@ -150,6 +162,10 @@ public final class ProcessContext {
 
     public List<Integer> getAllowedExitValues() {
         return allowedExitValues;
+    }
+
+    public boolean isInheritEnvironment() {
+        return inheritEnvironment;
     }
 
 }

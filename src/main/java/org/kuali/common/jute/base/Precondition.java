@@ -24,6 +24,7 @@ import java.io.File;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Range;
 
 /**
  * Strongly mimic's Guava's {@code Preconditions} class with a sensible default error message for common situations
@@ -48,6 +49,7 @@ public final class Precondition {
     private static final String NOT_BLANK_MSG = "'%s' cannot be blank";
     private static final String NOT_EMPTY_MSG = "'%s' cannot be the empty string";
     private static final String MIN_MSG = "%s not allowed. '%s' must be greater than or equal to %s";
+    private static final String RANGE_MSG = "%s not allowed. '%s' must be in the range %s";
     private static final String MAX_MSG = "%s not allowed. '%s' must be less than or equal to %s";
     private static final String EQUALS_MSG = "[%s] not allowed. '%s' must be equal to [%s]";
     private static final String NOT_EQUALS_MSG = "[%s] not allowed. '%s' must not be equal to [%s]";
@@ -256,6 +258,15 @@ public final class Precondition {
     public static long checkMax(long arg, long max, String argName) {
         checkNotBlank(argName, ARG_NAME);
         checkArgument(arg <= max, MAX_MSG, arg, argName, max);
+        return arg;
+    }
+
+    @SuppressWarnings("rawtypes")
+    public static <C extends Comparable> C checkRange(C arg, Range<C> range, String argName) {
+        checkNotNull(arg, "arg");
+        checkNotNull(range, "range");
+        checkNotBlank(argName, ARG_NAME);
+        checkArgument(range.contains(arg), RANGE_MSG, arg, range, argName);
         return arg;
     }
 
