@@ -13,7 +13,7 @@ public final class ByteSinks {
     /**
      * Return a ByteSink that wraps the provided ByteArrayOutputStream.
      */
-    public static ByteSink asByteSink(ByteArrayOutputStream out) {
+    public static ByteSink wrap(ByteArrayOutputStream out) {
         return new WrappingByteSink(out, true);
     }
 
@@ -51,38 +51,38 @@ public final class ByteSinks {
     // delegate all calls to the output stream passed in
     private static class DelegatingOutputStream extends OutputStream {
 
-        private DelegatingOutputStream(OutputStream out, boolean closeable) {
-            this.out = checkNotNull(out, "out");
+        private DelegatingOutputStream(OutputStream delegate, boolean closeable) {
+            this.delegate = checkNotNull(delegate, "delegate");
             this.closeable = closeable;
         }
 
-        private final OutputStream out;
+        private final OutputStream delegate;
         private final boolean closeable;
 
         @Override
         public void write(int b) throws IOException {
-            out.write(b);
+            delegate.write(b);
         }
 
         @Override
         public void write(byte[] b) throws IOException {
-            out.write(b);
+            delegate.write(b);
         }
 
         @Override
         public void write(byte[] b, int off, int len) throws IOException {
-            out.write(b, off, len);
+            delegate.write(b, off, len);
         }
 
         @Override
         public void flush() throws IOException {
-            out.flush();
+            delegate.flush();
         }
 
         @Override
         public void close() throws IOException {
             if (closeable) {
-                out.close();
+                delegate.close();
             }
         }
 

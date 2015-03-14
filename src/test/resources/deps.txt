@@ -13,6 +13,3 @@
 - commented out the Oracle jdbc driver?
 - walk through creating a sub-task in Jira
 - review scopes on pom.xml (is rice-*-impl) scoped as anything but runtime?
-
-Please accept this email as my formal resignation of the position of "Engineer" at KualiCo effective March 31, 2015.
-

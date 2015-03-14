@@ -23,7 +23,6 @@ import com.google.common.base.Optional;
 import com.google.common.base.Stopwatch;
 import com.google.common.base.VerifyException;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Range;
 import com.google.common.io.ByteSource;
 import com.google.common.io.Closer;
 
@@ -89,24 +88,23 @@ public class DefaultProcessService implements ProcessService {
 
     private void checkExitValue(int exitValue, ProcessContext context) {
 
+        List<Integer> allowedValues = context.getAllowedExitValues();
+
         // no exit values were supplied
-        if (!context.getAllowedExitValues().isPresent()) {
+        if (allowedValues.isEmpty()) {
             return;
         }
 
-        // extract the range of allowed exit values
-        Range<Integer> range = context.getAllowedExitValues().get();
-
         // if the exit value is in that range, we are good to go
-        if (range.contains(exitValue)) {
+        if (allowedValues.contains(exitValue)) {
             return;
         }
 
         // we've been supplied with a range of exit values, but the actual exit value was not in that range
         String cmd = context.getCommand();
         String args = Joiner.on(' ').join(context.getArgs());
-        String msg = "invalid exit value '%s', allowed value(s) '%s' -> [%s %s]";
-        throw new VerifyException(format(msg, exitValue, range, cmd, args));
+        String msg = "invalid exit value '%s', allowed values %s -> [%s %s]";
+        throw new VerifyException(format(msg, exitValue, allowedValues, cmd, args));
     }
 
     // check to see if the process is still alive

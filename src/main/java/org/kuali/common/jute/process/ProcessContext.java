@@ -17,7 +17,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Range;
 
 @JsonDeserialize(builder = ProcessContext.Builder.class)
 public final class ProcessContext {
@@ -28,7 +27,7 @@ public final class ProcessContext {
     private final Optional<Long> timeoutMillis;
     private final long sleepMillis;
     private final ImmutableMap<String, String> environment;
-    private final Optional<Range<Integer>> allowedExitValues;
+    private final ImmutableList<Integer> allowedExitValues;
 
     private ProcessContext(Builder builder) {
         this.command = builder.command;
@@ -37,7 +36,7 @@ public final class ProcessContext {
         this.timeoutMillis = builder.timeoutMillis;
         this.sleepMillis = builder.sleepMillis;
         this.environment = ImmutableMap.copyOf(builder.environment);
-        this.allowedExitValues = builder.allowedExitValues;
+        this.allowedExitValues = ImmutableList.copyOf(builder.allowedExitValues);
     }
 
     public static ProcessContext build(String command) {
@@ -65,16 +64,11 @@ public final class ProcessContext {
         private Optional<Long> timeoutMillis = absent();
         private long sleepMillis = 10;
         private Map<String, String> environment = newHashMap();
-        private Optional<Range<Integer>> allowedExitValues = Optional.of(Range.closed(0, 0));
+        private List<Integer> allowedExitValues = newArrayList(0);
 
-        @JsonSetter
-        public Builder withAllowedExitValues(Optional<Range<Integer>> allowedExitValues) {
+        public Builder withAllowedExitValues(List<Integer> allowedExitValues) {
             this.allowedExitValues = allowedExitValues;
             return this;
-        }
-
-        public Builder withAllowedExitValues(Range<Integer> allowedExitValues) {
-            return withAllowedExitValues(Optional.of(allowedExitValues));
         }
 
         public Builder withEnvironment(Map<String, String> environment) {
@@ -154,7 +148,7 @@ public final class ProcessContext {
         return environment;
     }
 
-    public Optional<Range<Integer>> getAllowedExitValues() {
+    public List<Integer> getAllowedExitValues() {
         return allowedExitValues;
     }
 
