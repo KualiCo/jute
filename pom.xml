@@ -21,7 +21,7 @@
   <parent>
     <groupId>org.kuali.pom</groupId>
     <artifactId>kuali-common</artifactId>
-    <version>5.0.4</version>
+    <version>5.0.6</version>
   </parent>
   <groupId>org.kuali.common</groupId>
   <artifactId>kuali-jute</artifactId>
