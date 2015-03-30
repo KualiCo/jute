@@ -57,6 +57,7 @@ public final class DefaultProcessService implements ProcessService {
 
         // Add default environment variables (if requested)
         if (context.isInheritEnvironment()) {
+            // copy system environment into a Map<String,String>
             pb.environment().putAll(fromProperties(system.getEnvironment()));
         }
 
