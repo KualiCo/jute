@@ -85,7 +85,7 @@ public final class DefaultProcessService implements ProcessService {
             builder.withTiming(timing);
             ProcessResult result = builder.build();
 
-            // we may need to validate the exit value
+            // validate the exit value (if needed)
             checkExitValue(result, context);
 
             return result;
